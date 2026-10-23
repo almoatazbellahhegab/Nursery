@@ -8,5 +8,8 @@
   "policyDecision": "DEC-06 requested; unresolved",
   "operationalDependencies": ["FEAT-007", "FEAT-009", "server-owned identity and authorization", "PostgreSQL RLS and durable transactions"],
   "sourceAcceptanceStatus": "Not run",
+  "implementedIncrement": "Immutable check-in/check-out decisions, scope/expiry checks, operation retry/conflict decisions and UTC/version invariants",
+  "domainVerification": "28 pytest scenarios including health and fail-closed API guard; Ruff lint/format, strict mypy and pip check",
+  "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false
 }

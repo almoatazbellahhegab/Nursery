@@ -12,5 +12,27 @@ jobs:
           node-version: '20'
       - name: Verify preserved baseline and review server
         run: node --test tests/system/review.test.mjs
+  api-domain:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: services/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install resolved project dependencies
+        run: python -m pip install -r requirements-dev.lock -e .
+      - name: Verify dependency consistency
+        run: python -m pip check
+      - name: Lint
+        run: python -m ruff check src tests
+      - name: Check formatting
+        run: python -m ruff format --check src tests
+      - name: Strict typing
+        run: python -m mypy --strict src tests
+      - name: Domain and fail-closed transport tests
+        run: python -m pytest -q -p no:cacheprovider
   # Production build, security, RLS and device jobs must be added with resolved
   # dependencies and real infrastructure. This workflow is not a release gate.

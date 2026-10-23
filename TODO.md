@@ -7,10 +7,10 @@ Sprint 2 is started at the user's request. Sprint 1 remains incomplete and unacc
 - [x] Review FEAT-011's five source development tasks and five acceptance cases.
 - [x] Identify unfinished FEAT-007/FEAT-009 and identity/authorization/storage prerequisites.
 - [x] Request DEC-06 attendance correction/override/absence policy without inventing defaults.
-- [ ] Implement immutable check-in/check-out transition decisions with UTC instants and version preconditions.
-- [ ] Reject duplicate/impossible transitions and reused operation IDs with changed payloads.
-- [ ] Verify exact retry behavior and rejection of expired or differently scoped trusted grants.
-- [ ] Run pytest, Ruff and strict mypy; preserve test evidence and UAT links.
+- [x] Implement immutable check-in/check-out transition decisions with UTC instants and version preconditions.
+- [x] Reject duplicate/impossible transitions and reused operation IDs with changed payloads.
+- [x] Verify exact retry behavior and rejection of expired or differently scoped trusted grants.
+- [x] Run pytest, Ruff and strict mypy; preserve test evidence and UAT links.
 - [ ] Connect real PostgreSQL transactions/RLS, durable receipts, audit/outbox and server-owned authorization after prerequisites close.
 - [ ] Build authorized web/mobile attendance entry, timeline consistency and reports.
 - [ ] Implement QR and approved offline synchronization after their identity/security prerequisites close.

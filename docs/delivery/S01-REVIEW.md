@@ -21,9 +21,9 @@ Headless desktop Chrome is not a physical iPhone or Safari test. Physical Window
 
 ## Open blockers and next work
 
-- ENV-001: npm registry failed with DNS ENOTFOUND after approved escalation. Resolve network access, install reviewed dependencies and commit reproducible locks.
+- ENV-001 update during S02: registry access is working again, and API/test dependencies have been installed into a project-local virtual environment with a resolved version lock. The original DNS failure is historical; actual web/Flutter builds remain unverified.
 - Flutter SDK and generated platform runners are unavailable. Generate localizations, run format/analyze/widget tests and build the actual app before claiming mobile delivery.
-- FastAPI dependencies are absent. Install into a project environment and run API quality checks; do not modify the bundled artifact runtime.
+- FastAPI dependency/setup blocker is resolved during S02. Health and attendance domain tests now run in the project environment; this does not close identity, PostgreSQL or operational API prerequisites.
 - Native iOS needs macOS/Xcode and signing/TestFlight provisioning.
 - TW-006/GATE-05: Windows 11 and iPhone are requested targets. Exact browser/iOS support versions, accessibility target and performance objectives still need a named decision.
 - TW-010 and policy gates remain open. Source files identify required operations, safeguarding, finance, privacy and Arabic-language owners.

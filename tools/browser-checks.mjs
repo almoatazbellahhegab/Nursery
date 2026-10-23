@@ -75,6 +75,7 @@ try {
     await page.setViewportSize({ width: 1440, height: 1100 });
     await page.goto(base);
     await page.getByText('41 features · 204 checklist items · 216 source tests').waitFor();
+    await page.getByText('S02 · FEAT-011 · In progress', { exact: true }).waitFor();
     assert.equal(await page.locator('details.sprint').count(), 4);
     await page.locator('#S01 > summary').click();
     await page.locator('#TC-FEAT-001-01 > summary').click();
