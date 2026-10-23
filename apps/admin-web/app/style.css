@@ -1,0 +1,5 @@
+:root { font-family: Segoe UI, Tahoma, sans-serif; color: #203b32; background: #f7f8f4; }
+body { margin: 0; }
+main { max-width: 960px; margin: 80px auto; padding: 24px; }
+h1 { font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 400; }
+p { line-height: 1.7; }
