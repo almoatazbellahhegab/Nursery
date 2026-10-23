@@ -8,11 +8,11 @@
 - [x] Create `sprint/03-review` and the dedicated FEAT-030 branch.
 - [x] Preserve the previous TODO at `docs/delivery/S02-TODO.md`.
 - [x] Review FEAT-030's six source tasks, five acceptance cases and unfinished FEAT-002/FEAT-005 dependencies.
-- [ ] Implement immutable, organization/branch-scoped stage snapshots and history facts.
-- [ ] Validate changes against explicit workflow policy without inventing approved transitions.
-- [ ] Reject stale versions, no-op moves, invalid times and unauthorized scope.
-- [ ] Preserve history actors/UTC timestamps and prevent direct enrollment without conversion.
-- [ ] Run admissions scenarios, attendance regressions, lint, formatting and strict typing.
+- [x] Implement immutable, organization/branch-scoped stage snapshots and history facts.
+- [x] Validate changes against explicit workflow policy without inventing approved transitions.
+- [x] Reject stale versions, no-op moves, invalid times and unauthorized scope.
+- [x] Preserve history actors/UTC timestamps and prevent direct enrollment without conversion.
+- [x] Run admissions scenarios, attendance regressions, lint, formatting and strict typing.
 - [ ] Record evidence/UAT mappings and commit the tested increment locally.
 
 ## FEAT-030 source tasks and operational delivery
@@ -53,7 +53,7 @@ The current increment uses opaque lead identifiers and no family/child identity 
 
 ## Deferred Sprint 2 work
 
-## Current feature
+## Deferred attendance increment
 
 - [x] Review FEAT-011's five source development tasks and five acceptance cases.
 - [x] Identify unfinished FEAT-007/FEAT-009 and identity/authorization/storage prerequisites.

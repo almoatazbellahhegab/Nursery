@@ -7,11 +7,12 @@
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "deferredFeatures": ["FEAT-011"],
+  "deferredSprints": ["S02"],
   "policyDecision": "Admissions workflow, inquiry fields, loss reasons and report definitions require approval; DEC-06 remains open for deferred attendance",
   "operationalDependencies": ["FEAT-002", "FEAT-005", "approved workflow and field definitions", "PostgreSQL RLS and durable transactions"],
   "sourceAcceptanceStatus": "Not run",
-  "implementedIncrement": "Admissions stage/history domain work started; implementation verification pending",
-  "domainVerification": "Admissions checks pending; previous attendance checks retained in historical evidence",
+  "implementedIncrement": "Immutable lead stage/history decisions, explicit policy edges, branch/organization scope, UTC/version invariants and enrollment conversion guard",
+  "domainVerification": "51 pytest scenarios including 22 admissions, 26 attendance and three transport guards; Ruff lint/format, strict mypy and pip check pass",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false
 }

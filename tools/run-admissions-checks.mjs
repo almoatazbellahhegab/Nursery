@@ -1,0 +1,11 @@
+/** FEAT-030 domain evidence only; policy fixtures do not approve a business workflow. */
+import { runApiChecks } from './api-checks.mjs';
+
+runApiChecks({
+  feature: 'FEAT-030', sprint: 'S03', slug: 'admissions',
+  mappings: [
+    { cases: ['ADM-UNIT-001', 'ADM-UNIT-002', 'ADM-UNIT-003', 'ADM-UNIT-004', 'ADM-UNIT-009', 'ADM-UNIT-010', 'ADM-UNIT-012', 'ADM-UNIT-013', 'ADM-UNIT-014', 'ADM-UNIT-015', 'ADM-UNIT-016', 'ADM-UNIT-017'], source: 'TC-FEAT-030-02', uat: 'UAT-S03-TC-FEAT-030-02', coverage: 'Partial: stage/history decisions with synthetic explicit policy; no API/persistence' },
+    { cases: ['ADM-UNIT-005', 'ADM-UNIT-006', 'ADM-UNIT-007', 'ADM-UNIT-008'], source: 'TC-FEAT-030-04', uat: 'UAT-S03-TC-FEAT-030-04', coverage: 'Partial: scope/expiry rejection only; actual branch visibility UI/E2E not run' },
+    { cases: ['ADM-UNIT-011'], source: 'TC-FEAT-030-03', uat: 'UAT-S03-TC-FEAT-030-03', coverage: 'Guard only: stage edits cannot create/undo enrollment; real conversion/deduplication not implemented' },
+  ],
+});
