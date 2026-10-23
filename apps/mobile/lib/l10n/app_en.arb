@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "appTitle": "Nursery",
+  "preview": "Development foundation · synthetic preview",
+  "heading": "A little closer, all day.",
+  "staffHeading": "More time for little moments.",
+  "language": "العربية",
+  "experience": "Preview experience",
+  "parent": "Parent",
+  "staff": "Staff",
+  "home": "Home",
+  "timeline": "Timeline",
+  "notices": "Notices",
+  "empty": "No operational records. Authentication and storage are not connected."
+}
