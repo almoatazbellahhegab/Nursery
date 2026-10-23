@@ -1,0 +1,273 @@
+Childcare Platform Engineering Standards
+Coding documentation review testing and delivery rules
+Decision baseline
+This document translates the approved product outcomes into an implementation and verification baseline. It does not replace legal, privacy, safeguarding, finance, or product policy approval where the source identifies an open decision.
+Field
+Value
+Prepared for
+Product, Engineering, Quality Assurance, Security, DevOps and Delivery
+Prepared by
+Technical Lead
+Date
+23 October 2026
+Status
+Mandatory baseline for implementation
+Source baseline
+Childcare Management Platform Product Owner Deliverables
+Traceability
+41 product features, cross-cutting quality requirements and minimum test portfolio
+
+
+Purpose and Enforcement
+These standards apply to the administration portal, Flutter application, Python services, database, infrastructure and automated tests. They are mandatory for new code. A deviation requires a short architecture decision or pull-request explanation, named approval and a remediation plan when the deviation is temporary.
+The objective is readable, secure and testable software. Comments and documentation must help a future developer understand intent, business rules, trust boundaries and non-obvious behavior. They must not create noise by repeating syntax that is already clear from the code.
+Repository Structure
+apps/  admin-web/          Next.js and TypeScript administration portal  mobile/             Flutter parent and staff applicationservices/  api/                FastAPI modular monolith  worker/             SQS consumers and scheduled jobscontracts/  openapi/            Published API contract and generation configinfra/  terraform/          Environment infrastructure modulestests/  system/             Cross-client and resilience suitesdocs/  adr/                Architecture decision records  runbooks/           Operational and recovery procedures
+Each deployable application owns its build manifest, tests and local setup instructions.
+Generated API clients are produced from the reviewed OpenAPI contract. Hand-editing generated files is prohibited.
+Business rules live in backend domain modules, not in controllers, React components, Flutter widgets, queue handlers or database triggers unless an approved design explicitly requires otherwise.
+Secrets, production exports, real child information and provider credentials are prohibited in the repository and test fixtures.
+General Coding Rules
+☐ Use small cohesive modules with one clear responsibility and explicit public interfaces.
+☐ Use descriptive domain names. Avoid abbreviations that are not present in the product vocabulary.
+☐ Validate data at every trust boundary and represent validated data with typed objects.
+☐ Keep functions short enough to understand without scrolling through unrelated responsibilities.
+☐ Prefer explicit control flow over clever expressions, reflection or hidden framework behavior.
+☐ Represent business states with enums or state objects and validate transitions centrally.
+☐ Use UTC for stored instants and organization timezones only for interpretation, scheduling and display.
+☐ Use integer minor units and a currency code for money. Never use binary floating point for balances.
+☐ Do not ignore errors, catch broad exceptions without classification or return a success response before durable completion.
+☐ Do not add an abstraction until it removes demonstrated duplication, establishes a security boundary or represents a stable domain concept.
+Comment and Documentation Standard
+Every part of the codebase must be understandable, but that does not mean commenting every line. Code explains what happens; comments explain why it happens, which invariant is protected, what is intentionally excluded and what failure or policy concern a future change must preserve.
+Required Documentation
+Location
+Required content
+Module or package
+Purpose, owned concepts, permitted dependencies, public entry points and security or data assumptions
+Public API operation
+Behavior, authorization, inputs, result, error codes, idempotency and side effects through OpenAPI metadata
+Public function or class
+Purpose, important arguments and return value, exceptions, invariants and externally visible side effects
+Complex algorithm
+Reason for the approach, ordering or concurrency assumptions, complexity and failure handling
+Security-critical block
+Threat or invariant being protected, including tenant, relationship, consent or signature assumptions
+Migration
+Data effect, compatibility sequence, expected duration, validation and rollback or forward-fix procedure
+Infrastructure module
+Resources created, inputs, outputs, trust boundary, data classification and recovery implications
+Test
+Scenario intent in the test name; additional comment only when setup or expected behavior is non-obvious
+
+Comment Rules
+Place a short orienting comment before a non-obvious block, not after each line inside it.
+Document business-policy provenance with an approved requirement, feature, ADR or policy identifier where available.
+Document temporary compromises with an issue identifier, owner and removal condition. Unowned TODO comments are prohibited.
+Update or remove comments in the same change that modifies the behavior they describe.
+Never place credentials, tokens, personal data, child names or production examples in comments.
+Do not comment obvious assignments, standard framework calls, closing braces or code whose name already states the behavior.
+Comment Examples
+Python authorization example
+def authorize_child_access(context: AccessContext, child: Child) -> AccessGrant:    """Return the fields the caller may access for this child.    Enforces organization, assignment, guardian relationship, role and    consent rules. A grant never implies access to every child field.    """    # Check the immutable tenant boundary before relationship evaluation so    # a cross-organization identifier cannot disclose whether a child exists.    require_same_organization(context.organization_id, child.organization_id)    return policy.evaluate(context, child)
+Flutter offline synchronization example
+// Keep the operation ID stable across retries. The API stores this ID with// the result, which prevents a reconnect from creating a second care event.final command = CareCommand(  operationId: pending.operationId,  childId: pending.childId,  expectedVersion: pending.expectedVersion,);
+TypeScript presentation example
+// The API has already removed fields the user cannot access. Preserve the// distinction between unavailable and empty; do not reconstruct hidden data.return <MedicalSummary data={child.medicalSummary} />;
+Unacceptable comment
+// Set the status to activeorganization.status = 'active';
+Python Standards
+Use the supported Python release selected for the project and pin dependencies with a reproducible lockfile.
+Use FastAPI only at transport boundaries, Pydantic for external schemas and explicit domain or application services for business behavior.
+Use complete type annotations for application code. CI runs mypy in strict or an approved progressively strict configuration.
+Use Ruff for linting and formatting, pytest for tests and a dependency vulnerability scanner in CI.
+Controllers validate transport data, establish request context and call one application use case. They do not contain SQL or multi-step business policy.
+Repositories expose domain-oriented operations and always require an explicit organization or trusted platform context.
+Use explicit transaction boundaries in application services. Do not commit from repositories or helper functions.
+Catch specific exceptions at the layer that can translate or recover from them. Preserve causal context and expose safe error codes.
+Async functions must not call blocking network or disk libraries on the event loop. Use supported asynchronous drivers or bounded executors.
+Flutter and Dart Standards
+Use feature-oriented packages with presentation, application and data boundaries. Widgets do not call HTTP or SQLite directly.
+Use immutable typed models, exhaustive states and generated serialization from the reviewed OpenAPI contract where practical.
+Run dart format, flutter analyze and the approved lint configuration in CI.
+Store authentication secrets only in platform secure storage. Store approved offline data in encrypted SQLite and clear it on logout, revocation or policy expiry.
+Represent loading, pending sync, conflict, failure, empty and success as distinct visible states.
+Use semantic labels, scalable text, large touch targets and direction-aware layouts. Do not hardcode left and right where start and end express the intent.
+All user-visible strings come from Arabic and English localization catalogues. Concatenating translated fragments is prohibited.
+Offline commands retain a stable operation ID and must not be removed until the server confirms success or returns an actionable terminal response.
+TypeScript and Next.js Standards
+Enable TypeScript strict mode. The any type requires a localized justification and an issue when temporary.
+Run ESLint, Prettier, type checking and unit tests in CI.
+Prefer server-rendered or server-owned data loading for administrative pages where it reduces exposed state, while preserving responsive interactions.
+Generated API types are authoritative at the transport boundary. Convert them into view models when presentation needs differ.
+Components do not implement authorization. They may hide unavailable actions for usability, but the API remains authoritative.
+Use accessible HTML semantics, keyboard behavior, focus management and direction-aware CSS. Validate Arabic content and mixed-direction identifiers.
+Do not place secrets in browser bundles, public runtime configuration or client telemetry.
+Use bounded, cancellable data requests and distinguish authorization, validation, conflict, unavailable and unexpected failures.
+API Standards
+Concern
+Rule
+Versioning
+Expose /api/v1 and apply compatibility review before removing or changing a field
+Identifiers
+Opaque IDs; never expose sequential database keys as a security control
+Validation
+Reject unknown or invalid input according to endpoint policy with field-level error details
+Errors
+Stable code, safe message key, correlation ID and appropriate HTTP status; no existence leaks
+Pagination
+Bounded page size and deterministic ordering; cursor preferred for mutable feeds
+Idempotency
+Required for retryable creates, safety confirmations, payments, invitations and batch commands
+Concurrency
+Version preconditions or explicit append-only commands where lost updates matter
+Audit
+Sensitive successful actions and material denied attempts emit the defined audit or security event
+Documentation
+Summary, authorization, parameters, examples, errors and side effects in OpenAPI
+
+Authorization Coding Rules
+☐ Read identity from the validated server request context, never from body or query fields.
+☐ Load membership, assignments and relationships from authoritative storage or a short-lived invalidation-safe cache.
+☐ Check organization state and tenant equality before returning whether a referenced resource exists.
+☐ Apply action policy and field filtering separately. Permission to view a record does not imply permission to view every field.
+☐ Pass organization context into every repository call and establish database row-security context inside the same transaction.
+☐ Do not create administrator bypass helpers. Exceptional support access requires an approved support context and audit event.
+☐ Add positive and negative tests whenever a policy changes, including a neighboring role, branch, classroom and organization.
+Database and Migration Standards
+Every tenant table contains organization_id, suitable indexes and approved row-level policies.
+Use database constraints for required fields, uniqueness, valid references and simple invariants. Application validation does not replace database integrity.
+Use Alembic revisions with deterministic upgrade steps. A committed migration is immutable after it is used by a shared environment.
+Apply expand, migrate and contract for breaking changes. Backfills are restartable, observable and bounded by primary-key or cursor ranges.
+Never perform a long unbounded data rewrite inside a normal deployment transaction.
+Migration reviews state lock risk, table size assumption, compatibility, validation query, expected duration and recovery approach.
+Row-level security policies, grants and tenant constraints receive integration tests against a real PostgreSQL instance.
+Audit, payment and safety history must not be silently updated or deleted. Corrections append a superseding record where the model requires immutable history.
+Asynchronous and Integration Standards
+Publish external work through a transactional outbox when it depends on a committed business change.
+Every consumer is idempotent and safe under duplicate, delayed and out-of-order delivery.
+Queue messages contain identifiers and minimal routing metadata, not unnecessary child or medical content.
+Set bounded retries with exponential backoff and jitter. Permanent failures go to a dead-letter queue with an owner and runbook.
+Verify webhook signatures, timestamps and replay protection before parsing provider claims into domain events.
+Wrap vendors behind internal adapter interfaces and test each adapter against provider-independent contract fixtures.
+Configure explicit connection, read and total timeouts. Do not allow an external provider wait to hold a database transaction open.
+Logging and Observability Standards
+Do
+Do not
+Use structured event names and correlation IDs
+Log entire request bodies or provider payloads
+Use internal pseudonymous identifiers when necessary
+Log child names, medical text, tokens, passwords or pickup secrets
+Record operation result, duration and retry count
+Treat accepted queue work as completed delivery
+Emit metrics for queues, database saturation and conflicts
+Create high-cardinality labels from user or child identifiers
+Link alerts to an owned runbook
+Create alerts without an action, threshold rationale or owner
+Test redaction with representative sensitive values
+Assume framework defaults remove sensitive fields
+
+Security Standards
+☐ Threat-model each new trust boundary, sensitive workflow or external integration.
+☐ Use least-privilege IAM roles per service and environment. Human production access is time-bounded and audited.
+☐ Encrypt data in transit and at rest. Use managed secret storage and automated rotation where the provider supports it.
+☐ Use parameterized queries and framework escaping. Review every raw SQL, HTML injection and file-path operation.
+☐ Validate file signature, type and size; quarantine and scan uploads before availability.
+☐ Apply rate limits and abuse controls to authentication, invitations, search, messaging, uploads, QR or PIN attempts and exports.
+☐ Use secure headers, CSRF protection where applicable, restrictive CORS and short-lived signed media access.
+☐ Run secret, dependency, static-analysis, container and infrastructure scans in CI and triage findings by defined SLA.
+☐ Complete independent security review before production launch and after material identity, payment, pickup or media changes.
+Testing Standards
+Test level
+Required focus
+Unit
+Domain decisions, state transitions, calculations, validators, policy predicates and serialization
+Database integration
+Transactions, constraints, migrations, RLS, repositories, outbox and concurrency
+API integration
+Authentication, authorization, validation, errors, pagination, idempotency and auditing
+Contract
+OpenAPI compatibility, generated clients and replaceable provider adapter behavior
+Component
+Web and Flutter states, accessibility semantics, localization and error recovery
+End to end
+Critical role journeys across real API and production-like dependencies
+Security
+Cross-tenant, role, relationship, replay, upload, webhook, rate-limit and logging abuse cases
+Performance and resilience
+SLOs, bursts, offline sync, duplicate delivery, backlog recovery and failover
+UAT
+Operational, safeguarding, finance, privacy and Arabic-language acceptance
+
+Name tests as observable behavior under a condition, for example denies a teacher from an unassigned classroom.
+Use deterministic fixtures with clearly separated organizations, branches, classrooms, relationships and roles.
+Every allowed-path test for sensitive data has a corresponding denied-path or filtered-field test.
+A defect fix includes a failing regression test at the lowest useful level and broader coverage when the defect crosses a boundary.
+Do not mock PostgreSQL behavior when testing transactions, SQL, constraints or row-level security.
+Flaky tests are defects. Quarantine requires an owner, issue, expiry and preserved release coverage.
+Pull Request Standard
+☐ The change is limited to one coherent outcome and links its feature, defect, ADR or operational need.
+☐ The description explains behavior, security or data implications, tests, migration, rollout and rollback.
+☐ Public interfaces, complex logic and security invariants have useful documentation and current comments.
+☐ Tests cover allowed, denied and failure paths appropriate to the change.
+☐ No secrets, production data, sensitive logs, generated noise or unrelated formatting changes are included.
+☐ API, database, localization, accessibility and observability impacts are reviewed where applicable.
+☐ At least one qualified reviewer approves; security, database, finance or safeguarding owners review changes in their governed areas.
+☐ All required CI checks pass and unresolved review conversations are closed with evidence.
+Continuous Integration Gates
+Gate
+Required checks
+Formatting and lint
+Ruff, Dart formatter and analyzer, ESLint and Prettier
+Type safety
+mypy, TypeScript compiler and Dart analyzer
+Tests
+Changed-area unit tests, database and API integration, contract and critical UI suites
+Contract
+OpenAPI generation, compatibility report and clean generated clients
+Security
+Secret scan, dependency scan, static analysis, container scan and Terraform scan
+Database
+Migration upgrade on empty and representative prior schema, RLS tests and schema drift check
+Build
+Reproducible web, API, worker and Flutter build artifacts
+Release
+SBOM, signed or attested artifact where supported, deployment plan and rollback readiness
+
+Definition of Ready
+☐ Outcome, acceptance criteria and non-goals are understood.
+☐ Dependencies and policy gates are satisfied.
+☐ UX covers success, empty, loading, validation, denied, offline, conflict and failure states as applicable.
+☐ Authorization, data classification, audit and retention implications are reviewed.
+☐ API, event, migration and integration contracts are defined.
+☐ Test cases, telemetry, rollout and rollback are defined before implementation begins.
+Definition of Done
+☐ Feature and cross-cutting acceptance criteria pass, including denied and edge paths.
+☐ Code follows these standards and has current, useful documentation and comments.
+☐ Automated tests, security checks, localization, RTL and accessibility validation pass at the appropriate levels.
+☐ Migrations, observability, dashboards, alerts, runbooks, rollout and rollback are complete.
+☐ Sensitive actions are auditable and logs contain no prohibited data.
+☐ Product, Design, QA and required specialist owners complete validation.
+☐ Known limitations, release notes and support guidance are updated.
+Review Ownership
+Area
+Required reviewer
+Architecture and module boundary
+Technical Lead or delegated senior architect
+Tenant isolation and authorization
+Security reviewer and domain owner
+Database schema and migration
+Backend lead and database reviewer
+Pickup, incident and medication
+Safeguarding and operations owner
+Billing and payment
+Finance owner and backend lead
+Arabic and RTL
+Arabic language and design owner
+Accessibility
+Design or accessibility owner
+Infrastructure and recovery
+DevOps or platform owner
+Production risk acceptance
+Named human owner with appropriate authority
+

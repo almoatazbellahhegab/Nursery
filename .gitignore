@@ -1,0 +1,14 @@
+node_modules/
+.next/
+.tools/
+.dart_tool/
+build/
+__pycache__/
+.pytest_cache/
+.venv/
+*.tsbuildinfo
+.env*
+!.env.example
+test-results/
+playwright-report/
+review-results/

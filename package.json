@@ -1,0 +1,12 @@
+{
+  "name": "nursery-sprint-review",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": { "node": ">=20.9" },
+  "scripts": {
+    "start": "node tools/review-server.mjs",
+    "test": "node --test tests/system/*.test.mjs",
+    "plan": "node tools/build-delivery-plan.mjs"
+  }
+}

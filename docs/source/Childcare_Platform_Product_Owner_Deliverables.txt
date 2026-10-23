@@ -1,0 +1,1517 @@
+Childcare Management Platform Product Owner Deliverables
+Development ready feature backlog and acceptance baseline
+Prepared for
+Product, Design, Technical Lead, Engineering, QA, and Delivery
+Source
+User supplied childcare platform project description
+Scope treatment
+Technology neutral product requirements; architecture and implementation choices reserved for the Technical Lead
+Status
+First product baseline for validation and refinement
+
+Product objective
+Give childcare centers one system to manage children, parents, staff, attendance, daily activities, communication, billing, pickup authorization, and parent engagement.
+This pack converts the supplied vision into product work the team can refine, estimate, implement, and test. It intentionally removes prescribed technologies, vendor products, database structures, and code-level instructions. The Technical Lead remains accountable for architecture and implementation decisions that satisfy the outcomes, controls, and acceptance criteria defined here.
+
+How to Use This Pack
+The backlog is an outcome and behavior baseline, not a substitute for discovery, UX design, security review, legal review, or engineering design. Product and QA should use the acceptance criteria as the starting test oracle. Engineering and the Technical Lead should validate feasibility and split items further when an independently valuable, testable increment can be released.
+Complexity is preliminary product judgment only. The Technical Lead and Development Team must validate estimates after solution design and refinement.
+Foundation items are prerequisites or cross-cutting controls. MVP Phase 1 establishes safe daily operations. Phase 2 adds revenue, communication, media, pickup, and growth workflows. Phase 3 and Future Modules require separate approval.
+All role, privacy, financial, safety, and cross-organization denial criteria are release blockers for the affected feature.
+Where the source specified a technology, the backlog retains the intended product outcome and leaves the method to the Technical Lead.
+Confirmed Product Direction
+Initial customers are nurseries, daycare centers, preschools, and early-childhood centers.
+The product is one configurable, multi-organization SaaS platform that supports multiple branches and future white-label offerings.
+The parent experience should encourage daily use; staff workflows must be fast enough for repeated classroom use.
+Arabic and English are initial languages, with Arabic right-to-left support and region-aware dates, time, currency, and notifications.
+Children’s medical, identity, relationship, pickup, incident, and media information is highly sensitive.
+Full payroll, real-time vehicle tracking, commerce, dedicated branded store builds, and parent community are not required for the initial MVP.
+Assumptions Requiring Validation
+The initial market is Egypt, but no legal, privacy, tax, payment, identity-verification, or record-retention policy has yet been confirmed.
+One person may hold different roles or relationships across organizations; conflict and precedence rules require approval.
+The center, not the platform operator, is expected to control most child records and consents; legal ownership and processor responsibilities require specialist review.
+MVP Phase 1 includes attendance, daily timeline, parent home, announcements, notifications, basic administration, and the minimum foundations needed to operate them safely.
+Online payments are Phase 2; the payment provider and supported markets are Technical Lead and commercial decisions, subject to finance and legal review.
+Plan names and example entitlements are commercial hypotheses, not approved pricing or packaging.
+Product Non Goals for Initial MVP
+Full payroll, leave management, and advanced shift management.
+Real-time vehicle location tracking.
+Parent social community and parent-to-parent messaging.
+Commerce catalog, fulfillment, platform commissions, and marketplace operations.
+Dedicated app-store builds, custom domains, and public integration APIs.
+Medical diagnosis, treatment recommendation, or clinical decision support.
+Recommended Delivery Sequence
+Stage
+Outcome
+Included capabilities
+Exit condition
+Foundation
+Safe configurable SaaS baseline
+Organization, access boundaries, platform support, audit, privacy, localization, plan and module controls
+Cross-organization and unauthorized-access tests pass
+MVP Phase 1
+Run daily nursery operations
+Accounts, invitations, branches, children, relationships, classrooms, staff, attendance, timeline, batch entry, parent home, announcements, notifications, calendar, search, demo
+A center can operate one full day in Arabic and English
+MVP Phase 2
+Add safety, revenue, communication, and growth
+Pickup, media, messaging, incidents, billing, payments, reminders, admissions, waiting list, nursery analytics
+End-to-end revenue and safeguarding journeys pass
+MVP Phase 3
+Extend operations and SaaS intelligence
+Transportation, medication, advanced platform KPIs and approved automation
+Module-specific risk and policy reviews pass
+Future Modules
+Test optional expansion bets
+Community, commerce, dedicated branding and integrations
+Separate product case and scope approved
+Role Access Baseline
+This matrix defines product intent, not an implementation model. “Scoped” means access is further limited by organization, branch, classroom, child relationship, assignment, or task need. Final permission details must be approved during refinement and tested with both allowed and denied scenarios.
+Role
+Primary permitted work
+Explicit constraints
+Platform Administrator
+Organizations, plans, feature configuration, system health, platform metrics, support
+No casual child-data access; exceptional support access is justified, time-bounded, and audited
+Nursery Administrator
+Branches, classrooms, children, guardians, staff, fees, attendance, reports, communications, billing, pickup, settings
+Restricted to own organization and granted sensitive-data permissions
+Branch Manager
+Administrator capabilities for permitted branches
+No unauthorized branch or organization access
+Teacher or Caregiver
+Assigned classrooms and children; attendance, care events, media, observations, incidents, permitted messaging
+No unrelated classroom, financial, or unnecessary medical information
+Accountant
+Invoices, payments, balances, financial reports
+No unnecessary care, incident, medical, or private child information
+Driver or Transport Staff
+Assigned route, stops, children, status, and minimum emergency contacts
+No unrelated children, routes, care timeline, billing, or medical detail beyond transport need
+Parent or Guardian
+Authorized children according to relationship permissions
+No unrelated child, family, classroom, staff, or parent data
+Common Definition of Done
+The following applies to every feature in addition to its feature-specific Definition of Done:
+All acceptance criteria pass, including permitted and denied paths.
+Functional, integration, regression, role-permission, and risk-based negative tests pass at the appropriate test level.
+Organization, branch, classroom, relationship, and role boundaries are verified where relevant.
+Arabic and English content, right-to-left behavior, responsive layouts, accessibility, and large touch targets are validated for affected journeys.
+Sensitive actions are auditable, sensitive data is minimized, and privacy or consent behavior is verified.
+Performance, pagination, temporary-connectivity behavior, retry behavior, and duplicate prevention are validated where relevant.
+Product, Design, QA, and business representatives complete required validation; specialist security, privacy, medical, finance, or legal review is completed where applicable.
+User-facing help, operational guidance, support notes, release notes, known limitations, and relevant product documentation are updated.
+
+Development Ready Feature Backlog
+Features are ordered by dependency and recommended release sequence rather than by source-document order. TODO items are functional work outcomes; the team may create implementation tasks after the Technical Lead approves the solution design.
+FEAT-001  Organization Lifecycle and Tenant Configuration
+Release
+Foundation
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+None
+Business value
+Enables the platform to serve multiple childcare organizations safely from one configurable product.
+Owner
+Product with cross-functional delivery
+
+Description: Create, configure, suspend, and reactivate organizations while keeping each organization’s operational data isolated. Configuration covers identity, contacts, locale, currency, timezone, branding settings, enabled modules, and subscription status.
+TODO
+☐ Create and maintain an organization profile.
+☐ Support active, suspended, and closed lifecycle states.
+☐ Apply organization-level settings consistently to all permitted users.
+☐ Prevent any organization user from discovering or accessing another organization’s records.
+☐ Record lifecycle and configuration changes in the audit history.
+Acceptance Criteria
+Given two active organizations with separate users, when a user searches, opens, exports, or references data, then only records from the user’s authorized organization are returned.
+Given an organization is suspended, When any non-platform user attempts an operational action, Then access is denied and no data is created or changed.
+Given an authorized platform administrator changes an organization setting, When the change is saved, Then the new value is applied to that organization only and the change is auditable.
+Given a user is not assigned to an organization, When the user attempts to access it through a direct reference, Then the request is denied.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-002  Branch Management
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-001
+Business value
+Supports single-site and multi-site childcare organizations with controlled local operations.
+Owner
+Product with cross-functional delivery
+
+Description: Allow authorized administrators to create and manage branches, assign managers and staff, and restrict branch-scoped users to permitted branches.
+TODO
+☐ Create, edit, activate, and deactivate branches.
+☐ Maintain branch contact details, timezone, capacity context, and operating status.
+☐ Assign users to one or more branches.
+☐ Apply branch restrictions to dashboards, workflows, reports, and search.
+Acceptance Criteria
+Given an administrator has organization-wide permission, When a branch is created with required information, Then it is available for classroom and staff assignment.
+Given a manager is assigned only to Branch A, When the manager requests Branch B data or a combined report, Then Branch B data is excluded and direct access is denied.
+Given a branch is deactivated, When users attempt to create new operational records for it, Then the action is blocked while historical records remain available to authorized users.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-003  Authentication and Account Recovery
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-001
+Business value
+Provides secure, usable access for staff, guardians, and platform operators.
+Owner
+Product with cross-functional delivery
+
+Description: Allow approved users to sign in using supported account methods, sign out, recover access, and handle suspended or disabled accounts.
+TODO
+☐ Support email and password, phone, Google, and Apple sign-in where available.
+☐ Provide secure password or account recovery.
+☐ Prevent disabled, suspended, or unlinked accounts from accessing protected product data.
+☐ Display actionable but non-revealing authentication errors.
+Acceptance Criteria
+Given a registered active user supplies valid credentials, When authentication succeeds, Then the user enters only the organizations and roles linked to the account.
+Given credentials are invalid, When sign-in is attempted, Then access is denied without revealing whether sensitive account details exist.
+Given a user or organization is suspended, When valid credentials are submitted, Then protected data remains inaccessible.
+Given a user completes the recovery flow, When the recovery proof is valid, Then the user can regain account access and the prior recovery token cannot be reused.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-004  User Invitations and Account Provisioning
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-003, FEAT-005
+Business value
+Lets centers onboard staff and guardians into the correct organization and role without manual support.
+Owner
+Product with cross-functional delivery
+
+Description: Allow an authorized administrator to invite a person by email or phone and securely connect the accepted invitation to the intended organization, role, branches, classrooms, and guardian relationships.
+TODO
+☐ Create, resend, revoke, and expire invitations.
+☐ Show invitation status to authorized administrators.
+☐ Validate the intended assignment independently of information supplied by the invitee.
+☐ Handle existing accounts and new accounts without duplicate membership.
+Acceptance Criteria
+Given an authorized administrator sends a valid invitation, When the recipient accepts it before expiry, Then the account receives only the assignment encoded by the approved invitation.
+Given an invitation is expired, revoked, already used, or altered, when acceptance is attempted, then no membership or role is granted.
+Given the recipient already has an account, When a valid invitation is accepted, Then the existing account is linked without creating a duplicate user profile.
+Given an unauthorized staff member attempts to invite a higher-privilege role, When the invitation is submitted, Then it is rejected and auditable.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-005  Roles Permissions and Access Boundaries
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-002
+Business value
+Protects children and business data while enabling each role to complete its work.
+Owner
+Product with cross-functional delivery
+
+Description: Enforce least-privilege access for Platform Administrator, Nursery Administrator, Branch Manager, Teacher or Caregiver, Accountant, Driver or Transportation Staff, and Parent or Guardian.
+TODO
+☐ Define role capabilities and permitted scope.
+☐ Support organization, branch, classroom, child, and relationship-based access.
+☐ Prevent role or permission elevation by client-side changes.
+☐ Separate financial, care, medical, transportation, and platform-support access.
+☐ Cover access rules with positive and negative role tests.
+Acceptance Criteria
+Given a teacher is assigned to Classroom A, When the teacher accesses Classroom B or its children, Then access is denied.
+Given an accountant opens a child record, When the record includes medical or care details unrelated to billing, Then those details are not accessible.
+Given a driver views an assigned route, When child information is shown, Then only the minimum transportation and emergency information required is available.
+Given a user changes role information in a request, When the request is evaluated, Then permissions continue to reflect the authoritative assignment and unauthorized access fails.
+Given a parent has no authorized relationship with a child, When any child record is requested directly, Then access is denied.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-006  Platform Administration and Audited Support Access
+Release
+Foundation
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-005, FEAT-034
+Business value
+Enables SaaS operations without normalizing unrestricted access to children’s private information.
+Owner
+Product with cross-functional delivery
+
+Description: Provide platform operators with organization lifecycle, plan, feature, health, metric, and support capabilities. Exceptional access to sensitive tenant data must be purpose-limited, time-bounded, and audited.
+TODO
+☐ Manage organizations, plans, subscriptions, feature availability, and platform metrics.
+☐ Expose operational health without showing unnecessary child data.
+☐ Require a support reason for exceptional sensitive-data access.
+☐ Record who accessed what, why, and when.
+☐ Allow authorized review of support-access history.
+Acceptance Criteria
+Given a platform administrator views system health or platform metrics, When the view loads, Then private child-level content is not shown.
+Given support access to sensitive tenant data is requested, When required justification or authorization is absent, Then access is denied.
+Given approved support access is used, When data is viewed or changed, Then actor, organization, reason, scope, and timestamps are recorded.
+Given support access expires or is revoked, When another sensitive request is made, Then it is denied.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-007  Child Profiles and Enrollment
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-005
+Business value
+Creates the trusted child record used across care, safety, attendance, communication, and billing workflows.
+Owner
+Product with cross-functional delivery
+
+Description: Create and maintain child identity, enrollment, classroom, care, emergency, medical, transportation, language, note, relationship, and consent information with heightened controls for sensitive fields.
+TODO
+☐ Create, view, edit, transfer, enroll, withdraw, and archive child profiles.
+☐ Capture all supplied child profile fields, allowing optional fields to remain blank.
+☐ Highlight allergies and urgent care information to authorized care staff.
+☐ Restrict medical, insurance, and medication details by role.
+☐ Retain history for sensitive changes.
+Acceptance Criteria
+Given an authorized administrator creates a child with all required fields, When saved, Then the child is linked to the selected organization, branch, classroom, and enrollment status.
+Given required information is missing or invalid, When save is attempted, Then the record is not created and field-level validation is shown.
+Given a child has an allergy, When authorized care staff open relevant daily or classroom views, Then the alert is clearly visible.
+Given an unauthorized role requests medical, insurance, or medication details, when the record is returned, then those fields are unavailable.
+Given an authorized user changes sensitive information, When the change is saved, Then the actor, time, resource, and appropriate before and after summary are audited.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-008  Guardian and Child Relationships
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-004, FEAT-007
+Business value
+Supports real family structures and precise permissions without duplicating guardian data in child records.
+Owner
+Product with cross-functional delivery
+
+Description: Link multiple guardians or contacts to multiple children and define relationship type plus granular permissions for timeline, photos, messaging, payment, pickup authorization, and child-profile editing.
+TODO
+☐ Create and revoke relationships for mother, father, guardian, grandparent, authorized caregiver, emergency contact, and pickup-only contact.
+☐ Configure permissions per relationship.
+☐ Support one guardian with multiple children and one child with multiple guardians.
+☐ Prevent revoked relationships from retaining access.
+Acceptance Criteria
+Given a guardian is linked to two children, When the guardian signs in, Then both children are available under the same account.
+Given a child has multiple guardians with different permissions, When each guardian opens the child experience, Then each sees only permitted capabilities and information.
+Given a pickup-only contact is linked to a child, when the contact attempts to view the timeline, photos, messages, or invoices, then access is denied.
+Given a relationship is revoked, When the guardian next requests child data, Then access is denied without waiting for a new invitation cycle.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-009  Classroom Management and Daily Dashboard
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-007, FEAT-010
+Business value
+Gives center teams an operational view of each group and its immediate care needs.
+Owner
+Product with cross-functional delivery
+
+Description: Create classrooms with branch, capacity, age range, schedule, children, and teacher assignments, plus a dashboard for presence, absences, birthdays, medical alerts, allergies, messages, and daily activities.
+TODO
+☐ Create, edit, deactivate, and search classrooms.
+☐ Assign and remove children and staff with effective dates.
+☐ Warn authorized users when configured capacity would be exceeded.
+☐ Show real-time operational classroom status to permitted users.
+Acceptance Criteria
+Given an administrator creates a classroom with valid branch and required details, When saved, Then it can receive child and teacher assignments.
+Given an assignment would exceed classroom capacity, When the assignment is submitted, Then the system warns or blocks according to the approved capacity policy and records any permitted override.
+Given a teacher is assigned to a classroom, When the dashboard opens, Then it shows only that classroom’s authorized children and operational indicators.
+Given a child changes classroom, When the effective date is reached, Then current views use the new classroom while historical records retain their original context.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-010  Staff Profiles and Assignments
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-004, FEAT-005
+Business value
+Provides a controlled workforce directory and the assignments needed for access and operations.
+Owner
+Product with cross-functional delivery
+
+Description: Maintain employee identity, contact, role, branch, classroom, schedule, permissions, and employment status. Full payroll is excluded from the MVP.
+TODO
+☐ Create, edit, activate, suspend, and archive employee profiles.
+☐ Assign roles, branches, classrooms, and schedules.
+☐ Remove access when employment ends or a user is suspended.
+☐ Keep future shift, leave, attendance, and payroll extension points as product considerations without implementing full payroll.
+Acceptance Criteria
+Given an employee is active and assigned, When the employee signs in, Then access matches current role and assignment scope.
+Given employment status becomes suspended or ended, When the employee next requests protected data, Then access is denied.
+Given a staff assignment is changed, When the effective time is reached, Then old-scope access is removed and new-scope access is applied.
+Given an administrator views the staff directory, when filtering by branch, role, classroom, or status, then matching employees are returned.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-011  Child Attendance
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-009
+Business value
+Provides a reliable record of presence for care, safeguarding, capacity, and reporting.
+Owner
+Product with cross-functional delivery
+
+Description: Record manual and QR-based child check-in and check-out, late arrival, early departure, absence, sick leave, and scheduled absence, including actor, timestamp, branch, and legally permitted contextual metadata.
+TODO
+☐ Record and correct attendance with controlled permissions.
+☐ Support optional parent QR and center-managed QR processes.
+☐ Prevent impossible or duplicate attendance transitions.
+☐ Show daily, classroom, absenteeism, and trend reports.
+☐ Operate through short connectivity interruptions and reconcile safely afterward.
+Acceptance Criteria
+Given a child is not currently present, When an authorized user checks the child in, Then a single attendance event records the child, branch, time, and actor.
+Given a child is already checked in, When another check-in is attempted, Then a duplicate present state is not created and the user receives a clear response.
+Given a child is checked out, When the action completes, Then the attendance record and child timeline reflect the same status and timestamp.
+Given attendance is recorded during a temporary connection loss, When connectivity returns, Then the record synchronizes once without duplication and conflicts are surfaced.
+Given an unauthorized person scans or submits a QR value, When verification occurs, Then no attendance state changes.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-012  Staff Attendance
+Release
+Future Ready
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-010
+Business value
+Supports workforce operations while keeping employee attendance distinct from child attendance.
+Owner
+Product with cross-functional delivery
+
+Description: Record staff check-in and check-out and make records available to permitted managers. Leave, shifts, and payroll remain separate future capabilities.
+TODO
+☐ Record staff attendance with timestamp and branch.
+☐ Permit authorized corrections with reason and audit history.
+☐ Restrict employee attendance details to approved roles.
+☐ Provide basic daily staff-presence reporting.
+Acceptance Criteria
+Given an active employee checks in at an authorized branch, When the action succeeds, Then one open staff-attendance record is created.
+Given the employee has an open attendance record, When another check-in is attempted, Then a duplicate open record is prevented.
+Given a manager corrects a record, When the correction is saved, Then the original value, new value, actor, time, and reason are auditable.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-013  Daily Child Timeline
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-011
+Business value
+Gives staff and families a chronological, trustworthy view of the child’s day.
+Owner
+Product with cross-functional delivery
+
+Description: Record and display authorized timeline events for arrival, departure, meals, bottles, naps, bathroom or diaper care, activities, lessons, mood, medication, temperature, observations, media, incidents, notes, and transportation.
+TODO
+☐ Create event types with appropriate required fields.
+☐ Display events chronologically with actor and time where appropriate.
+☐ Restrict sensitive event types and fields by role and relationship.
+☐ Allow controlled correction while preserving audit history.
+☐ Generate a parent-facing daily summary from authorized events.
+Acceptance Criteria
+Given an authorized teacher records a valid event, When saved, Then it appears once in the child’s timeline in chronological order.
+Given a guardian lacks permission for a sensitive event or field, When the timeline loads, Then that content is excluded.
+Given an event is corrected, When authorized viewers refresh, Then the corrected value is shown and the change remains auditable.
+Given multiple event types occur at the same time, When the timeline is displayed, Then ordering is stable and no event is lost.
+Given a parent summary is produced, When events are included, Then it contains only the child’s authorized events for the selected day.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-014  Quick and Batch Care Entry
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-009, FEAT-013
+Business value
+Reduces staff administration time and makes all-day use practical in busy classrooms.
+Owner
+Product with cross-functional delivery
+
+Description: Provide large, fast actions for common care entries and enable a teacher to apply an event to multiple authorized children before adjusting exceptions individually.
+TODO
+☐ Provide quick actions for meal outcome, mood, nap, toilet, diaper, and medication administration where permitted.
+☐ Allow multi-child selection within authorized scope.
+☐ Preview recipients and values before committing a batch.
+☐ Edit or exclude exceptions without re-entering the whole batch.
+☐ Prevent duplicate submission and preserve child-level records.
+Acceptance Criteria
+Given a teacher selects 14 authorized children and records lunch completed, When the batch is confirmed, Then one appropriate child-level timeline event is created for each selected child.
+Given two selected children are exceptions, When the teacher adjusts them before confirming, Then their individual outcomes differ from the batch default.
+Given the selection contains a child outside the teacher’s authorized classroom, When submission occurs, Then the unauthorized child is rejected and no record is created for that child.
+Given a batch request is retried, When the same submission is processed again, Then duplicate timeline events are not created.
+Given medication is selected, When required authorization or administration details are absent, Then the action is blocked.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-015  Parent Home and Daily Summary
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-008, FEAT-013, FEAT-017, FEAT-019
+Business value
+Makes the product reassuring and useful enough for parents to check daily.
+Owner
+Product with cross-functional delivery
+
+Description: Present each authorized child’s current attendance state, important events, teacher notes, new media count, and relevant upcoming items in a warm, easy-to-scan home experience.
+TODO
+☐ Support guardians with one or multiple children.
+☐ Show current state and today’s authorized summary.
+☐ Highlight safety-critical information without clutter.
+☐ Link summary items to permitted detail.
+☐ Keep stale or unavailable data clearly distinguished from current state.
+Acceptance Criteria
+Given a guardian has one authorized child, When the home view opens, Then it shows the child’s current attendance state and today’s permitted information.
+Given a guardian has multiple children, When switching children, Then the displayed data changes to the selected child without mixing records.
+Given an event is not permitted by the guardian relationship or consent settings, When the summary loads, Then it is not shown or counted.
+Given current state cannot be refreshed, When the page is shown, Then the user sees a clear freshness indicator rather than a misleading live status.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-016  Announcements
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-005, FEAT-009
+Business value
+Allows centers to communicate consistently with the correct audience.
+Owner
+Product with cross-functional delivery
+
+Description: Create, schedule, publish, edit, and archive organization-wide, branch-wide, and classroom-specific announcements with delivery and read visibility.
+TODO
+☐ Target announcements by permitted organization scope.
+☐ Validate that publishers cannot target unauthorized branches or classrooms.
+☐ Show relevant announcements to staff and guardians.
+☐ Track publication and read status.
+☐ Notify recipients according to priority and preference rules.
+Acceptance Criteria
+Given an administrator publishes a classroom announcement, When recipients open announcements, Then only authorized members of that classroom audience can see it.
+Given a branch manager attempts to target another branch, When publishing is attempted, Then the action is denied.
+Given an announcement is scheduled, When the scheduled time arrives, Then it becomes visible once to the intended audience.
+Given a recipient opens an announcement, When read status is recorded, Then authorized senders can see an aggregate or recipient-level status consistent with privacy policy.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-017  Notifications and Preference Management
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-013, FEAT-016
+Business value
+Keeps families informed about safety, care, finance, transport, and events without creating alert fatigue.
+Owner
+Product with cross-functional delivery
+
+Description: Deliver notifications for check-in or out, meals, naps, media, notes, payments, announcements, incidents, transport, pickup authorization, and events. Users may configure optional categories; mandatory safety alerts cannot be disabled.
+TODO
+☐ Define notification category, priority, audience, and delivery behavior.
+☐ Provide guardian notification preferences.
+☐ Identify mandatory safety categories through an approved policy.
+☐ Batch low-priority updates where appropriate.
+☐ Prevent duplicates and expose delivery status where useful.
+Acceptance Criteria
+Given a guardian disables an optional category, When a matching event occurs, Then the optional notification is not sent to that guardian.
+Given a mandatory safety event occurs, When notifications are generated, Then eligible recipients are notified regardless of optional preferences.
+Given several low-priority events occur within the configured window, When batching applies, Then the guardian receives the approved summary rather than repetitive alerts.
+Given notification processing is retried, When the same event is handled again, Then the recipient does not receive a duplicate message.
+Given an event is not visible to a guardian, When notifications are generated, Then no notification reveals that event’s private content.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-018  Calendar and Relevant Events
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-009
+Business value
+Helps families and staff plan around closures, meetings, trips, celebrations, and center activities.
+Owner
+Product with cross-functional delivery
+
+Description: Manage holidays, events, parent meetings, trips, birthdays, activities, closures, and special days, targeted to the organization, branch, classroom, or relevant child audience.
+TODO
+☐ Create and maintain calendar entries with dates, audience, location, and status.
+☐ Show users only relevant events.
+☐ Handle updates and cancellations.
+☐ Notify intended audiences according to event and notification rules.
+Acceptance Criteria
+Given a classroom event is published, When an unrelated parent views the calendar, Then the event is not shown.
+Given a relevant event is updated or cancelled, When the intended audience next views it, Then the new status is clear.
+Given date, time, and timezone are configured, when users in the organization view the event, then it is displayed consistently in the organization’s locale and timezone.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-019  Administrative Search
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-005, FEAT-007, FEAT-009, FEAT-010
+Business value
+Reduces time spent locating operational records.
+Owner
+Product with cross-functional delivery
+
+Description: Allow permitted administrators to search children, guardians, staff, invoices, and classrooms with type, branch, status, and other useful filters.
+TODO
+☐ Provide a unified search entry point.
+☐ Return only records within the user’s access scope.
+☐ Support common name and identifier variations approved for each record type.
+☐ Paginate results and handle no-result states.
+☐ Avoid exposing sensitive fields in result previews.
+Acceptance Criteria
+Given an administrator searches for a valid record within scope, When results are returned, Then the matching record type and identifying context are shown.
+Given matching records exist outside the user’s organization or branch scope, When the search runs, Then those records and their existence are not revealed.
+Given a large result set, When the user navigates results, Then results are paginated or progressively loaded without losing filters.
+Given a query has no authorized matches, When search completes, Then a clear empty state is shown without suggesting private records exist.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-020  Pickup Persons and Standing Authorization
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-008, FEAT-034
+Business value
+Reduces safeguarding risk by making approved pickup status explicit and verifiable.
+Owner
+Product with cross-functional delivery
+
+Description: Allow permitted guardians and administrators to maintain approved pickup persons with identity, relationship, contact, status, validity dates, and required identification information.
+TODO
+☐ Create, edit, deactivate, and expire pickup persons.
+☐ Respect relationship permission to authorize pickup.
+☐ Show staff current authorization and identity verification information.
+☐ Audit all authorization changes.
+☐ Apply privacy minimization to identity information.
+Acceptance Criteria
+Given an authorized guardian creates a valid pickup person, When saved, Then permitted staff can verify that person during the active validity period.
+Given a pickup person is inactive or outside the validity period, When staff attempt checkout, Then standing authorization is not accepted.
+Given a guardian lacks pickup-authorization permission, When they attempt to add or change a pickup person, Then the action is denied.
+Given identity or authorization information changes, When saved, Then the change is auditable and prior sensitive values are not exposed unnecessarily.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-021  Temporary Pickup Authorization and Secure Checkout
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-011, FEAT-020
+Business value
+Supports real-life pickup exceptions while maintaining child release controls.
+Owner
+Product with cross-functional delivery
+
+Description: Allow time-bounded temporary authorization, issue a single-purpose QR or PIN, require staff verification before checkout, and record the child, pickup person, authorization, staff member, and time.
+TODO
+☐ Create, revoke, expire, and use temporary authorizations.
+☐ Constrain authorization to child, date, time window, and permitted person.
+☐ Require staff confirmation of identity and authorization.
+☐ Prevent reuse after successful checkout.
+☐ Record failed and successful verification attempts appropriately.
+Acceptance Criteria
+Given a valid temporary authorization is presented within its window, When staff verify identity and confirm checkout, Then the child is checked out and the pickup audit record is complete.
+Given a token is expired, revoked, altered, for another child, outside the time window, or already used, when verification occurs, then checkout is blocked.
+Given verification succeeds but checkout cannot complete, When the user retries, Then the process does not create duplicate attendance or pickup records.
+Given staff bypass is permitted by approved policy, When it is used, Then elevated authorization and a reason are required and audited.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-022  Photo and Video Sharing with Consent
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-008, FEAT-013, FEAT-035
+Business value
+Builds parent engagement while protecting children’s images and privacy choices.
+Owner
+Product with cross-functional delivery
+
+Description: Allow teachers to upload media linked to organization, branch, classroom, event, and children shown. Visibility must respect guardian relationship and consent for internal use, parent-app use, and marketing.
+TODO
+☐ Upload, process, view, and remove media within authorized scope.
+☐ Tag children visible in each item.
+☐ Enforce consent before sharing or marketing use.
+☐ Provide optimized previews and protected access.
+☐ Prevent public discovery or durable public links.
+☐ Audit consent changes and sensitive media actions.
+Acceptance Criteria
+Given a teacher uploads media and tags authorized children, When processing completes, Then permitted guardians can view it only where parent-app consent allows.
+Given a guardian is related to one tagged child but not another, When media access policy does not permit classroom-wide sharing, Then unrelated child data is not exposed.
+Given marketing consent is prohibited, When media is selected for a marketing workflow, Then the action is blocked.
+Given a user shares or reuses an expired or unauthorized media reference, When access is attempted, Then the media is not returned.
+Given consent is withdrawn, When future access is evaluated, Then prohibited visibility is removed according to the approved consent and retention policy.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-023  Direct Messaging
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-005, FEAT-008, FEAT-009
+Business value
+Supports a persistent, accountable communication channel between families and authorized center staff.
+Owner
+Product with cross-functional delivery
+
+Description: Provide parent-to-authorized-staff conversations with text, images, attachments, read status, history, and participant controls. Parent-to-parent messaging is not enabled by default.
+TODO
+☐ Create conversations only among authorized participants.
+☐ Send and receive text, images, and approved attachments.
+☐ Show read and delivery states.
+☐ Retain conversation history according to policy.
+☐ Remove access when staff assignments or guardian relationships change.
+Acceptance Criteria
+Given a guardian starts a conversation for a child, When eligible recipients are listed, Then only authorized center staff are selectable.
+Given a parent attempts to address an unrelated parent, When the message is sent, Then it is rejected.
+Given a participant sends an allowed attachment, When upload and checks succeed, Then authorized participants can view it and others cannot.
+Given a participant’s authorization is removed, When they request new or historical messages, Then access follows the approved retention and access policy.
+Given a message is read, When conversation state updates, Then the sender sees the approved read status without duplicate messages.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-024  Incident Reporting and Acknowledgement
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-017, FEAT-034
+Business value
+Creates a consistent safety record and prompt escalation path for child incidents.
+Owner
+Product with cross-functional delivery
+
+Description: Allow staff to record child, time, location, description, severity, action taken, staff involved, attachments, parent notification, manager review, and acknowledgement with immutable audit history.
+TODO
+☐ Create incident drafts and submit complete reports.
+☐ Define severity and escalation rules through approved policy.
+☐ Notify relevant managers immediately for critical incidents.
+☐ Track parent notification, manager review, and acknowledgement.
+☐ Control post-submission amendment and preserve history.
+Acceptance Criteria
+Given a staff member submits an incident with required fields, When submission succeeds, Then a time-stamped report is available only to authorized roles.
+Given severity is critical, When the report is submitted, Then relevant managers receive the mandatory notification promptly.
+Given a submitted incident is amended, When the authorized change is saved, Then the original and revised information, actor, time, and reason remain auditable.
+Given a guardian lacks access to the affected child, When the incident is requested, Then no incident information is revealed.
+Given manager review or parent acknowledgement occurs, When recorded, Then status, actor, and timestamp are retained.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-025  Medication Instructions and Administration Record
+Release
+MVP Phase 3 Optional
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-007, FEAT-013, FEAT-034
+Business value
+Supports accurate recording of authorized care instructions without presenting medical advice.
+Owner
+Product with cross-functional delivery
+
+Description: Store medication, dosage, schedule, instructions, start and end dates, parent authorization, and staff administration records. The product records instructions and actions; it does not recommend treatment.
+TODO
+☐ Create and approve medication instructions.
+☐ Require active authorization before administration recording.
+☐ Record medication, dosage, time, staff member, and notes for every administration.
+☐ Prevent unauthorized changes to historical administrations.
+☐ Display due or missed administrations only to authorized care roles.
+Acceptance Criteria
+Given an active, authorized medication instruction exists, when permitted staff record administration with all required fields, then an immutable administration event appears in the child’s care record.
+Given authorization is absent, expired, revoked, or outside the instruction dates, when administration is attempted, then recording is blocked or elevated review is required according to policy.
+Given dosage or required details differ from the instruction, When submission is attempted, Then the discrepancy is clearly flagged and handled according to approved policy.
+Given an unauthorized role requests medication details, When access is evaluated, Then sensitive information is denied.
+Given any medication screen is shown, When the user reads it, Then no content is presented as medical advice.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-026  Fee Plans Discounts and Charge Rules
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-002, FEAT-005
+Business value
+Allows centers to represent how tuition and additional services are priced.
+Owner
+Product with cross-functional delivery
+
+Description: Configure tuition, transportation, meals, activities, registration, additional services, discounts, and sibling discounts for monthly, annual, installment, and one-off billing.
+TODO
+☐ Create, version, activate, and retire fee plans.
+☐ Define recurrence, due dates, eligible branches or services, and currency.
+☐ Apply approved discounts with traceable rules.
+☐ Preview charges before issuing invoices.
+☐ Prevent retroactive changes to issued invoices unless handled through an approved adjustment.
+Acceptance Criteria
+Given an accountant creates a valid active fee plan, When an eligible child is assigned, Then expected charges can be previewed for the defined period.
+Given a sibling discount rule applies, When eligible siblings are billed, Then the calculated discount follows the configured rule and is visible on the invoice preview.
+Given a fee plan is changed after invoices were issued, When the change is saved, Then existing issued invoice amounts do not silently change.
+Given a user lacks financial permission, When fee plans or discount rules are requested, Then access is denied.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-027  Invoices Balances and Payment History
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-008, FEAT-026, FEAT-034
+Business value
+Gives centers and families a clear, auditable statement of amounts due and paid.
+Owner
+Product with cross-functional delivery
+
+Description: Create invoices with draft, issued, partially paid, paid, overdue, and cancelled states; support recurring and one-off charges; show guardians outstanding balances, history, and upcoming payments.
+TODO
+☐ Create, review, issue, cancel, and adjust invoices under controlled permissions.
+☐ Calculate invoice and account balances consistently.
+☐ Apply payments and preserve payment history.
+☐ Show guardians only invoices they are permitted to pay or view.
+☐ Provide printable or exportable invoice details where required.
+Acceptance Criteria
+Given a valid draft invoice, When an authorized user issues it, Then its amount, due date, recipient, currency, and line items become available to permitted guardians.
+Given a partial payment is confirmed, When it is applied, Then invoice state becomes partially paid and the remaining balance is correct.
+Given confirmed payments equal the amount due, When balances recalculate, Then invoice state becomes paid and outstanding balance is zero.
+Given the due date passes with an outstanding amount, When overdue evaluation runs, Then the invoice becomes overdue according to policy.
+Given an issued invoice is cancelled or adjusted, When the action completes, Then financial history remains auditable and totals are recalculated correctly.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-028  Online Payment Processing
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-027, FEAT-034
+Business value
+Improves collection convenience while keeping payment truth authoritative and replaceable across markets.
+Owner
+Product with cross-functional delivery
+
+Description: Allow guardians to initiate payment through an approved market provider while keeping payment status independent of client claims and supporting future provider replacement.
+TODO
+☐ Initiate payment for an eligible invoice.
+☐ Handle success, failure, cancellation, duplicate, delayed, and reversed outcomes.
+☐ Update financial records only from authoritative payment confirmation.
+☐ Use a consistent product contract across providers.
+☐ Reconcile provider and invoice records.
+☐ Protect payment details according to applicable specialist guidance.
+Acceptance Criteria
+Given a guardian initiates payment for an eligible balance, When the provider confirms success through the authoritative channel, Then one payment is recorded and the invoice balance updates once.
+Given the client reports payment success without authoritative confirmation, When status is evaluated, Then the invoice is not marked paid.
+Given the same provider event is delivered more than once, When processed, Then duplicate payments are not created.
+Given payment fails or is cancelled, When the outcome is confirmed, Then the invoice remains payable and the guardian sees a clear non-success state.
+Given a confirmed payment is reversed, When reconciliation occurs, Then balances and state update correctly and the reversal is auditable.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-029  Automated Payment Reminders
+Release
+MVP Phase 2
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-017, FEAT-027
+Business value
+Improves on-time collection with configurable, respectful reminders.
+Owner
+Product with cross-functional delivery
+
+Description: Allow administrators to configure reminders before, on, and after the due date using push and email, with future support for WhatsApp.
+TODO
+☐ Configure schedule, audience, channel, template, and enabled status.
+☐ Use current invoice state before sending.
+☐ Stop or suppress reminders for paid, cancelled, disputed, or otherwise excluded invoices.
+☐ Prevent duplicate delivery for the same reminder occurrence.
+☐ Track reminder outcome.
+Acceptance Criteria
+Given an unpaid issued invoice is seven days from due and a matching reminder is enabled, When the schedule runs, Then the intended payer receives one reminder.
+Given the invoice is paid before a scheduled reminder, When the schedule runs, Then no payment-due reminder is sent.
+Given the schedule retries, When the same reminder occurrence is processed again, Then a duplicate is not sent.
+Given an administrator changes the reminder schedule, When saved, Then future occurrences follow the new configuration without rewriting past history.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-030  Admissions Pipeline
+Release
+MVP Phase 2
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-002, FEAT-005
+Business value
+Connects product usage to enrollment growth and nursery revenue.
+Owner
+Product with cross-functional delivery
+
+Description: Track prospective families through inquiry, contacted, visit scheduled, trial day, application, accepted, waitlisted, enrolled, and lost, including parent, child age, desired start, branch, source, notes, and assigned staff.
+TODO
+☐ Create and assign leads.
+☐ Move leads through valid pipeline states.
+☐ Schedule visits and trial days.
+☐ Convert accepted prospects into enrollment without duplicate re-entry.
+☐ Record loss reasons where approved.
+☐ Report pipeline volume and conversion.
+Acceptance Criteria
+Given an authorized user creates an inquiry with required details, When saved, Then it appears in the selected branch pipeline.
+Given a lead changes stage, When the transition is valid, Then stage history records the previous stage, new stage, actor, and time.
+Given an accepted lead is enrolled, When conversion completes, Then relevant approved data is carried into the child or guardian onboarding flow without creating duplicate records.
+Given a user lacks access to the lead’s branch, When the pipeline is opened, Then the lead is not visible.
+Given a conversion report is viewed, When a date range and scope are selected, Then results use defined stage and conversion rules.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-031  Waiting List and Capacity Opportunity
+Release
+MVP Phase 2
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-009, FEAT-030
+Business value
+Helps centers fill available places using transparent eligibility and timing.
+Owner
+Product with cross-functional delivery
+
+Description: Maintain waiting lists by branch, classroom, age, and desired start date, and alert authorized staff when relevant capacity becomes available. Automatic family invitations are future scope.
+TODO
+☐ Add, rank, pause, offer, enroll, or remove waiting-list entries.
+☐ Record eligibility information and ordering rationale.
+☐ Detect relevant capacity availability.
+☐ Notify authorized administrators of matches.
+☐ Preserve history when order or status changes.
+Acceptance Criteria
+Given a prospect is eligible for a waiting list, When added, Then branch, classroom or age context, desired date, status, and ordering information are recorded.
+Given relevant capacity becomes available, When capacity is evaluated, Then authorized administrators are notified of qualified waiting-list entries.
+Given an entry is offered a place or enrolled, When status changes, Then it is not presented as generally available to receive another offer.
+Given order is changed manually, When saved, Then the actor, time, reason, and prior order remain auditable.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-032  Operational and Nursery Analytics
+Release
+MVP Phase 2
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-011, FEAT-016, FEAT-023, FEAT-027, FEAT-030, FEAT-031
+Business value
+Turns daily operations into actionable enrollment, finance, attendance, admissions, and engagement insight.
+Owner
+Product with cross-functional delivery
+
+Description: Provide nursery dashboards for active children, capacity, occupancy, enrollment changes, withdrawals, revenue, receivables, overdue balances, collection rate, attendance, absence, utilization, admissions, waiting list, parent usage, unread announcements, and message volume.
+TODO
+☐ Define each metric, period, scope, and source of truth.
+☐ Provide organization, branch, classroom, and date filters where applicable.
+☐ Restrict financial and sensitive metrics by permission.
+☐ Show freshness and incomplete-data conditions.
+☐ Support drill-down only where the viewer may access underlying records.
+Acceptance Criteria
+Given an authorized administrator selects a period and branch, When the dashboard loads, Then all displayed metrics use the same selected scope and documented definitions.
+Given capacity and active enrollment are available, When occupancy is calculated, Then the numerator and denominator follow the approved metric definition.
+Given an accountant opens financial analytics, When metrics load, Then values reconcile with invoices and confirmed payments for the same scope and period.
+Given a user lacks permission for a metric or its underlying records, When the dashboard loads, Then the metric and drill-down are unavailable.
+Given source data is delayed or incomplete, When a metric is shown, Then freshness or limitation is visible.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-033  Transportation Operations
+Release
+MVP Phase 3 Optional
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-005, FEAT-007, FEAT-017
+Business value
+Gives centers and parents accountable pickup and drop-off visibility for assigned transport.
+Owner
+Product with cross-functional delivery
+
+Description: Manage vehicles, routes, drivers, attendants, stops, and assigned children; record pickup and drop-off confirmations and notify parents. Real-time vehicle tracking is excluded from the MVP.
+TODO
+☐ Create and maintain transportation resources and routes.
+☐ Assign staff and children with effective dates.
+☐ Show transportation staff only assigned route and minimum required child information.
+☐ Confirm pickup and drop-off.
+☐ Notify authorized guardians.
+☐ Handle missed, skipped, or exceptional transport outcomes.
+Acceptance Criteria
+Given a driver opens an assigned route, When the route loads, Then only assigned stops, children, and minimum necessary emergency information are shown.
+Given a child is confirmed picked up, When the event is saved, Then the route, timeline, actor, and timestamp update and authorized guardians are notified.
+Given a transportation user attempts to view an unassigned route or child, When access is evaluated, Then it is denied.
+Given a pickup or drop-off confirmation is retried, When processed again, Then duplicate events and notifications are not created.
+Given real-time tracking is unavailable, When standard transport workflows run, Then pickup and drop-off confirmation remains usable.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-034  Audit History
+Release
+Foundation
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-005
+Business value
+Provides accountability for sensitive, safety, financial, and access-related actions.
+Owner
+Product with cross-functional delivery
+
+Description: Record actor, action, resource, time, organization, and appropriate before and after summary for sensitive actions including child creation, medical changes, pickup changes, checkout, payment changes, role changes, incident changes, and consent changes.
+TODO
+☐ Define auditable actions and minimum event fields.
+☐ Create records independently of normal user edit permissions.
+☐ Prevent normal users from changing or deleting audit history.
+☐ Provide authorized filtering and review.
+☐ Minimize sensitive values stored in change summaries.
+☐ Define retention and export handling.
+Acceptance Criteria
+Given an auditable action succeeds, When the transaction completes, Then one corresponding audit event records the required context.
+Given an auditable action fails without changing data, When logged according to policy, Then the audit record clearly distinguishes attempted from completed action.
+Given a normal organization user attempts to edit or delete audit history, When the request is evaluated, Then it is denied.
+Given an authorized reviewer filters by actor, action, resource, organization, or date, when results load, then only permitted audit records are returned.
+Given a change summary contains sensitive data, When recorded, Then it includes only what the approved audit policy requires.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-035  Privacy Consent Retention Export and Deletion
+Release
+Foundation
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-005, FEAT-034
+Business value
+Protects children and families through privacy-by-default lifecycle controls and supports regulatory review.
+Owner
+Product with cross-functional delivery
+
+Description: Implement data minimization, consent management, privacy defaults, role-based access, account deletion workflow, organization export, retention settings, and secure handling of children’s data and media.
+TODO
+☐ Capture consent purpose, status, subject, grantor, effective dates, and withdrawal.
+☐ Apply consent to media, communications, and authorized uses.
+☐ Provide reviewed account-deletion and organization-export workflows.
+☐ Apply configurable retention rules with legal-hold or exception handling where approved.
+☐ Prevent public exposure of child data.
+☐ Require explicit marketing consent for child data or images.
+Acceptance Criteria
+Given no explicit marketing consent exists, When child data or media is selected for marketing use, Then the action is blocked.
+Given consent is withdrawn, When future processing is evaluated, Then the withdrawn purpose is no longer permitted and the withdrawal is auditable.
+Given an organization export is requested by an authorized user, When approved and completed, Then it contains only that organization’s permitted data and is delivered securely.
+Given an account deletion request is submitted, When identity and scope are verified, Then the workflow shows status, applies approved retention exceptions, and completes without deleting another subject’s records.
+Given a retention period expires, When lifecycle processing runs, Then eligible records are disposed of or anonymized according to approved policy and exceptions are recorded.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-036  Arabic English Localization and Regional Settings
+Release
+MVP Phase 1
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001
+Business value
+Makes the initial Egypt launch usable while keeping later geographic expansion practical.
+Owner
+Product with cross-functional delivery
+
+Description: Provide Arabic and English experiences, including right-to-left Arabic layout, localized visible text, dates, currencies, timezone, and notifications, with support for adding languages later.
+TODO
+☐ Allow organization and user language preferences.
+☐ Provide complete Arabic and English product text for released features.
+☐ Support right-to-left layout and mixed-direction content.
+☐ Localize dates, numbers, currency, and times using organization settings.
+☐ Localize notification content and dynamic placeholders.
+☐ Identify untranslated content before release.
+Acceptance Criteria
+Given Arabic is selected, When any released user journey opens, Then approved Arabic text and right-to-left layout are used without clipped, reversed, or overlapping controls.
+Given English is selected, When the same journey opens, Then English and left-to-right layout are used.
+Given an organization’s currency and timezone are configured, When financial values and times are displayed, Then they use those settings consistently.
+Given a translated notification is sent, When dynamic values are inserted, Then grammar, direction, and values remain understandable.
+Given visible text lacks a translation, When release validation runs, Then the gap is detected rather than silently shipping a hard-coded fallback.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-037  Configurable Branding Modules and Plans
+Release
+MVP Phase 1 Baseline
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-001, FEAT-006
+Business value
+Supports a scalable SaaS and white-label business model without separate products for each nursery.
+Owner
+Product with cross-functional delivery
+
+Description: Configure organization name, logo, icon, splash image, colors, contacts, social links, app display settings, language, currency, timezone, subscription plan, and enabled modules. Dedicated branded store builds and custom domains are future scope.
+TODO
+☐ Apply tenant branding within approved accessibility constraints.
+☐ Enable and disable modules by plan and organization entitlement.
+☐ Represent Starter, Growth, and Pro packaging as configurable commercial concepts pending validation.
+☐ Handle plan downgrade, suspension, and expired subscription states.
+☐ Keep historical data when a module is disabled unless approved lifecycle policy says otherwise.
+☐ Prepare for custom domain and dedicated build decisions without implementing them in MVP.
+Acceptance Criteria
+Given an organization changes an allowed brand setting, When published, Then only that organization’s permitted experience changes.
+Given a module is not enabled for an organization, When a user navigates directly to it, Then access is denied or the approved upgrade state is shown without exposing module data.
+Given a plan is downgraded, When entitlements update, Then unavailable capabilities are blocked while historical data follows the approved retention and reactivation policy.
+Given colors or assets fail accessibility or format validation, When publishing is attempted, Then clear validation prevents an unusable configuration.
+Given plan names and limits have not been commercially approved, When backlog delivery begins, Then they remain configurable assumptions rather than hard-coded commitments.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-038  Platform Commercial KPI Dashboard
+Release
+MVP Phase 3
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-006, FEAT-027, FEAT-032, FEAT-037
+Business value
+Provides the SaaS operator with commercial and usage insight needed to run the product.
+Owner
+Product with cross-functional delivery
+
+Description: Track paying organizations, monthly and annual recurring revenue, average revenue per organization, churn, active children, active parents, storage usage, and notification volume, plus nursery-level commercial metrics.
+TODO
+☐ Define commercial metrics and authoritative inputs.
+☐ Provide period, plan, market, and organization segmentation where appropriate.
+☐ Separate operational usage from billed revenue.
+☐ Protect tenant-sensitive details in platform views.
+☐ Show freshness, exclusions, and data-quality limitations.
+Acceptance Criteria
+Given an authorized platform administrator selects a reporting period, When the dashboard loads, Then each KPI follows its approved definition and time boundary.
+Given recurring revenue is shown, When reconciled to active paid subscriptions, Then included and excluded subscription states match the metric definition.
+Given a platform user lacks commercial-metric permission, When the dashboard is requested, Then access is denied.
+Given a KPI is based on incomplete data, When displayed, Then the limitation and freshness are visible.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-039  Optional Parent Community
+Release
+Future Module
+Complexity
+Hard preliminary
+Type
+Functional
+Dependencies
+FEAT-008, FEAT-035, FEAT-037
+Business value
+Can deepen parent engagement without making social behavior central to care operations.
+Owner
+Product with cross-functional delivery
+
+Description: Provide an optional, default-off classroom community with events, discussions, and activity sharing. Parents control profile visibility, name visibility, and messaging, and child data must never be exposed through community features.
+TODO
+☐ Require organization enablement before the module is available.
+☐ Collect explicit parent privacy choices.
+☐ Keep community identity and content separate from child records.
+☐ Provide moderation, reporting, and access-removal rules before launch.
+☐ Prevent default parent-to-parent discovery and messaging.
+Acceptance Criteria
+Given the module is disabled, When a user navigates directly to community features, Then no community data or participant list is exposed.
+Given a parent has not opted into profile visibility, When other parents view the community, Then that parent is not discoverable.
+Given community content is created, When displayed, Then it does not expose child records, care events, medical details, or private media.
+Given a parent disables messaging, When another parent attempts contact, Then the action is denied.
+Given moderation controls are not approved and testable, When release readiness is assessed, Then the module cannot be enabled.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-040  Commerce Extension Readiness
+Release
+Future Module
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-027, FEAT-028, FEAT-037
+Business value
+Preserves a path to sell uniforms, books, kits, meals, trips, events, and services without burdening the MVP.
+Owner
+Product with cross-functional delivery
+
+Description: Define future product boundaries for organization catalog items or services, parent purchase, payment, fulfillment, and later platform commission. No commerce experience is included in the MVP.
+TODO
+☐ Document future catalog, order, payment, fulfillment, refund, and commission concepts.
+☐ Avoid coupling current billing assumptions to tuition only.
+☐ Identify regulatory, tax, refund, and fulfillment decisions before build.
+☐ Keep commerce disabled until a separately approved scope exists.
+Acceptance Criteria
+Given current MVP billing is used, When tuition and service charges are processed, Then no commerce catalog or fulfillment workflow is required.
+Given a future commerce proposal is assessed, When it enters refinement, Then catalog, order, fulfillment, refund, tax, commission, and consumer-protection decisions are explicit.
+Given commerce is not enabled, When a user attempts to access it, Then no commerce capability or data is exposed.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+FEAT-041  Demo Organization and Scenario Data
+Release
+MVP Phase 1
+Complexity
+Medium preliminary
+Type
+Functional
+Dependencies
+FEAT-001 through FEAT-019 as applicable
+Business value
+Allows stakeholders, sales, support, and delivery teams to validate complete workflows immediately.
+Owner
+Product with cross-functional delivery
+
+Description: Provide a clearly marked demo organization named Happy Kids Nursery with New Cairo and Sheikh Zayed branches and representative administrators, teachers, parents, children, classrooms, activities, invoices, media, attendance, and messages.
+TODO
+☐ Create non-realistic but coherent sample identities and relationships.
+☐ Cover key roles and Phase 1 journeys.
+☐ Include safe sample activities, invoices, attendance, media placeholders, and messages.
+☐ Allow repeatable reset or recreation.
+☐ Keep demo data isolated from production customer data and metrics.
+Acceptance Criteria
+Given a permitted demo user signs in, When the demo opens, Then representative Phase 1 workflows can be completed without manual data setup.
+Given the two demo branches are used, When branch-restricted users sign in, Then permissions demonstrate the expected separation.
+Given demo data is reset, When recreation completes, Then required scenarios return to a known baseline.
+Given platform commercial or customer metrics are calculated, When demo data is present, Then it is excluded or clearly identified according to the metric definition.
+Definition of Done
+Feature-specific acceptance criteria are satisfied.
+Relevant test scenarios pass, including denied paths and edge cases.
+Required business validation and applicable specialist review are completed.
+The Common Definition of Done in this pack is satisfied.
+
+Cross Cutting Quality Requirements
+Security and isolation: No user may access another organization’s records. Access must also respect branch, classroom, assignment, guardian relationship, role, consent, and task need. Hiding a control is not sufficient; unauthorized requests must fail.
+Privacy and child safety: Collect only necessary data, default to private, protect medical and media information, prevent public exposure, and require explicit consent for marketing use. Specialist privacy and child-safeguarding review is required.
+Reliability and retries: Safety, finance, notification, invitation, audit, media, and batch processes must tolerate retry without duplicate or conflicting outcomes. Failed actions must be visible and recoverable.
+Performance and scale: List views must avoid loading unbounded records, support pagination or progressive loading, and remain usable at realistic organization and platform volumes defined by the Technical Lead and Product.
+Temporary connectivity: Teachers must be able to record approved basic activities during short connectivity interruptions. Synchronization must avoid loss and duplicates and must surface conflicts.
+Usability: Staff workflows use large touch targets, clear status, minimal forms, and fast repeated entry. Parent views present important information within seconds and avoid an enterprise resource planning feel.
+Localization: All released visible content supports Arabic and English. Right-to-left layout, dates, currency, times, dynamic notification text, and mixed-direction content must be tested.
+Accessibility: Color is not the sole status indicator; text and controls remain readable and operable across supported devices, zoom, and assistive settings defined during design.
+Observability and support: Operational failures, delivery failures, and data-quality issues must be discoverable by authorized support roles without exposing unnecessary child data.
+Data lifecycle: Retention, export, deletion, suspension, archival, and module-disable behavior must be explicit and testable; historical and audit integrity must be preserved where policy requires.
+Technical Lead Outcome Handoff
+The source description prescribed specific technologies, vendors, data structures, and implementation mechanisms. Those prescriptions are intentionally excluded from the product backlog. The Technical Lead should produce the following implementation-neutral decisions and delivery assets, demonstrating how the selected solution satisfies the product and quality requirements.
+System architecture: Component responsibilities, trust boundaries, organization isolation, scaling approach, failure modes, and environment strategy.
+Identity and authorization design: Authoritative role and relationship model, permission evaluation, invitation security, session handling, suspension behavior, and support-access controls.
+Information model: Entities, relationships, lifecycle states, history, sensitive-data classification, query patterns, pagination, archival, and migration approach.
+Security design and verification: Server-enforced access controls, threat model, abuse cases, media protection, secrets handling, security test strategy, and independent review needs.
+Integration boundaries: Replaceable contracts for payments, messaging channels, search, analytics, media processing, and future external APIs.
+Reliability design: Retry, idempotency, concurrency, offline synchronization, conflict handling, scheduled processing, backup, restoration, and disaster recovery.
+Non-functional targets: Measurable availability, performance, scalability, recovery, data freshness, device support, and observability targets agreed with Product.
+Delivery and operations: Environment setup, deployment, rollback, monitoring, support procedures, test data, demo reset, and incident response.
+Technical documentation: Architecture diagram, decision records, setup guide, environment configuration reference, integration documentation, test approach, known limitations, and recommended next steps.
+Minimum Test Portfolio
+Test area
+Minimum scenarios
+Release expectation
+Organization isolation
+Parent A cannot access Parent B’s child; no user can access another organization through search, direct reference, export, media, notification, or report.
+Blocking
+Assignment boundaries
+Teacher cannot access an unrelated classroom; branch manager cannot access an unassigned branch; transport staff cannot access an unassigned route.
+Blocking
+Role separation
+Accountant cannot access private medical or care notes; teacher cannot manage invoices; parent cannot administer staff or organization settings.
+Blocking
+Suspension
+Suspended user is denied; suspended organization cannot operate; historical handling and platform support behavior follow approved policy.
+Blocking
+Guardian relationships
+Multiple guardians and children work; granular permissions apply; pickup-only contact cannot see timeline; revoked relationship loses access.
+Blocking
+Safety workflows
+Pickup authorization validity and one-time use, incident escalation, allergy visibility, and medication authorization behave as approved.
+Blocking
+Financial integrity
+Partial, full, overdue, cancelled, duplicate, delayed, failed, and reversed payment outcomes produce correct balances.
+Blocking
+Retry and concurrency
+Repeated invitations, batch entries, notifications, payments, media jobs, and pickup confirmations do not duplicate outcomes.
+Blocking
+Localization and UX
+Arabic and English flows, right-to-left layout, responsive behavior, long text, large touch targets, and status clarity are verified.
+Blocking
+Connectivity and recovery
+Temporary offline entry synchronizes once, conflicts are surfaced, and failed operations can be recovered without data loss.
+Blocking for affected modules
+Reporting
+Metrics reconcile with source records, filters use a consistent scope, unauthorized drill-down is denied, and freshness is visible.
+Blocking for analytics release
+Privacy lifecycle
+Consent withdrawal, marketing prohibition, export isolation, deletion scope, retention, and media access are verified.
+Blocking
+Risks and Product Recommendations
+Safety and privacy policy gap: Pickup verification, medication, incidents, medical visibility, consent, retention, and support access require approved policies before release. Recommendation: Product to convene legal, privacy, safeguarding, and operations review before detailed build of affected modules.
+MVP breadth: The source includes more than a viable first release and mixes core operations with revenue and future expansion. Recommendation: Protect Phase 1 exit criteria and do not pull Phase 3 modules forward unless they resolve a Phase 1 blocker.
+Permission complexity: Role names alone cannot express classroom, child, relationship, branch, consent, and task-based access. Recommendation: Approve a detailed permission matrix and denial test suite before development of dependent features.
+Offline conflicts: Batch care and attendance entry during connectivity loss can create duplicate or contradictory records. Recommendation: Define user-visible conflict rules and immutable event identity during Technical Lead design.
+Payment and financial regulation: Provider choice, tax, refunds, chargebacks, receipts, and local payment rules are unresolved. Recommendation: Complete market, finance, legal, and reconciliation discovery before FEAT-028 enters implementation.
+Notification fatigue: High-frequency care events can reduce trust if each triggers an alert. Recommendation: Validate mandatory categories and batching rules with parents and centers before final notification design.
+Commercial assumptions: Starter, Growth, and Pro packaging is illustrative and lacks pricing research. Recommendation: Treat entitlements as configurable and validate packaging separately from engineering delivery.
+Analytics ambiguity: Metrics such as churn, occupancy, engagement, and collection rate can be misleading without definitions. Recommendation: Create a metric dictionary with owner, formula, exclusions, refresh timing, and source before dashboard acceptance.
+Open Product Decisions
+What is the legally approved privacy, consent, data-controller, retention, deletion, and breach-response model for Egypt, and what changes are required for later European markets?
+Which roles may view and edit each medical, incident, pickup, emergency, media, and financial field?
+What identity evidence is required for pickup persons, who may view it, and how long may it be retained?
+Which incident severities, recipients, response times, acknowledgement rules, and escalation channels are mandatory?
+Which notification categories are mandatory safety notices, and which may parents disable or receive as a digest?
+What are the exact attendance correction, late arrival, early departure, absence, and checkout override policies?
+Which fields are required to enroll a child in the initial market, and which are optional or prohibited by data-minimization policy?
+What are the approved supported devices, browser versions, accessibility target, availability target, and response-time expectations?
+What is the definition and denominator for occupancy, active parent, engagement, collection rate, withdrawal, churn, MRR, and ARR?
+Which Phase 1 reports are essential for go-live, and which can wait for Phase 2 analytics?
+What are the commercial plan limits, downgrade behavior, trial policy, subscription grace period, and suspended-customer experience?
+Which payment markets and methods are required first, and what are the rules for refunds, reversals, disputes, receipts, taxes, and reconciliation?
+What content moderation, reporting, and safeguarding controls would be required before enabling the optional parent community?
+Who owns UAT sign-off for operations, safeguarding, finance, privacy, Arabic language quality, and release readiness?
+Traceability to Source Scope
+The following map confirms coverage of every material capability in the supplied description. Technology-specific prescriptions are represented by outcome requirements or Technical Lead decisions rather than copied into the backlog.
+Source capability group
+Covered by
+Multi-organization SaaS, branches, subscription, white label
+FEAT-001, 002, 006, 037, 038
+Authentication, invitations, roles, permissions
+FEAT-003 through 006
+Children, guardians, classrooms, staff
+FEAT-007 through 010
+Attendance, timeline, quick entry, parent home
+FEAT-011 through 015
+Announcements, notifications, calendar, search
+FEAT-016 through 019
+Pickup security
+FEAT-020 and 021
+Media and consent
+FEAT-022 and 035
+Messaging and community
+FEAT-023 and 039
+Incidents and medication
+FEAT-024 and 025
+Billing, payments, reminders
+FEAT-026 through 029
+Admissions and waiting list
+FEAT-030 and 031
+Nursery and platform analytics
+FEAT-032 and 038
+Transportation
+FEAT-033
+Audit, privacy, localization
+FEAT-034 through 036
+Commerce future readiness
+FEAT-040
+Demo data
+FEAT-041
+Performance, offline, testing, security, architecture, delivery documentation
+Cross Cutting Quality Requirements, Minimum Test Portfolio, and Technical Lead Outcome Handoff

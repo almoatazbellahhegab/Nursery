@@ -1,0 +1,666 @@
+Childcare Platform Technical Design
+Architecture security data reliability and delivery baseline
+Decision baseline
+This document translates the approved product outcomes into an implementation and verification baseline. It does not replace legal, privacy, safeguarding, finance, or product policy approval where the source identifies an open decision.
+Field
+Value
+Prepared for
+Product, Engineering, Quality Assurance, Security, DevOps and Delivery
+Prepared by
+Technical Lead
+Date
+23 October 2026
+Status
+Proposed for cross functional review
+Source baseline
+Childcare Management Platform Product Owner Deliverables
+Traceability
+41 product features, cross-cutting quality requirements and minimum test portfolio
+
+
+Executive Summary
+Decision: Build the initial platform as a modular monolith with a Next.js and TypeScript administration portal, a Flutter mobile application, a Python FastAPI API and worker runtime, PostgreSQL as the authoritative system of record, and managed AWS infrastructure. This design minimizes operational complexity while preserving replaceable integration boundaries for identity, notifications, media, payments and future external APIs.
+The architecture prioritizes child safety, tenant isolation, auditable authorization, offline-safe classroom entry, financial integrity, Arabic and English support, and recoverable asynchronous processing. It intentionally avoids microservices, Kubernetes, Kafka, a separate search cluster and a data warehouse until measured demand justifies them.
+Decision area
+Selected approach
+Reason
+Architecture
+Modular monolith plus separate worker deployment
+Strong module boundaries without distributed transaction overhead
+Web
+Next.js and TypeScript
+Mature browser forms, tables, accessibility and localization ecosystem
+Mobile
+Flutter and Dart
+Consistent mobile experience, camera and QR support, encrypted offline storage
+Backend
+FastAPI, Pydantic and SQLAlchemy
+Typed contracts, clear Python domain modules and asynchronous I/O
+Data
+PostgreSQL with row level security
+Relational integrity, transactions, reporting and defense in depth
+Cloud
+AWS managed services
+Reduces infrastructure operations while keeping application containers portable
+
+Document Map
+Problem scope and requirements describe the product boundary and architecture drivers.
+Architecture and component sections define runtime responsibilities and trust boundaries.
+Identity, data, API and integration sections define implementation contracts.
+Security, privacy, reliability and operations sections define production controls.
+Delivery, testing, risks and decisions sections define how the design is governed and validated.
+The companion delivery workbook contains the complete feature roadmap, developer checklists and executable test catalogue.
+Problem Definition
+Give childcare centers one system to manage children, parents, staff, attendance, daily activities, communication, billing, pickup authorization, and parent engagement.
+The platform must serve multiple childcare organizations and branches from one configurable product. It must support high-frequency care workflows, guardian engagement and sensitive operational records without allowing cross-organization, cross-branch, unrelated-child or inappropriate field access.
+Goals
+Operate one complete childcare day in Arabic and English using responsive web and mobile experiences.
+Enforce organization, branch, classroom, assignment, guardian relationship, consent, role and task-purpose boundaries on the server.
+Preserve correctness across retries, concurrency, short connectivity failures and asynchronous delivery.
+Protect medical, identity, incident, pickup, payment and media information throughout its lifecycle.
+Provide auditable administration, support access, configuration, deployment and recovery.
+Keep payment, notification, identity and media integrations replaceable without redesigning core domain logic.
+Non Goals
+Full payroll, leave management, and advanced shift management.
+Real-time vehicle location tracking.
+Parent social community and parent-to-parent messaging.
+Commerce catalog, fulfillment, platform commissions, and marketplace operations.
+Dedicated app-store builds, custom domains, and public integration APIs.
+Medical diagnosis, treatment recommendation, or clinical decision support.
+Requirements Summary
+Requirement group
+Architecture response
+Multi organization SaaS
+Shared application and database with mandatory tenant keys, server authorization and PostgreSQL row level security
+Granular access
+RBAC combined with branch, classroom, relationship, consent, assignment and field rules
+Temporary connectivity
+Encrypted mobile SQLite, client operation identifiers, an outbox and conflict-aware synchronization
+Sensitive media
+Private object storage, signed URLs, malware scanning, metadata removal and consent checks at access time
+Reliable notifications and jobs
+Transactional outbox, SQS, idempotent workers, dead-letter handling and delivery ledgers
+Financial correctness
+Immutable payment events, database transactions, provider webhook verification and reconciliation
+Localization
+ICU message catalogues, locale-aware formatting, RTL layouts and bilingual automated and manual coverage
+Support and operations
+Purpose-limited support sessions, security audit events and privacy-preserving operational telemetry
+
+Assumptions and Decision Gates
+The following items are not architecture facts. They must be approved before the affected implementation or production deployment proceeds.
+Gate
+Decision
+Required by
+Owner
+GATE-01
+Privacy, controller and processor roles, retention, deletion, breach response and cross-border data handling
+Before production data model and hosting region approval
+Legal, Privacy and Product
+GATE-02
+Field-level permission matrix for medical, incident, pickup, emergency, media and finance
+Before dependent API implementation
+Product and Safeguarding
+GATE-03
+Pickup identity evidence and retention policy
+Before FEAT-020 and FEAT-021
+Operations, Legal and Safeguarding
+GATE-04
+Incident severity, escalation, acknowledgement and response times
+Before FEAT-024
+Safeguarding and Operations
+GATE-05
+Supported devices, browsers, accessibility target, availability and response time objectives
+Before release test plan approval
+Product and Engineering
+GATE-06
+Egypt payment methods, tax, refund, dispute and reconciliation rules
+Before FEAT-028
+Finance, Legal and Product
+GATE-07
+Production region and data residency
+Before infrastructure production approval
+Legal, Security and Executive Sponsor
+
+Proposed Architecture
+
+Proposed runtime architecture and primary data flows
+The synchronous request path remains short: client, edge protection, FastAPI and PostgreSQL or private object storage. Slow or retry-prone work is persisted with the business transaction and performed asynchronously by workers. Authentication establishes identity; the application database remains authoritative for authorization.
+Technology Stack
+Layer
+Technology
+Responsibility
+Administration portal
+Next.js, React and TypeScript
+Platform, nursery, branch, finance and reporting workflows
+Mobile application
+Flutter and Dart
+Parent and staff journeys on iOS and Android
+Mobile storage
+SQLite with encryption
+Minimum offline working set and operation outbox
+API
+Python, FastAPI and Pydantic
+REST resources, validation, policy enforcement and OpenAPI
+Persistence
+SQLAlchemy 2 and Alembic
+Explicit transactions, data access and controlled migrations
+Database
+PostgreSQL
+Authoritative relational data, tenant isolation, audit and search
+Asynchronous processing
+Transactional outbox and Amazon SQS
+Reliable jobs with retries and dead-letter queues
+Identity
+Amazon Cognito
+OIDC, email, phone, Google, Apple, recovery and MFA
+Media
+Amazon S3 and CloudFront
+Private originals, derived assets and signed delivery
+Runtime
+Docker on Amazon ECS Fargate
+API, worker and scheduled process deployment
+Infrastructure
+Terraform and GitHub Actions
+Repeatable environments, checks, deployment and rollback
+Telemetry
+OpenTelemetry and CloudWatch
+Structured logs, metrics, traces, dashboards and alerts
+
+Component Responsibilities
+Component
+Owns
+Boundary
+Admin portal
+Administrative operations, accessible data tables, reports, configuration and support workflows
+Does not decide authorization or financial truth
+Mobile app
+Role-adaptive parent and staff user experience, camera, QR, notifications and short-term offline entry
+Stores only a minimum authorized offline working set
+API
+Authentication validation, authorization, domain rules, transactions, query scoping and audit creation
+Only public entry point to core data
+Worker
+Delivery, media transformation, exports, reminders and scheduled projections
+Consumes idempotently and never trusts queue payloads as authorization
+PostgreSQL
+System of record, relational constraints, row policies, audit ledger and transactional outbox
+No direct client access
+Object storage
+Encrypted child media, attachments and exports
+Private by default with expiring access
+External adapters
+Provider-specific identity, payment and communication translation
+Domain modules depend on internal interfaces, not vendor SDKs
+
+Module Boundaries
+Module
+Responsibilities
+Organizations
+Organizations, branches, settings, lifecycle, plans and enabled modules
+Identity and access
+Accounts, invitations, memberships, assignments, roles, support sessions and policy evaluation
+People and enrollment
+Children, guardians, relationships, staff, classrooms and enrollment history
+Daily operations
+Child and staff attendance, timeline events, batch entry, calendar and transportation
+Safety
+Pickup authorization, incidents, medication records, emergency information and acknowledgements
+Engagement
+Announcements, direct messaging, media, notifications and parent home projections
+Revenue
+Fee rules, invoices, balances, payments, reminders, admissions and waiting lists
+Governance
+Consent, retention, exports, deletion, audit, localization, demo data and platform metrics
+
+Modules may call published application interfaces, not another module's tables or private repositories. Cross-module work that must be atomic runs in one database transaction. Events published outside that transaction use the outbox. A module may later be extracted only when measured scaling, security isolation, release independence or ownership needs justify it.
+Identity and Authorization
+
+Authorization evaluation sequence for every protected request
+Authentication
+Cognito authenticates email, phone and approved social identities through standards-based OIDC flows.
+Administrators and platform support roles require MFA. Sensitive support access and designated high-risk actions require recent or stepped-up authentication.
+The API validates issuer, audience, signature, token lifetime and required authentication strength. It never trusts role, tenant or child access supplied by the client.
+Account linking follows a verified invitation or administrator-controlled process to prevent accidental or malicious identity merging.
+Suspension is checked against authoritative application state on every protected request, not only when a token is issued.
+Authorization Model
+Authorization combines role capabilities with attributes and relationships. A request is permitted only when the account, organization and membership are active; the role permits the action; the branch and classroom scope matches; any required child assignment or guardian relationship exists; consent and field rules allow the data; and the requested purpose is appropriate.
+Control
+Authoritative source
+Example
+Role capability
+Membership role and approved permission matrix
+An accountant may manage invoices but not care notes
+Organization scope
+Membership organization identifier
+A user cannot enumerate another organization
+Branch and classroom scope
+Current assignments
+A teacher sees only assigned classrooms
+Relationship scope
+Guardian child relationship and per-relationship grants
+A pickup-only contact cannot view the timeline
+Field policy
+Sensitivity classification and role rules
+Medical fields are excluded from billing responses
+Consent and purpose
+Versioned consent record and requested operation
+Marketing media requires explicit marketing consent
+Support access
+Approved, expiring support session
+Tenant-sensitive access includes reason, scope and expiry
+
+Information Model
+Domain
+Core records
+Important invariants
+Tenancy
+Organization, branch, plan, module entitlement
+Every tenant record has an immutable organization identifier
+Identity
+Person, external identity, membership, role, assignment, invitation
+Identity and organization membership are separate records
+Children
+Child, enrollment, classroom placement, emergency and medical profile
+Sensitive changes retain history and actor context
+Relationships
+Guardian relationship and granular grants
+Revocation immediately removes access
+Daily operations
+Attendance session, timeline event and batch operation
+Stable operation IDs prevent duplicate outcomes
+Safety
+Pickup person, authorization, checkout, incident and medication administration
+One-time credentials and immutable safety history
+Engagement
+Announcement, conversation, message, media asset and notification
+Audience and consent evaluated before delivery and access
+Finance
+Fee rule, charge, invoice, payment attempt, payment event and allocation
+Provider events are verified, deduplicated and reconciled
+Governance
+Consent, retention policy, audit event, export and deletion case
+History remains tamper-evident and policy-driven
+
+Use UUIDv7 or an equivalent sortable, globally unique identifier generated by trusted application code.
+Use UTC instants for persisted event times and retain the relevant organization timezone for interpretation and display.
+Use integer minor units plus ISO currency codes for money. Floating-point types are prohibited for financial amounts.
+Use explicit lifecycle states and transition services. Do not infer business state from nullable timestamps alone.
+Use tenant-aware unique constraints and foreign keys so an identifier from one organization cannot be attached to another organization.
+Prefer append-only events for attendance corrections, payments, consent, incidents and audit history; corrections reference the superseded record.
+Tenant Isolation
+All tenant-owned tables include organization_id. The API opens a transaction, establishes a transaction-local tenant context, performs application authorization and executes through a restricted database role. PostgreSQL row-level policies then provide a second denial boundary. The runtime role must not own protected tables and must not have BYPASSRLS. Platform-wide operations use separate, explicitly reviewed repositories and service methods.
+☐ Every tenant table has row-level security enabled and forced where appropriate.
+☐ Every tenant query has an organization predicate even when row-level security also applies.
+☐ Cross-organization foreign keys are impossible through composite or validated tenant keys.
+☐ Exports, search, reports, media paths, notifications and worker jobs receive the same isolation tests as ordinary API reads.
+☐ Database migration and administrative roles are never used by the application runtime.
+API and Contract Design
+Expose versioned HTTPS REST resources under /api/v1 and publish an OpenAPI contract from FastAPI.
+Generate Dart and TypeScript clients in CI. Generated clients are committed or packaged with a repeatable generation command and compatibility check.
+Use cursor pagination for ordered, frequently changing lists. Use bounded offset pagination only for stable administrative views where direct page navigation is required.
+Accept an Idempotency-Key for retryable creates and safety or financial commands. Store request fingerprint and result for the defined replay period.
+Use ETag or explicit version fields for mutable records where concurrent updates must be detected.
+Return stable machine-readable error codes, a user-safe localized message key and a correlation identifier. Never disclose record existence across an authorization boundary.
+Use UTC ISO 8601 timestamps, ISO currency codes and locale-neutral wire values. Localization occurs at the client or notification rendering boundary.
+Offline Synchronization
+Offline capability is limited to approved basic attendance and care entry. The client does not download a full organization database. Each queued command carries a stable client operation ID, organization, actor, subject, device time, server-known version and payload schema version.
+Write the local event and outbox command in one SQLite transaction.
+When connectivity returns, send commands in bounded batches using the authenticated user's current session.
+The API re-evaluates authorization and organization state, validates the command and records the operation ID with the resulting server record in one PostgreSQL transaction.
+A repeated operation ID returns the original result without creating a duplicate.
+Non-conflicting events append normally. Mutually exclusive state changes use explicit conflict rules and return a conflict object rather than silently selecting a winner.
+The client marks confirmed commands complete, displays rejected commands with a recovery action and securely removes expired local data.
+Asynchronous Processing
+The API writes a domain change and an outbox record in the same PostgreSQL transaction. A relay publishes pending outbox records to SQS. Workers acknowledge messages only after durable completion or a safely recorded terminal outcome. Consumers remain idempotent because standard queues may redeliver.
+Job type
+Idempotency key
+Recovery
+Notification
+Notification delivery identifier plus channel
+Retry transient failures, record terminal delivery state, dead-letter exhausted items
+Media processing
+Media asset identifier plus transformation version
+Retain original privately, rerun transformations, quarantine failures
+Export
+Export request identifier
+Expire generated files, expose failure reason to authorized requester
+Payment webhook
+Provider, merchant and provider event identifier
+Verify signature, deduplicate, retain payload hash and reconcile
+Scheduled reminder
+Rule, recipient, subject and scheduled occurrence
+Prevent duplicate sends across scheduler retries
+
+Media Design
+Clients request a short-lived upload authorization after the API confirms role, organization, child scope and media purpose.
+Uploads enter a private quarantine prefix. Workers validate type and size, scan for malware, remove unnecessary metadata and generate approved derivatives.
+The database stores the asset, organization, uploader, children shown, consent purpose, processing status and object references.
+Downloads require a fresh authorization and consent evaluation before the API issues an expiring signed URL or cookie.
+Revoked consent blocks future access and schedules policy-approved deletion or restriction; CDN caching must not outlive authorization assumptions.
+Public object ACLs are prohibited. Storage and access logs must not contain child names or sensitive metadata.
+Notifications and Messaging
+Notification creation, audience selection and channel delivery are separate concerns. Domain modules request a notification using a stable event and template key. The notification module resolves mandatory versus optional categories, current guardian relationships, preferences, locale and quiet-hour rules before creating channel deliveries.
+Use versioned Arabic and English ICU templates with review ownership and test fixtures.
+Do not place medical, incident, financial or pickup secrets in lock-screen notification text.
+Mandatory safety notices cannot be disabled but still require policy-approved wording and escalation behavior.
+Track accepted, delivered, failed and opened states only where the provider reliably supports them; do not present accepted as delivered.
+Store message attachments privately and evaluate conversation participation on every read and send operation.
+Payment Boundary
+The payment provider remains undecided. The revenue module owns invoices, balances, allocation and reconciliation. A provider adapter owns checkout creation, provider-specific credentials, signature verification and event translation. The browser or mobile response is never authoritative proof of payment.
+☐ Approved market, payment methods, tax, receipts, refunds, reversals and disputes are defined.
+☐ Provider webhook signatures and replay windows are verified.
+☐ Provider events are immutable, deduplicated and mapped to internal payment events.
+☐ Invoice balance updates and payment event recording occur atomically.
+☐ Daily reconciliation identifies missing, duplicated and mismatched provider transactions.
+☐ Provider replacement tests run against the internal adapter contract.
+Search and Analytics
+MVP administrative search uses PostgreSQL indexes, full-text search and trigram matching with the same tenant and permission filters as the underlying records. Search results return minimal summaries and require ordinary authorization to open. Analytics begin with defined SQL projections and materialized aggregates; a separate search engine or warehouse is introduced only after measured query or retention needs justify it.
+Security and Threat Controls
+Threat
+Primary controls
+Verification
+Cross-tenant reference manipulation
+Server authorization, tenant-aware keys, RLS and denial tests
+Automated direct-reference tests across every resource type
+Privilege elevation
+Authoritative memberships, assignment checks and restricted administration
+Role mutation and forged-claim tests
+Guardian relationship abuse
+Versioned grants and immediate revocation checks
+Revocation, pickup-only and unrelated-child tests
+Support misuse
+Justified, time-limited support sessions with full audit
+Expired, revoked and missing-reason tests
+Invitation takeover
+High-entropy single-use tokens, expiry and assignment binding
+Altered, replayed, expired and higher-role invitation tests
+Media disclosure
+Private storage, consent checks, signed access and quarantine
+Cross-tenant URL, revoked-consent and cache-expiry tests
+QR or PIN replay
+Single-purpose, short-lived credential and atomic redemption
+Concurrent and repeated redemption tests
+Payment forgery
+Signed provider events and server-side reconciliation
+Client-claim, replay and out-of-order webhook tests
+Sensitive logging
+Structured allowlist logging and automated redaction
+Log-capture tests using representative PII and tokens
+Dependency compromise
+Lockfiles, provenance checks, scanning and controlled updates
+CI dependency, container and secret scans
+
+Privacy and Data Lifecycle
+Classify fields as public business, internal, personal, sensitive child, medical, safety, financial, credential or audit data.
+Collect optional fields only for an approved purpose and retain the legal basis or consent version when required.
+Represent access revocation, archival, legal hold, deletion request and physical deletion as explicit lifecycle states.
+Organization exports run asynchronously, are scoped and audited, produce encrypted short-lived files and never combine tenants.
+Deletion workflows identify dependent records, statutory or safeguarding retention, media copies, derived assets, queues, caches, backups and audit integrity.
+Production data is prohibited in development and test environments. Demo data is synthetic and visibly marked.
+Reliability and Service Objectives
+The values below are proposed engineering targets for planning and testing. Product and business owners must approve them at GATE-05 before they become commitments.
+Measure
+Proposed target
+Measurement
+Monthly API availability
+99.9 percent excluding approved maintenance
+Successful eligible requests divided by total eligible requests
+Interactive API latency
+95th percentile below 500 ms and 99th below 1.5 s
+Server latency by operation excluding provider-controlled waits
+Mobile sync confirmation
+95 percent within 10 seconds after stable connectivity
+Command accepted or conflict returned
+Safety notification creation
+99 percent queued within 60 seconds
+Domain event to durable channel delivery record
+Recovery point objective
+15 minutes for transactional data
+Verified backup and point-in-time recovery coverage
+Recovery time objective
+4 hours for regional service restoration
+Timed recovery exercise
+Error budget
+43 minutes per 30-day month at 99.9 percent
+Availability SLI burn-rate alerts
+
+Failure Modes and Recovery
+Failure
+Expected behavior
+Recovery
+Database unavailable
+Reject writes without false success; clients retain safe retry state
+RDS failover, connection recovery and controlled replay
+Queue unavailable
+Business transaction and outbox commit remain durable
+Relay resumes publishing without duplicating outcomes
+Worker failure
+Message becomes visible after timeout
+Idempotent retry, bounded backoff and dead-letter escalation
+Identity provider unavailable
+Existing valid sessions continue per policy; new sign-ins fail safely
+Provider recovery and status communication
+Notification provider failure
+Core care or finance record remains successful
+Retry alternative or same channel according to policy
+Media processor failure
+Original remains quarantined and unavailable
+Reprocess after cause is corrected
+Mobile connectivity loss
+Approved commands remain locally visible as pending
+Sync, deduplicate and show conflicts after reconnection
+Bad deployment
+Health checks fail and rollout stops
+Automated rollback to prior image and compatible schema
+
+Capacity and Cost
+No approved scale forecast is present in the product baseline. Initial load tests should use a planning profile, then replace it with contracted or measured volumes. The architecture scales API and worker containers horizontally while PostgreSQL remains the transactional consistency boundary.
+Planning input
+Initial test assumption
+Revalidation trigger
+Organizations
+100 active organizations
+Commercial forecast or first 25 customers
+Children
+50,000 active children
+Measured enrollment distribution
+Concurrent interactive users
+2,000
+Observed peak exceeds 50 percent
+Daily care and attendance writes
+1,000,000
+Observed sustained throughput or storage trend
+Media uploads
+100,000 items per day
+Storage, processing or delivery cost threshold
+Burst notifications
+50,000 deliveries in 15 minutes
+Safety or announcement campaign evidence
+
+Observability and Support
+Propagate a correlation identifier across client, API, outbox, queue and worker execution.
+Emit structured logs with event name, environment, service, operation, result, latency and pseudonymous internal identifiers. Exclude tokens, passwords, free-text care notes, medical details and child names.
+Measure request rate, latency, errors, saturation, database connections, queue age, dead-letter depth, sync conflicts, provider delivery and data-quality exceptions.
+Trace representative requests and asynchronous jobs through OpenTelemetry with sampling that does not expose sensitive payloads.
+Create service dashboards, SLO burn-rate alerts, queue and database capacity alerts, security-denial anomaly alerts and runbook links.
+Support views expose health and identifiers needed for diagnosis without exposing normal child-level content.
+Environment and Deployment Model
+Environment
+Purpose
+Data rule
+Local
+Developer feedback and isolated integration tests
+Synthetic fixtures only
+Development
+Shared integration and contract validation
+Synthetic seeded organizations
+Staging
+Production-like release candidate, performance smoke and UAT
+Synthetic or approved anonymized data only
+Production
+Customer service
+Approved production data and region only
+
+Terraform provisions isolated accounts or equivalent boundaries, networks, roles, databases, queues, buckets, alarms and secrets references.
+CI builds immutable images and mobile artifacts, produces an SBOM, scans dependencies and containers, runs tests and signs release artifacts where supported.
+Database changes follow expand, migrate and contract. The application remains compatible with the previous schema during rolling deployment.
+Production deployment uses health-gated rolling or blue-green release. Feature flags disable incomplete business capability, not security controls.
+Rollback restores the previous application image. Forward-only corrective migrations are preferred when a schema change has already received production writes.
+Backup and Disaster Recovery
+☐ Enable encrypted automated database backups and point-in-time recovery with policy-approved retention.
+☐ Enable versioning and lifecycle controls for protected media where retention policy permits.
+☐ Back up infrastructure configuration, application configuration references and migration history without copying secrets into source control.
+☐ Perform quarterly database restoration tests and annual service recovery exercises before production maturity review.
+☐ Record actual recovery point and recovery time from exercises and remediate missed objectives.
+☐ Document customer communication, evidence preservation and security escalation for major incidents.
+Delivery Roadmap
+
+Recommended delivery sequence and decision boundaries
+Stage
+Primary outcome
+Exit gate
+Decision gates
+Approve privacy, permissions, devices, SLOs and production region
+Named owners approve recorded decisions
+Foundation
+Tenancy, identity, authorization, audit, privacy, localization and delivery platform
+Cross-tenant, role-denial and deployment recovery tests pass
+MVP Phase 1
+Operate daily childcare workflows and parent essentials
+A center completes one day in Arabic and English
+Release hardening
+Prove security, accessibility, resilience, backup, recovery and UAT
+All blocking tests and release controls pass
+MVP Phase 2
+Add pickup, media, messaging, incidents, billing, payments, admissions and analytics
+Safeguarding and revenue journeys reconcile end to end
+Later approval
+Transportation, medication, advanced platform analytics and optional modules
+Separate policy and product approval
+
+The companion workbook contains the itemized feature work, dependencies, developer completion criteria, test cases and release controls. Work must not begin merely because it appears in a later phase; its decision gates and predecessor features must be complete.
+Testing and Validation
+Unit tests cover domain decisions, calculations, state transitions, policy evaluation and serialization without external services.
+Database integration tests run against real PostgreSQL and verify transactions, constraints, migrations and row-level security.
+API tests exercise allowed and denied paths, validation, idempotency, pagination, concurrency and non-revealing errors.
+Contract tests verify OpenAPI compatibility and generated Dart and TypeScript client behavior.
+Browser and mobile tests cover critical role journeys, offline recovery, Arabic RTL, accessibility and supported device sizes.
+Security tests include cross-tenant direct references, forged scopes, invitation replay, signed URL abuse, QR replay, provider webhook replay and log redaction.
+Performance and resilience tests verify agreed SLOs, queue backlog recovery, database failover behavior and retry storms.
+UAT requires named operational, safeguarding, finance, privacy and Arabic-language owners for their respective release areas.
+Risks and Mitigations
+Severity
+Risk
+Consequence
+Mitigation
+Critical
+Unapproved child privacy and safeguarding policy
+Unsafe implementation or release delay
+Close GATE-01 through GATE-04 before affected build
+Critical
+Incorrect tenant or relationship authorization
+Child data disclosure
+Central policy service, RLS, field filtering and exhaustive denial suite
+High
+MVP breadth
+Delayed release and shallow hardening
+Protect Phase 1 exit criteria and defer optional modules
+High
+Offline duplicate or conflicting care records
+Incorrect daily timeline
+Stable operation IDs, conflict rules and visible recovery
+High
+Payment market uncertainty
+Incorrect balances or regulatory exposure
+Complete finance discovery and adapter contract before implementation
+High
+Media and notification privacy
+Sensitive lock-screen or URL disclosure
+Private storage, minimal text, signed access and consent checks
+Medium
+Three-language engineering stack
+Coordination and contract drift
+OpenAPI generation, clear ownership and shared quality gates
+Medium
+Undefined analytics metrics
+Misleading decisions
+Approve metric dictionary before dashboard acceptance
+
+Success Metrics
+Zero confirmed cross-organization, unauthorized-child or inappropriate-field disclosures.
+One representative center completes a full operational day in Arabic and English without a spreadsheet workaround.
+Offline-approved entries synchronize once or return an actionable conflict, with no silent loss or duplicate outcome.
+Financial balances reconcile to immutable payment events and the provider settlement source.
+All release-blocking tests pass and every source acceptance criterion maps to at least one test case.
+Production restoration exercises meet approved recovery objectives.
+Operational failures are detected through telemetry before or at the same time as customer reports for agreed alertable conditions.
+Architecture Decision Records
+Record
+Decision
+Status
+ADR-001
+Modular monolith for the initial platform
+Proposed
+ADR-002
+Next.js and TypeScript for the administration portal
+Proposed
+ADR-003
+Flutter for the parent and staff mobile application
+Proposed
+ADR-004
+FastAPI and Python for API and workers
+Proposed
+ADR-005
+PostgreSQL shared schema with tenant keys and row-level security
+Proposed
+ADR-006
+Cognito for authentication and application database for authorization
+Proposed
+ADR-007
+REST and OpenAPI generated clients
+Proposed
+ADR-008
+Transactional outbox and SQS for asynchronous work
+Proposed
+ADR-009
+Encrypted SQLite outbox for limited offline workflows
+Proposed
+ADR-010
+Private S3 and signed access for media
+Proposed
+ADR-011
+AWS production region
+Blocked by GATE-07
+ADR-012
+Payment provider and market behavior
+Blocked by GATE-06
+
+Implementation Entry Checklist
+☐ Product acceptance criteria and user experience are refined for the increment.
+☐ Required decision gates and predecessor features are complete.
+☐ Data classification, permission rules, audit requirements and retention behavior are identified.
+☐ API contract, idempotency behavior, errors and pagination are reviewed.
+☐ Arabic, English, RTL, accessibility and offline behavior are specified where relevant.
+☐ Test cases include allowed, denied, retry, concurrency, recovery and cross-tenant paths.
+☐ Telemetry, rollout, migration and rollback are defined.
+References
+Reference
+Location
+Product baseline
+Childcare Management Platform Product Owner Deliverables supplied by the Product Owner
+PostgreSQL row security
+https://www.postgresql.org/docs/current/ddl-rowsecurity.html
+Amazon Cognito identity providers
+https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-identity-provider.html
+Expo SQLite capability reference
+https://docs.expo.dev/versions/latest/sdk/sqlite/
+Amazon ECS Fargate
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
+Amazon RDS Multi-AZ
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html
+Amazon SQS
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+AWS regions
+https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
+
