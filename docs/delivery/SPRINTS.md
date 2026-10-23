@@ -136,7 +136,7 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 
 - [ ] FEAT-006 Platform Administration and Audited Support Access — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-006-platform-administration-and-audited-support-access`
 - [ ] FEAT-035 Privacy Consent Retention Export and Deletion — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-035-privacy-consent-retention-export-and-deletion`
-- [ ] FEAT-036 Arabic English Localization and Regional Settings — depends on FEAT-001; branch `feat/FEAT-036-arabic-english-localization-and-regional-settings`
+- [ ] FEAT-036 Arabic English Localization and Regional Settings — depends on FEAT-001; branch `feat/FEAT-036-localization-foundation`
 - [ ] FEAT-037 Configurable Branding Modules and Plans — depends on FEAT-001, FEAT-006; branch `feat/FEAT-037-configurable-branding-modules-and-plans`
 
 - [ ] TW-027 Implement reason-bound, expiring and audited platform support sessions — depends on TW-023; owner Backend and Security

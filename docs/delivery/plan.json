@@ -382,8 +382,8 @@
       "release": "MVP Phase 1",
       "dependencies": "FEAT-001",
       "sprint": "S04",
-      "branch": "feat/FEAT-036-arabic-english-localization-and-regional-settings",
-      "status": "Not started"
+      "branch": "feat/FEAT-036-localization-foundation",
+      "status": "Groundwork only; full feature acceptance pending S04"
     },
     {
       "id": "FEAT-037",
@@ -2298,7 +2298,7 @@
       "dependencies": "TW-006",
       "owner": "Technical Lead",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial groundwork; production builds or prerequisites blocked"
     },
     {
       "id": "TW-012",
@@ -2316,7 +2316,7 @@
       "dependencies": "TW-011",
       "owner": "Engineering Enablement",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial groundwork; production builds or prerequisites blocked"
     },
     {
       "id": "TW-014",
@@ -2379,7 +2379,7 @@
       "dependencies": "TW-011",
       "owner": "QA and Backend",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial synthetic preview fixtures; operational scenario seeding not started"
     },
     {
       "id": "TW-021",
@@ -2469,7 +2469,7 @@
       "dependencies": "TW-006,TW-011",
       "owner": "Web, Mobile and Design",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial groundwork; production builds or prerequisites blocked"
     },
     {
       "id": "TW-031",
@@ -2505,7 +2505,7 @@
       "dependencies": "TW-012,TW-023,TW-030",
       "owner": "Web",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial groundwork; production builds or prerequisites blocked"
     },
     {
       "id": "TW-035",
@@ -2514,7 +2514,7 @@
       "dependencies": "TW-012,TW-025,TW-030",
       "owner": "Mobile",
       "sprint": "S01",
-      "status": "Not started"
+      "status": "Partial groundwork; production builds or prerequisites blocked"
     },
     {
       "id": "TW-036",
@@ -2838,7 +2838,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-001-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-001-02",
@@ -2854,7 +2855,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-001-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-001-03",
@@ -2870,7 +2872,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-001-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-001-04",
@@ -2886,7 +2889,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-001-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-002-01",
@@ -2902,7 +2906,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-002-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-002-02",
@@ -2918,7 +2923,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-002-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-002-03",
@@ -2934,7 +2940,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-002-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-003-01",
@@ -2950,7 +2957,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-003-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-003-02",
@@ -2966,7 +2974,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-003-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-003-03",
@@ -2982,7 +2991,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-003-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-003-04",
@@ -2998,7 +3008,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-003-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-004-01",
@@ -3014,7 +3025,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-004-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-004-02",
@@ -3030,7 +3042,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-004-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-004-03",
@@ -3046,7 +3059,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-004-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-004-04",
@@ -3062,7 +3076,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-004-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-005-01",
@@ -3078,7 +3093,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-005-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-005-02",
@@ -3094,7 +3110,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-005-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-005-03",
@@ -3110,7 +3127,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-005-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-005-04",
@@ -3126,7 +3144,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-005-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-005-05",
@@ -3142,7 +3161,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-005-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-006-01",
@@ -3158,7 +3178,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-006-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-006-02",
@@ -3174,7 +3195,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-006-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-006-03",
@@ -3190,7 +3212,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-006-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-006-04",
@@ -3206,7 +3229,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-006-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-007-01",
@@ -3222,7 +3246,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-007-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-007-02",
@@ -3238,7 +3263,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-007-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-007-03",
@@ -3254,7 +3280,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-007-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-007-04",
@@ -3270,7 +3297,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-007-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-007-05",
@@ -3286,7 +3314,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-007-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-008-01",
@@ -3302,7 +3331,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-008-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-008-02",
@@ -3318,7 +3348,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-008-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-008-03",
@@ -3334,7 +3365,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-008-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-008-04",
@@ -3350,7 +3382,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-008-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-009-01",
@@ -3366,7 +3399,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-009-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-009-02",
@@ -3382,7 +3416,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-009-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-009-03",
@@ -3398,7 +3433,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-009-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-009-04",
@@ -3414,7 +3450,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-009-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-010-01",
@@ -3430,7 +3467,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-010-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-010-02",
@@ -3446,7 +3484,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-010-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-010-03",
@@ -3462,7 +3501,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-010-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-010-04",
@@ -3478,7 +3518,8 @@
       "sprint": "S03",
       "uat": "UAT-S03-TC-FEAT-010-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-011-01",
@@ -3494,7 +3535,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-011-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-011-02",
@@ -3510,7 +3552,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-011-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-011-03",
@@ -3526,7 +3569,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-011-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-011-04",
@@ -3542,7 +3586,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-011-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-011-05",
@@ -3558,7 +3603,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-011-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-012-01",
@@ -3574,7 +3620,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-012-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-012-02",
@@ -3590,7 +3637,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-012-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-012-03",
@@ -3606,7 +3654,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-012-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-013-01",
@@ -3622,7 +3671,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-013-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-013-02",
@@ -3638,7 +3688,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-013-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-013-03",
@@ -3654,7 +3705,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-013-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-013-04",
@@ -3670,7 +3722,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-013-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-013-05",
@@ -3686,7 +3739,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-013-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-014-01",
@@ -3702,7 +3756,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-014-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-014-02",
@@ -3718,7 +3773,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-014-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-014-03",
@@ -3734,7 +3790,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-014-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-014-04",
@@ -3750,7 +3807,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-014-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-014-05",
@@ -3766,7 +3824,8 @@
       "sprint": "S05",
       "uat": "UAT-S05-TC-FEAT-014-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-015-01",
@@ -3782,7 +3841,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-015-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-015-02",
@@ -3798,7 +3858,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-015-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-015-03",
@@ -3814,7 +3875,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-015-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-015-04",
@@ -3830,7 +3892,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-015-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-016-01",
@@ -3846,7 +3909,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-016-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-016-02",
@@ -3862,7 +3926,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-016-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-016-03",
@@ -3878,7 +3943,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-016-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-016-04",
@@ -3894,7 +3960,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-016-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-017-01",
@@ -3910,7 +3977,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-017-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-017-02",
@@ -3926,7 +3994,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-017-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-017-03",
@@ -3942,7 +4011,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-017-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-017-04",
@@ -3958,7 +4028,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-017-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-017-05",
@@ -3974,7 +4045,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-017-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-018-01",
@@ -3990,7 +4062,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-018-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-018-02",
@@ -4006,7 +4079,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-018-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-018-03",
@@ -4022,7 +4096,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-018-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-019-01",
@@ -4038,7 +4113,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-019-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-019-02",
@@ -4054,7 +4130,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-019-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-019-03",
@@ -4070,7 +4147,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-019-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-019-04",
@@ -4086,7 +4164,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-019-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-020-01",
@@ -4102,7 +4181,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-020-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-020-02",
@@ -4118,7 +4198,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-020-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-020-03",
@@ -4134,7 +4215,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-020-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-020-04",
@@ -4150,7 +4232,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-020-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-021-01",
@@ -4166,7 +4249,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-021-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-021-02",
@@ -4182,7 +4266,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-021-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-021-03",
@@ -4198,7 +4283,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-021-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-021-04",
@@ -4214,7 +4300,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-021-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-022-01",
@@ -4230,7 +4317,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-022-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-022-02",
@@ -4246,7 +4334,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-022-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-022-03",
@@ -4262,7 +4351,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-022-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-022-04",
@@ -4278,7 +4368,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-022-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-022-05",
@@ -4294,7 +4385,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-022-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-023-01",
@@ -4310,7 +4402,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-023-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-023-02",
@@ -4326,7 +4419,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-023-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-023-03",
@@ -4342,7 +4436,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-023-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-023-04",
@@ -4358,7 +4453,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-023-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-023-05",
@@ -4374,7 +4470,8 @@
       "sprint": "S09",
       "uat": "UAT-S09-TC-FEAT-023-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-024-01",
@@ -4390,7 +4487,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-024-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-024-02",
@@ -4406,7 +4504,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-024-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-024-03",
@@ -4422,7 +4521,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-024-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-024-04",
@@ -4438,7 +4538,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-024-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-024-05",
@@ -4454,7 +4555,8 @@
       "sprint": "S08",
       "uat": "UAT-S08-TC-FEAT-024-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-025-01",
@@ -4470,7 +4572,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-025-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-025-02",
@@ -4486,7 +4589,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-025-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-025-03",
@@ -4502,7 +4606,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-025-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-025-04",
@@ -4518,7 +4623,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-025-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-025-05",
@@ -4534,7 +4640,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-025-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-026-01",
@@ -4550,7 +4657,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-026-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-026-02",
@@ -4566,7 +4674,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-026-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-026-03",
@@ -4582,7 +4691,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-026-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-026-04",
@@ -4598,7 +4708,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-026-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-027-01",
@@ -4614,7 +4725,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-027-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-027-02",
@@ -4630,7 +4742,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-027-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-027-03",
@@ -4646,7 +4759,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-027-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-027-04",
@@ -4662,7 +4776,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-027-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-027-05",
@@ -4678,7 +4793,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-027-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-028-01",
@@ -4694,7 +4810,8 @@
       "sprint": "S11",
       "uat": "UAT-S11-TC-FEAT-028-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-028-02",
@@ -4710,7 +4827,8 @@
       "sprint": "S11",
       "uat": "UAT-S11-TC-FEAT-028-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-028-03",
@@ -4726,7 +4844,8 @@
       "sprint": "S11",
       "uat": "UAT-S11-TC-FEAT-028-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-028-04",
@@ -4742,7 +4861,8 @@
       "sprint": "S11",
       "uat": "UAT-S11-TC-FEAT-028-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-028-05",
@@ -4758,7 +4878,8 @@
       "sprint": "S11",
       "uat": "UAT-S11-TC-FEAT-028-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-029-01",
@@ -4774,7 +4895,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-029-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-029-02",
@@ -4790,7 +4912,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-029-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-029-03",
@@ -4806,7 +4929,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-029-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-029-04",
@@ -4822,7 +4946,8 @@
       "sprint": "S10",
       "uat": "UAT-S10-TC-FEAT-029-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-030-01",
@@ -4838,7 +4963,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-030-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-030-02",
@@ -4854,7 +4980,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-030-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-030-03",
@@ -4870,7 +4997,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-030-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-030-04",
@@ -4886,7 +5014,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-030-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-030-05",
@@ -4902,7 +5031,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-030-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-031-01",
@@ -4918,7 +5048,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-031-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-031-02",
@@ -4934,7 +5065,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-031-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-031-03",
@@ -4950,7 +5082,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-031-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-031-04",
@@ -4966,7 +5099,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-031-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-032-01",
@@ -4982,7 +5116,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-032-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-032-02",
@@ -4998,7 +5133,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-032-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-032-03",
@@ -5014,7 +5150,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-032-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-032-04",
@@ -5030,7 +5167,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-032-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-032-05",
@@ -5046,7 +5184,8 @@
       "sprint": "S12",
       "uat": "UAT-S12-TC-FEAT-032-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-033-01",
@@ -5062,7 +5201,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-033-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-033-02",
@@ -5078,7 +5218,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-033-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-033-03",
@@ -5094,7 +5235,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-033-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-033-04",
@@ -5110,7 +5252,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-033-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-033-05",
@@ -5126,7 +5269,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-033-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-034-01",
@@ -5142,7 +5286,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-034-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-034-02",
@@ -5158,7 +5303,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-034-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-034-03",
@@ -5174,7 +5320,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-034-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-034-04",
@@ -5190,7 +5337,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-034-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-034-05",
@@ -5206,7 +5354,8 @@
       "sprint": "S02",
       "uat": "UAT-S02-TC-FEAT-034-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-035-01",
@@ -5222,7 +5371,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-035-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-035-02",
@@ -5238,7 +5388,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-035-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-035-03",
@@ -5254,7 +5405,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-035-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-035-04",
@@ -5270,7 +5422,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-035-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-035-05",
@@ -5286,7 +5439,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-035-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-036-01",
@@ -5302,7 +5456,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-036-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-036-02",
@@ -5318,7 +5473,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-036-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-036-03",
@@ -5334,7 +5490,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-036-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-036-04",
@@ -5350,7 +5507,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-036-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-036-05",
@@ -5366,7 +5524,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-036-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-037-01",
@@ -5382,7 +5541,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-037-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-037-02",
@@ -5398,7 +5558,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-037-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-037-03",
@@ -5414,7 +5575,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-037-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-037-04",
@@ -5430,7 +5592,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-037-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-037-05",
@@ -5446,7 +5609,8 @@
       "sprint": "S04",
       "uat": "UAT-S04-TC-FEAT-037-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-038-01",
@@ -5462,7 +5626,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-038-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-038-02",
@@ -5478,7 +5643,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-038-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-038-03",
@@ -5494,7 +5660,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-038-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-038-04",
@@ -5510,7 +5677,8 @@
       "sprint": "S13",
       "uat": "UAT-S13-TC-FEAT-038-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-039-01",
@@ -5526,7 +5694,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-039-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-039-02",
@@ -5542,7 +5711,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-039-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-039-03",
@@ -5558,7 +5728,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-039-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-039-04",
@@ -5574,7 +5745,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-039-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-039-05",
@@ -5590,7 +5762,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-039-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-040-01",
@@ -5606,7 +5779,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-040-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-040-02",
@@ -5622,7 +5796,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-040-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-040-03",
@@ -5638,7 +5813,8 @@
       "sprint": "S14",
       "uat": "UAT-S14-TC-FEAT-040-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-041-01",
@@ -5654,7 +5830,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-041-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-041-02",
@@ -5670,7 +5847,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-041-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-041-03",
@@ -5686,7 +5864,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-041-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "TC-FEAT-041-04",
@@ -5702,7 +5881,8 @@
       "sprint": "S06",
       "uat": "UAT-S06-TC-FEAT-041-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": false
     },
     {
       "id": "XCT-01",
@@ -5718,7 +5898,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-01",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-02",
@@ -5734,7 +5915,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-02",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-03",
@@ -5750,7 +5932,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-03",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-04",
@@ -5766,7 +5949,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-04",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-05",
@@ -5782,7 +5966,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-05",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-06",
@@ -5798,7 +5983,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-06",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-07",
@@ -5814,7 +6000,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-07",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-08",
@@ -5830,7 +6017,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-08",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-09",
@@ -5846,7 +6034,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-09",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-10",
@@ -5862,7 +6051,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-10",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-11",
@@ -5878,7 +6068,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-11",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "XCT-12",
@@ -5894,7 +6085,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-XCT-12",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T001",
@@ -5910,7 +6102,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T001",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T002",
@@ -5926,7 +6119,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T002",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T003",
@@ -5942,7 +6136,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T003",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T004",
@@ -5958,7 +6153,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T004",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T005",
@@ -5974,7 +6170,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T005",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T006",
@@ -5990,7 +6187,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T006",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T007",
@@ -6006,7 +6204,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T007",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T008",
@@ -6022,7 +6221,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T008",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T009",
@@ -6038,7 +6238,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T009",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T010",
@@ -6054,7 +6255,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T010",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T011",
@@ -6070,7 +6272,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T011",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T012",
@@ -6086,7 +6289,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T012",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T013",
@@ -6102,7 +6306,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T013",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T014",
@@ -6118,7 +6323,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T014",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T015",
@@ -6134,7 +6340,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T015",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T016",
@@ -6150,7 +6357,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T016",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T017",
@@ -6166,7 +6374,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T017",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T018",
@@ -6182,7 +6391,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T018",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T019",
@@ -6198,7 +6408,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T019",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T020",
@@ -6214,7 +6425,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T020",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T021",
@@ -6230,7 +6442,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T021",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T022",
@@ -6246,7 +6459,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T022",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T023",
@@ -6262,7 +6476,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T023",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     },
     {
       "id": "TECH-T024",
@@ -6278,7 +6493,8 @@
       "sprint": "S07",
       "uat": "UAT-S07-TECH-T024",
       "status": "Not run",
-      "evidence": null
+      "evidence": null,
+      "repeatEachAffectedSprint": true
     }
   ],
   "controls": [

@@ -4,7 +4,7 @@ The four original specifications are preserved in `Document`. Development has st
 
 ## One click review on Windows 11
 
-Double-click **Start-Sprint-Review.cmd**. Node.js 20.9 or newer must be installed. The launcher opens http://localhost:3100 and prints your computer's local Wi-Fi URL. If the browser opens before the server is ready, refresh once. Keep the terminal open; Ctrl+C stops the server.
+Double-click **Start-Sprint-Review.cmd**. Node.js 20.9 or newer must be installed. The launcher starts the server, then opens http://localhost:3100 and prints your computer's local Wi-Fi URL. Keep the terminal open; Ctrl+C stops the server.
 
 On your iPhone, join the same Wi-Fi and open the printed `http://<computer-ip>:3100` URL in Safari. Tap Mobile preview. If Windows Firewall blocks local network access, allow Node on your private network only. No firewall rule is changed automatically. A hosted HTTPS link is a later delivery step once staging exists; no cloud deployment is configured yet.
 

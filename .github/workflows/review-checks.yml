@@ -1,0 +1,16 @@
+name: Review tooling checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  prototype:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Verify preserved baseline and review server
+        run: node --test tests/system/review.test.mjs
+  # Production build, security, RLS and device jobs must be added with resolved
+  # dependencies and real infrastructure. This workflow is not a release gate.
