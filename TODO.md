@@ -13,7 +13,7 @@
 - [x] Reject stale versions, no-op moves, invalid times and unauthorized scope.
 - [x] Preserve history actors/UTC timestamps and prevent direct enrollment without conversion.
 - [x] Run admissions scenarios, attendance regressions, lint, formatting and strict typing.
-- [ ] Record evidence/UAT mappings and commit the tested increment locally.
+- [x] Record evidence/UAT mappings and commit the tested increment locally.
 
 ## FEAT-030 source tasks and operational delivery
 
