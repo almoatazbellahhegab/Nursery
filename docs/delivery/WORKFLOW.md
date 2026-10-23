@@ -11,4 +11,6 @@
 
 S01 preview checks are supplemental UAT-S01 cases. Source product test cases remain Not run because the preview has no real API, authentication, database or native app. Source test IDs are preserved without claiming full-feature coverage.
 
-Cross-cutting XCT and TECH cases are repeated in every affected sprint; their S07 assignment is the final release verification milestone, not permission to defer changed-area security or quality checks. Every new run appends evidence and preserves prior failures. Source TODO text stays unchanged; partial groundwork is reported separately from completed outcomes.
+Cross-cutting XCT and TECH cases are repeated in every affected sprint; their S02 assignment (original S07 milestone) is the final Phase 1 release verification milestone, not permission to defer changed-area security or quality checks. Every new run appends evidence and preserves prior failures. Source TODO text stays unchanged; partial groundwork is reported separately from completed outcomes.
+
+The four-sprint revision retains the original 14 milestone work packages and their exit criteria. Existing UAT identifiers stay stable so historical evidence remains valid; currentUat is the alias for the new sprint assignment. S04 advanced/optional modules still require the original separate product and specialist approvals. Durations and dates require estimation against unchanged scope. Push approval applies only to the work explicitly authorized; the previous push does not authorize later plan revisions.

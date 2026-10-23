@@ -4,7 +4,7 @@ These checks validate only the offline delivery tools and presentation experimen
 
 | Test | Automated behavior | UAT link | Source relationship |
 | --- | --- | --- | --- |
-| RV-001 | All source identifiers retained once; valid sprint assignments, dependencies and UAT links | UAT-S01-04 | TW-011 and traceability |
+| RV-001 | Exactly four sprints; all source identifiers, item content, 14 milestone exits, gates, controls and original UAT links retained; valid dependencies and new UAT aliases | UAT-S01-04 | TW-011 and traceability; compares against archived 14-sprint baseline |
 | RV-002 | Matching, nonempty English and Arabic catalogue keys | UAT-S01-03 | Partial FEAT-036-05 groundwork |
 | RV-003 | Invalid evidence and native-app pass rejected | UAT-S01-05, UAT-S01-06 | Review integrity |
 | RV-004 | Review routes, private-file denial, origin validation, durable append-only results | UAT-S01-05 | Delivery tooling only |

@@ -1,66 +1,87 @@
-# Sprint milestones and itemized work
+# Four sprint milestones and itemized work
 
-Source: all four unchanged files in Document. Two-week planning envelopes are provisional; no dates are committed. Preserve dependencies inside each sprint. Enabling localization and UI experiments in S01 do not complete FEAT-036, TW-034 or TW-035. TW-006 and TW-010 remain open decisions.
+Source: all four unchanged files in Document. All 41 features, 204 feature tasks, 69 technical tasks, 216 source tests, dependencies, decision gates and release controls are retained. The original 14 milestones remain ordered work packages inside four sprints. Duration is to be estimated; consolidation does not imply an eight-week commitment. Preserve dependencies within each sprint. Enabling experiments do not complete operational features. TW-006 and TW-010 remain open decisions.
 
-## S01 Review foundations
+| Sprint | Scope | Features | Feature tasks | Technical tasks | Source tests |
+| --- | --- | ---: | ---: | ---: | ---: |
+| S01 | Platform foundations and nursery setup | 14 | 68 | 37 | 61 |
+| S02 | Daily operations and Phase 1 release | 9 | 44 | 18 | 75 |
+| S03 | Safety, communication, finance and growth | 12 | 63 | 9 | 55 |
+| S04 | Advanced and optional modules | 6 | 29 | 5 | 25 |
 
-Review portal, bilingual interface prototypes, stack skeletons and traceability. Production builds are blocked by dependency access.
+## S01 Platform foundations and nursery setup
 
-Exit: Windows and iPhone review flows visible; prototype checks pass; physical device UAT remains pending.
+Working web and Flutter foundations, secure tenant/identity boundaries, nursery setup, privacy, localization and platform controls.
 
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+Exit: All constituent exit criteria pass; actual client builds and Windows 11/iPhone checks are evidenced.
 
+Approval: pending. To be estimated from unchanged scope, team capacity and gates; no committed duration or dates.
 
+### Retained milestone work packages
 
-- [ ] TW-006 Approve supported devices, browsers, accessibility target and response-time objectives — depends on None; owner Product and Engineering
-- [ ] TW-010 Name UAT owners for operations, safeguarding, finance, privacy and Arabic quality — depends on None; owner Product and Delivery
-- [ ] TW-011 Create the repository structure for web, Flutter, API, worker, contracts, infrastructure and system tests — depends on TW-006; owner Technical Lead
-- [ ] TW-012 Define OpenAPI governance and generate Dart and TypeScript clients in CI — depends on TW-011; owner Backend Lead
-- [ ] TW-013 Configure Ruff, mypy, pytest, Dart analysis, ESLint, Prettier and commit checks — depends on TW-011; owner Engineering Enablement
-- [ ] TW-014 Configure secret, dependency, static-analysis, container and Terraform scans — depends on TW-011; owner Security and DevOps
-- [ ] TW-020 Create deterministic synthetic organization fixtures and reset tooling — depends on TW-011; owner QA and Backend
-- [ ] TW-030 Establish Arabic and English ICU catalogues, RTL foundations and locale formatting — depends on TW-006,TW-011; owner Web, Mobile and Design
-- [ ] TW-034 Build the administration shell, navigation, role-aware routes and bilingual layout — depends on TW-012,TW-023,TW-030; owner Web
-- [ ] TW-035 Build the Flutter shell, authentication, role-aware navigation and secure storage — depends on TW-012,TW-025,TW-030; owner Mobile
+- Original S01: Review foundations. Review portal, bilingual interface prototypes, stack skeletons and traceability. Production builds are blocked by dependency access. Exit: Windows and iPhone review flows visible; prototype checks pass; physical device UAT remains pending.
+- Original S02: Tenant and access foundations. Organization, branches, identity, server authorization and append-only audit. Exit: Allowed and denied API journeys, real PostgreSQL RLS and suspension tests pass.
+- Original S03: People and classroom setup. Invitations, children, guardian relationships, staff and classrooms. Exit: Administrator sets up a synthetic center; staff and parents see only permitted records.
+- Original S04: Privacy and platform controls. Consent and lifecycle, audited support, full localization and plan/module controls. Exit: Privacy review, support expiry, disabled-module denial and bilingual journeys pass.
 
-
-
-## S02 Tenant and access foundations
-
-Organization, branches, identity, server authorization and append-only audit.
-
-Exit: Allowed and denied API journeys, real PostgreSQL RLS and suspension tests pass.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+### Features
 
 - [ ] FEAT-001 Organization Lifecycle and Tenant Configuration — depends on None; branch `feat/FEAT-001-organization-lifecycle-and-tenant-configuration`
+- [ ] FEAT-006 Platform Administration and Audited Support Access — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-006-platform-administration-and-audited-support-access`
 - [ ] FEAT-034 Audit History — depends on FEAT-001, FEAT-005; branch `feat/FEAT-034-audit-history`
+- [ ] FEAT-035 Privacy Consent Retention Export and Deletion — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-035-privacy-consent-retention-export-and-deletion`
 - [ ] FEAT-002 Branch Management — depends on FEAT-001; branch `feat/FEAT-002-branch-management`
 - [ ] FEAT-003 Authentication and Account Recovery — depends on FEAT-001; branch `feat/FEAT-003-authentication-and-account-recovery`
+- [ ] FEAT-004 User Invitations and Account Provisioning — depends on FEAT-001, FEAT-003, FEAT-005; branch `feat/FEAT-004-user-invitations-and-account-provisioning`
 - [ ] FEAT-005 Roles Permissions and Access Boundaries — depends on FEAT-001, FEAT-002; branch `feat/FEAT-005-roles-permissions-and-access-boundaries`
+- [ ] FEAT-007 Child Profiles and Enrollment — depends on FEAT-002, FEAT-005; branch `feat/FEAT-007-child-profiles-and-enrollment`
+- [ ] FEAT-008 Guardian and Child Relationships — depends on FEAT-004, FEAT-007; branch `feat/FEAT-008-guardian-and-child-relationships`
+- [ ] FEAT-009 Classroom Management and Daily Dashboard — depends on FEAT-002, FEAT-007, FEAT-010; branch `feat/FEAT-009-classroom-management-and-daily-dashboard`
+- [ ] FEAT-010 Staff Profiles and Assignments — depends on FEAT-002, FEAT-004, FEAT-005; branch `feat/FEAT-010-staff-profiles-and-assignments`
+- [ ] FEAT-036 Arabic English Localization and Regional Settings — depends on FEAT-001; branch `feat/FEAT-036-localization-foundation`
+- [ ] FEAT-037 Configurable Branding Modules and Plans — depends on FEAT-001, FEAT-006; branch `feat/FEAT-037-configurable-branding-modules-and-plans`
+
+### Technical tasks
 
 - [ ] TW-001 Approve Egypt privacy, controller, processor and cross-border data model — depends on None; owner Legal and Product
 - [ ] TW-002 Approve retention, deletion, archival, legal-hold and breach-response policies — depends on TW-001; owner Privacy and Security
 - [ ] TW-003 Approve the field-level permission matrix for all roles and relationships — depends on None; owner Product and Safeguarding
 - [ ] TW-004 Approve pickup identity evidence, verification and retention rules — depends on TW-001; owner Safeguarding and Legal
 - [ ] TW-005 Approve incident severity, escalation, acknowledgement and response rules — depends on TW-001; owner Safeguarding and Operations
+- [ ] TW-006 Approve supported devices, browsers, accessibility target and response-time objectives — depends on None; owner Product and Engineering
 - [ ] TW-007 Approve the production AWS region and data-residency position — depends on TW-001; owner Legal and Security
 - [ ] TW-008 Approve payment markets, methods, tax, receipt, refund, dispute and reconciliation rules — depends on TW-001; owner Finance and Legal
 - [ ] TW-009 Approve Phase 1 reports and metric definitions — depends on None; owner Product and Finance
+- [ ] TW-010 Name UAT owners for operations, safeguarding, finance, privacy and Arabic quality — depends on None; owner Product and Delivery
+- [ ] TW-011 Create the repository structure for web, Flutter, API, worker, contracts, infrastructure and system tests — depends on TW-006; owner Technical Lead
+- [ ] TW-012 Define OpenAPI governance and generate Dart and TypeScript clients in CI — depends on TW-011; owner Backend Lead
+- [ ] TW-013 Configure Ruff, mypy, pytest, Dart analysis, ESLint, Prettier and commit checks — depends on TW-011; owner Engineering Enablement
+- [ ] TW-014 Configure secret, dependency, static-analysis, container and Terraform scans — depends on TW-011; owner Security and DevOps
 - [ ] TW-015 Create Terraform modules for network, ECS, RDS, S3, SQS, Cognito, KMS and monitoring — depends on TW-007,TW-011; owner DevOps
 - [ ] TW-016 Create immutable Docker builds for API and worker services — depends on TW-011; owner Backend and DevOps
 - [ ] TW-017 Implement development, staging and production deployment workflows with approvals — depends on TW-015,TW-016; owner DevOps
 - [ ] TW-018 Establish OpenTelemetry context, structured logging, metrics and correlation identifiers — depends on TW-011,TW-015; owner Platform Engineering
 - [ ] TW-019 Create service ownership, incident severity and operational runbook templates — depends on TW-018; owner DevOps and Support
+- [ ] TW-020 Create deterministic synthetic organization fixtures and reset tooling — depends on TW-011; owner QA and Backend
 - [ ] TW-021 Define tenant-aware base tables, identifiers, foreign keys and indexes — depends on TW-003; owner Backend and Database
 - [ ] TW-022 Implement PostgreSQL row-level security and a non-owner runtime role — depends on TW-021; owner Database and Security
 - [ ] TW-023 Implement authoritative membership, role, branch, classroom and relationship policy evaluation — depends on TW-003,TW-021; owner Backend and Security
 - [ ] TW-024 Implement field-level response filtering for sensitive categories — depends on TW-003,TW-023; owner Backend and Security
 - [ ] TW-025 Configure Cognito clients, OIDC flows, MFA, recovery and token validation — depends on TW-015; owner Backend and DevOps
+- [ ] TW-026 Implement secure invitation, existing-account linking and single-use acceptance — depends on TW-023,TW-025; owner Backend
+- [ ] TW-027 Implement reason-bound, expiring and audited platform support sessions — depends on TW-023; owner Backend and Security
 - [ ] TW-028 Implement append-only audit event creation, review and protected retention — depends on TW-021,TW-023; owner Backend and Security
+- [ ] TW-029 Implement consent versions, retention state and privacy workflow skeleton — depends on TW-002,TW-028; owner Backend and Privacy
+- [ ] TW-030 Establish Arabic and English ICU catalogues, RTL foundations and locale formatting — depends on TW-006,TW-011; owner Web, Mobile and Design
 - [ ] TW-031 Implement standard errors, cursor pagination, idempotency and concurrency controls — depends on TW-012,TW-023; owner Backend
 - [ ] TW-032 Implement transactional outbox, relay, SQS consumers and dead-letter handling — depends on TW-015,TW-021; owner Backend and DevOps
+- [ ] TW-033 Implement private upload authorization, quarantine, scanning, transformation and signed delivery — depends on TW-015,TW-023,TW-029,TW-032; owner Backend and Media
+- [ ] TW-034 Build the administration shell, navigation, role-aware routes and bilingual layout — depends on TW-012,TW-023,TW-030; owner Web
+- [ ] TW-035 Build the Flutter shell, authentication, role-aware navigation and secure storage — depends on TW-012,TW-025,TW-030; owner Mobile
 - [ ] TW-036 Implement organization, branch and lifecycle administration — depends on TW-021,TW-023,TW-028; owner Backend and Web
+- [ ] TW-037 Implement child, guardian, relationship, classroom and staff modules — depends on TW-024,TW-029,TW-036; owner Backend, Web and Mobile
+
+### Feature tasks
 
 - [ ] DEV-FEAT-001-01 Create and maintain an organization profile.
 - [ ] DEV-FEAT-001-02 Support active, suspended, and closed lifecycle states.
@@ -75,39 +96,20 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-003-02 Provide secure password or account recovery.
 - [ ] DEV-FEAT-003-03 Prevent disabled, suspended, or unlinked accounts from accessing protected product data.
 - [ ] DEV-FEAT-003-04 Display actionable but non-revealing authentication errors.
+- [ ] DEV-FEAT-004-01 Create, resend, revoke, and expire invitations.
+- [ ] DEV-FEAT-004-02 Show invitation status to authorized administrators.
+- [ ] DEV-FEAT-004-03 Validate the intended assignment independently of information supplied by the invitee.
+- [ ] DEV-FEAT-004-04 Handle existing accounts and new accounts without duplicate membership.
 - [ ] DEV-FEAT-005-01 Define role capabilities and permitted scope.
 - [ ] DEV-FEAT-005-02 Support organization, branch, classroom, child, and relationship-based access.
 - [ ] DEV-FEAT-005-03 Prevent role or permission elevation by client-side changes.
 - [ ] DEV-FEAT-005-04 Separate financial, care, medical, transportation, and platform-support access.
 - [ ] DEV-FEAT-005-05 Cover access rules with positive and negative role tests.
-- [ ] DEV-FEAT-034-01 Define auditable actions and minimum event fields.
-- [ ] DEV-FEAT-034-02 Create records independently of normal user edit permissions.
-- [ ] DEV-FEAT-034-03 Prevent normal users from changing or deleting audit history.
-- [ ] DEV-FEAT-034-04 Provide authorized filtering and review.
-- [ ] DEV-FEAT-034-05 Minimize sensitive values stored in change summaries.
-- [ ] DEV-FEAT-034-06 Define retention and export handling.
-
-## S03 People and classroom setup
-
-Invitations, children, guardian relationships, staff and classrooms.
-
-Exit: Administrator sets up a synthetic center; staff and parents see only permitted records.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-004 User Invitations and Account Provisioning — depends on FEAT-001, FEAT-003, FEAT-005; branch `feat/FEAT-004-user-invitations-and-account-provisioning`
-- [ ] FEAT-007 Child Profiles and Enrollment — depends on FEAT-002, FEAT-005; branch `feat/FEAT-007-child-profiles-and-enrollment`
-- [ ] FEAT-008 Guardian and Child Relationships — depends on FEAT-004, FEAT-007; branch `feat/FEAT-008-guardian-and-child-relationships`
-- [ ] FEAT-009 Classroom Management and Daily Dashboard — depends on FEAT-002, FEAT-007, FEAT-010; branch `feat/FEAT-009-classroom-management-and-daily-dashboard`
-- [ ] FEAT-010 Staff Profiles and Assignments — depends on FEAT-002, FEAT-004, FEAT-005; branch `feat/FEAT-010-staff-profiles-and-assignments`
-
-- [ ] TW-026 Implement secure invitation, existing-account linking and single-use acceptance — depends on TW-023,TW-025; owner Backend
-- [ ] TW-037 Implement child, guardian, relationship, classroom and staff modules — depends on TW-024,TW-029,TW-036; owner Backend, Web and Mobile
-
-- [ ] DEV-FEAT-004-01 Create, resend, revoke, and expire invitations.
-- [ ] DEV-FEAT-004-02 Show invitation status to authorized administrators.
-- [ ] DEV-FEAT-004-03 Validate the intended assignment independently of information supplied by the invitee.
-- [ ] DEV-FEAT-004-04 Handle existing accounts and new accounts without duplicate membership.
+- [ ] DEV-FEAT-006-01 Manage organizations, plans, subscriptions, feature availability, and platform metrics.
+- [ ] DEV-FEAT-006-02 Expose operational health without showing unnecessary child data.
+- [ ] DEV-FEAT-006-03 Require a support reason for exceptional sensitive-data access.
+- [ ] DEV-FEAT-006-04 Record who accessed what, why, and when.
+- [ ] DEV-FEAT-006-05 Allow authorized review of support-access history.
 - [ ] DEV-FEAT-007-01 Create, view, edit, transfer, enroll, withdraw, and archive child profiles.
 - [ ] DEV-FEAT-007-02 Capture all supplied child profile fields, allowing optional fields to remain blank.
 - [ ] DEV-FEAT-007-03 Highlight allergies and urgent care information to authorized care staff.
@@ -125,29 +127,12 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-010-02 Assign roles, branches, classrooms, and schedules.
 - [ ] DEV-FEAT-010-03 Remove access when employment ends or a user is suspended.
 - [ ] DEV-FEAT-010-04 Keep future shift, leave, attendance, and payroll extension points as product considerations without implementing full payroll.
-
-## S04 Privacy and platform controls
-
-Consent and lifecycle, audited support, full localization and plan/module controls.
-
-Exit: Privacy review, support expiry, disabled-module denial and bilingual journeys pass.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-006 Platform Administration and Audited Support Access — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-006-platform-administration-and-audited-support-access`
-- [ ] FEAT-035 Privacy Consent Retention Export and Deletion — depends on FEAT-001, FEAT-005, FEAT-034; branch `feat/FEAT-035-privacy-consent-retention-export-and-deletion`
-- [ ] FEAT-036 Arabic English Localization and Regional Settings — depends on FEAT-001; branch `feat/FEAT-036-localization-foundation`
-- [ ] FEAT-037 Configurable Branding Modules and Plans — depends on FEAT-001, FEAT-006; branch `feat/FEAT-037-configurable-branding-modules-and-plans`
-
-- [ ] TW-027 Implement reason-bound, expiring and audited platform support sessions — depends on TW-023; owner Backend and Security
-- [ ] TW-029 Implement consent versions, retention state and privacy workflow skeleton — depends on TW-002,TW-028; owner Backend and Privacy
-- [ ] TW-033 Implement private upload authorization, quarantine, scanning, transformation and signed delivery — depends on TW-015,TW-023,TW-029,TW-032; owner Backend and Media
-
-- [ ] DEV-FEAT-006-01 Manage organizations, plans, subscriptions, feature availability, and platform metrics.
-- [ ] DEV-FEAT-006-02 Expose operational health without showing unnecessary child data.
-- [ ] DEV-FEAT-006-03 Require a support reason for exceptional sensitive-data access.
-- [ ] DEV-FEAT-006-04 Record who accessed what, why, and when.
-- [ ] DEV-FEAT-006-05 Allow authorized review of support-access history.
+- [ ] DEV-FEAT-034-01 Define auditable actions and minimum event fields.
+- [ ] DEV-FEAT-034-02 Create records independently of normal user edit permissions.
+- [ ] DEV-FEAT-034-03 Prevent normal users from changing or deleting audit history.
+- [ ] DEV-FEAT-034-04 Provide authorized filtering and review.
+- [ ] DEV-FEAT-034-05 Minimize sensitive values stored in change summaries.
+- [ ] DEV-FEAT-034-06 Define retention and export handling.
 - [ ] DEV-FEAT-035-01 Capture consent purpose, status, subject, grantor, effective dates, and withdrawal.
 - [ ] DEV-FEAT-035-02 Apply consent to media, communications, and authorized uses.
 - [ ] DEV-FEAT-035-03 Provide reviewed account-deletion and organization-export workflows.
@@ -167,23 +152,54 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-037-05 Keep historical data when a module is disabled unless approved lifecycle policy says otherwise.
 - [ ] DEV-FEAT-037-06 Prepare for custom domain and dedicated build decisions without implementing them in MVP.
 
-## S05 Attendance and daily care
+## S02 Daily operations and Phase 1 release
 
-Attendance, timeline, batch entry and encrypted offline command recovery.
+Attendance, daily care, offline recovery, parent engagement, complete demo and Phase 1 release hardening.
 
-Exit: Staff completes a classroom day; retry and conflict tests show no silent loss or duplication.
+Exit: A full nursery day completes in Arabic and English; security, accessibility, resilience, restoration, rollback and specialist UAT pass.
 
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+Approval: pending. To be estimated from unchanged scope, team capacity and gates; no committed duration or dates.
+
+### Retained milestone work packages
+
+- Original S05: Attendance and daily care. Attendance, timeline, batch entry and encrypted offline command recovery. Exit: Staff completes a classroom day; retry and conflict tests show no silent loss or duplication.
+- Original S06: Parent engagement and Phase 1 acceptance. Announcements, notification ledger, calendar, search, parent home and complete demo. Exit: A representative center completes a full day in English and Arabic.
+- Original S07: Phase 1 release hardening. Security, accessibility, performance, resilience, backup restore and operational UAT. Exit: Blocking release controls pass with named specialist signoffs and rollback evidence.
+
+### Features
 
 - [ ] FEAT-011 Child Attendance — depends on FEAT-007, FEAT-009; branch `feat/FEAT-011-child-attendance`
 - [ ] FEAT-013 Daily Child Timeline — depends on FEAT-007, FEAT-011; branch `feat/FEAT-013-daily-child-timeline`
 - [ ] FEAT-014 Quick and Batch Care Entry — depends on FEAT-009, FEAT-013; branch `feat/FEAT-014-quick-and-batch-care-entry`
+- [ ] FEAT-015 Parent Home and Daily Summary — depends on FEAT-008, FEAT-013, FEAT-017, FEAT-019; branch `feat/FEAT-015-parent-home-and-daily-summary`
+- [ ] FEAT-016 Announcements — depends on FEAT-002, FEAT-005, FEAT-009; branch `feat/FEAT-016-announcements`
+- [ ] FEAT-017 Notifications and Preference Management — depends on FEAT-013, FEAT-016; branch `feat/FEAT-017-notifications-and-preference-management`
+- [ ] FEAT-018 Calendar and Relevant Events — depends on FEAT-002, FEAT-009; branch `feat/FEAT-018-calendar-and-relevant-events`
+- [ ] FEAT-019 Administrative Search — depends on FEAT-005, FEAT-007, FEAT-009, FEAT-010; branch `feat/FEAT-019-administrative-search`
+- [ ] FEAT-041 Demo Organization and Scenario Data — depends on FEAT-001 through FEAT-019 as applicable; branch `feat/FEAT-041-demo-organization-and-scenario-data`
+
+### Technical tasks
 
 - [ ] TW-038 Implement child attendance commands, corrections, QR entry and reporting views — depends on TW-031,TW-037; owner Backend and Mobile
 - [ ] TW-039 Implement typed child timeline events and visibility projections — depends on TW-024,TW-037,TW-038; owner Backend and Mobile
 - [ ] TW-040 Implement authorized batch care commands with per-child exceptions — depends on TW-031,TW-039; owner Backend and Mobile
 - [ ] TW-041 Implement encrypted SQLite working set, local outbox and resumable sync — depends on TW-031,TW-035,TW-038,TW-039; owner Mobile and Backend
 - [ ] TW-042 Implement idempotent command receipt and user-visible conflict handling — depends on TW-041; owner Backend, Mobile and QA
+- [ ] TW-043 Implement parent home, announcements, calendar and relevant search — depends on TW-037,TW-039; owner Backend, Web and Mobile
+- [ ] TW-044 Implement notification intent, preference, localization and channel-delivery ledgers — depends on TW-030,TW-032,TW-043; owner Backend and Mobile
+- [ ] TW-045 Populate and validate the Happy Kids Nursery demonstration scenarios — depends on TW-020,TW-036,TW-044; owner QA and Product
+- [ ] TW-046 Run tenant, role, relationship, field, media, invitation and support-access abuse suites — depends on TW-022,TW-027,TW-033,TW-045; owner Security and QA
+- [ ] TW-047 Complete Arabic, English, RTL and mixed-direction test passes — depends on TW-030,TW-045; owner QA and Arabic Owner
+- [ ] TW-048 Complete keyboard, screen-reader, zoom, contrast and touch-target verification — depends on TW-034,TW-035,TW-045; owner QA and Design
+- [ ] TW-049 Execute realistic API, sync, notification and media performance tests — depends on TW-006,TW-045; owner Performance QA
+- [ ] TW-050 Test queue replay, dead-letter recovery, retry storms, provider failure and database failover — depends on TW-032,TW-044; owner QA and DevOps
+- [ ] TW-051 Restore database and protected media into an isolated environment — depends on TW-015,TW-017; owner DevOps and Security
+- [ ] TW-052 Validate consent withdrawal, export, deletion, retention and log redaction — depends on TW-029,TW-033,TW-045; owner Privacy and QA
+- [ ] TW-053 Finalize dashboards, alerts, runbooks, support procedures and incident response — depends on TW-018,TW-019,TW-050; owner DevOps and Support
+- [ ] TW-054 Execute full-day bilingual operational UAT and close blocking defects — depends on TW-010,TW-045,TW-047,TW-052; owner Product and QA
+- [ ] TW-055 Run production readiness review and verify rollback — depends on TW-046,TW-054; owner Technical Lead
+
+### Feature tasks
 
 - [ ] DEV-FEAT-011-01 Record and correct attendance with controlled permissions.
 - [ ] DEV-FEAT-011-02 Support optional parent QR and center-managed QR processes.
@@ -200,26 +216,6 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-014-03 Preview recipients and values before committing a batch.
 - [ ] DEV-FEAT-014-04 Edit or exclude exceptions without re-entering the whole batch.
 - [ ] DEV-FEAT-014-05 Prevent duplicate submission and preserve child-level records.
-
-## S06 Parent engagement and Phase 1 acceptance
-
-Announcements, notification ledger, calendar, search, parent home and complete demo.
-
-Exit: A representative center completes a full day in English and Arabic.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-015 Parent Home and Daily Summary — depends on FEAT-008, FEAT-013, FEAT-017, FEAT-019; branch `feat/FEAT-015-parent-home-and-daily-summary`
-- [ ] FEAT-016 Announcements — depends on FEAT-002, FEAT-005, FEAT-009; branch `feat/FEAT-016-announcements`
-- [ ] FEAT-017 Notifications and Preference Management — depends on FEAT-013, FEAT-016; branch `feat/FEAT-017-notifications-and-preference-management`
-- [ ] FEAT-018 Calendar and Relevant Events — depends on FEAT-002, FEAT-009; branch `feat/FEAT-018-calendar-and-relevant-events`
-- [ ] FEAT-019 Administrative Search — depends on FEAT-005, FEAT-007, FEAT-009, FEAT-010; branch `feat/FEAT-019-administrative-search`
-- [ ] FEAT-041 Demo Organization and Scenario Data — depends on FEAT-001 through FEAT-019 as applicable; branch `feat/FEAT-041-demo-organization-and-scenario-data`
-
-- [ ] TW-043 Implement parent home, announcements, calendar and relevant search — depends on TW-037,TW-039; owner Backend, Web and Mobile
-- [ ] TW-044 Implement notification intent, preference, localization and channel-delivery ledgers — depends on TW-030,TW-032,TW-043; owner Backend and Mobile
-- [ ] TW-045 Populate and validate the Happy Kids Nursery demonstration scenarios — depends on TW-020,TW-036,TW-044; owner QA and Product
-
 - [ ] DEV-FEAT-015-01 Support guardians with one or multiple children.
 - [ ] DEV-FEAT-015-02 Show current state and today’s authorized summary.
 - [ ] DEV-FEAT-015-03 Highlight safety-critical information without clutter.
@@ -250,43 +246,50 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-041-04 Allow repeatable reset or recreation.
 - [ ] DEV-FEAT-041-05 Keep demo data isolated from production customer data and metrics.
 
-## S07 Phase 1 release hardening
+## S03 Safety, communication, finance and growth
 
-Security, accessibility, performance, resilience, backup restore and operational UAT.
+Pickup, incidents, private media, messaging, billing, payments, admissions, capacity and operational analytics.
 
-Exit: Blocking release controls pass with named specialist signoffs and rollback evidence.
+Exit: Safeguarding, privacy and finance journeys pass; payments reconcile and Phase 2 end-to-end acceptance is complete.
 
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+Approval: pending. To be estimated from unchanged scope, team capacity and gates; no committed duration or dates.
 
+### Retained milestone work packages
 
+- Original S08: Pickup and incidents. Standing/temporary pickup, atomic checkout and incident acknowledgement. Exit: Safeguarding owner accepts identity, replay, escalation and acknowledgement scenarios.
+- Original S09: Private media and messaging. Consent-aware media and scoped conversations with private attachments. Exit: Revoked-consent, unrelated-child and unauthorized-participant denial tests pass.
+- Original S10: Billing and payment reminders. Fee rules, invoices, immutable balances and reminder delivery. Exit: Finance accepts minor-unit calculations, corrections, access filtering and balances.
+- Original S11: Payments and reconciliation. Provider adapter, signature/replay checks and settlement reconciliation. Exit: Finance/security accept duplicate and out-of-order webhooks and reconciled settlement.
+- Original S12: Admissions and operational analytics. Admissions pipeline, waiting list and approved metric projections. Exit: Operations accepts capacity and metric definitions; Phase 2 release tests pass.
 
-- [ ] TW-046 Run tenant, role, relationship, field, media, invitation and support-access abuse suites — depends on TW-022,TW-027,TW-033,TW-045; owner Security and QA
-- [ ] TW-047 Complete Arabic, English, RTL and mixed-direction test passes — depends on TW-030,TW-045; owner QA and Arabic Owner
-- [ ] TW-048 Complete keyboard, screen-reader, zoom, contrast and touch-target verification — depends on TW-034,TW-035,TW-045; owner QA and Design
-- [ ] TW-049 Execute realistic API, sync, notification and media performance tests — depends on TW-006,TW-045; owner Performance QA
-- [ ] TW-050 Test queue replay, dead-letter recovery, retry storms, provider failure and database failover — depends on TW-032,TW-044; owner QA and DevOps
-- [ ] TW-051 Restore database and protected media into an isolated environment — depends on TW-015,TW-017; owner DevOps and Security
-- [ ] TW-052 Validate consent withdrawal, export, deletion, retention and log redaction — depends on TW-029,TW-033,TW-045; owner Privacy and QA
-- [ ] TW-053 Finalize dashboards, alerts, runbooks, support procedures and incident response — depends on TW-018,TW-019,TW-050; owner DevOps and Support
-- [ ] TW-054 Execute full-day bilingual operational UAT and close blocking defects — depends on TW-010,TW-045,TW-047,TW-052; owner Product and QA
-- [ ] TW-055 Run production readiness review and verify rollback — depends on TW-046,TW-054; owner Technical Lead
-
-
-
-## S08 Pickup and incidents
-
-Standing/temporary pickup, atomic checkout and incident acknowledgement.
-
-Exit: Safeguarding owner accepts identity, replay, escalation and acknowledgement scenarios.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+### Features
 
 - [ ] FEAT-020 Pickup Persons and Standing Authorization — depends on FEAT-007, FEAT-008, FEAT-034; branch `feat/FEAT-020-pickup-persons-and-standing-authorization`
 - [ ] FEAT-021 Temporary Pickup Authorization and Secure Checkout — depends on FEAT-011, FEAT-020; branch `feat/FEAT-021-temporary-pickup-authorization-and-secure-checkout`
+- [ ] FEAT-022 Photo and Video Sharing with Consent — depends on FEAT-007, FEAT-008, FEAT-013, FEAT-035; branch `feat/FEAT-022-photo-and-video-sharing-with-consent`
+- [ ] FEAT-023 Direct Messaging — depends on FEAT-005, FEAT-008, FEAT-009; branch `feat/FEAT-023-direct-messaging`
 - [ ] FEAT-024 Incident Reporting and Acknowledgement — depends on FEAT-007, FEAT-017, FEAT-034; branch `feat/FEAT-024-incident-reporting-and-acknowledgement`
+- [ ] FEAT-026 Fee Plans Discounts and Charge Rules — depends on FEAT-001, FEAT-002, FEAT-005; branch `feat/FEAT-026-fee-plans-discounts-and-charge-rules`
+- [ ] FEAT-027 Invoices Balances and Payment History — depends on FEAT-008, FEAT-026, FEAT-034; branch `feat/FEAT-027-invoices-balances-and-payment-history`
+- [ ] FEAT-028 Online Payment Processing — depends on FEAT-027, FEAT-034; branch `feat/FEAT-028-online-payment-processing`
+- [ ] FEAT-029 Automated Payment Reminders — depends on FEAT-017, FEAT-027; branch `feat/FEAT-029-automated-payment-reminders`
+- [ ] FEAT-030 Admissions Pipeline — depends on FEAT-002, FEAT-005; branch `feat/FEAT-030-admissions-pipeline`
+- [ ] FEAT-031 Waiting List and Capacity Opportunity — depends on FEAT-009, FEAT-030; branch `feat/FEAT-031-waiting-list-and-capacity-opportunity`
+- [ ] FEAT-032 Operational and Nursery Analytics — depends on FEAT-011, FEAT-016, FEAT-023, FEAT-027, FEAT-030, FEAT-031; branch `feat/FEAT-032-operational-and-nursery-analytics`
+
+### Technical tasks
 
 - [ ] TW-056 Implement pickup persons, standing and temporary authorizations, QR or PIN and checkout — depends on TW-004,TW-037,TW-046; owner Backend, Mobile and Safeguarding
+- [ ] TW-057 Implement child tagging, consent-aware media sharing and revocation behavior — depends on TW-033,TW-037,TW-052; owner Backend, Mobile and Privacy
+- [ ] TW-058 Implement controlled guardian and staff conversations with private attachments — depends on TW-023,TW-033,TW-044; owner Backend and Mobile
 - [ ] TW-059 Implement incident capture, escalation, notification, review and acknowledgement — depends on TW-005,TW-028,TW-044; owner Backend, Mobile and Safeguarding
+- [ ] TW-060 Implement fee rules, invoices, balances, payment history and reminders — depends on TW-003,TW-036,TW-044; owner Backend, Web and Finance
+- [ ] TW-061 Implement provider adapter, signed webhooks, immutable events and reconciliation — depends on TW-008,TW-060; owner Backend, Finance and Security
+- [ ] TW-062 Implement admissions pipeline, waiting list and capacity opportunity — depends on TW-036,TW-037; owner Backend and Web
+- [ ] TW-063 Implement approved operational projections and metric definitions — depends on TW-009,TW-060,TW-062; owner Backend, Web and Product
+- [ ] TW-064 Execute safeguarding, finance, consent and end-to-end Phase 2 tests — depends on TW-056,TW-063; owner QA and Specialists
+
+### Feature tasks
 
 - [ ] DEV-FEAT-020-01 Create, edit, deactivate, and expire pickup persons.
 - [ ] DEV-FEAT-020-02 Respect relationship permission to authorize pickup.
@@ -298,26 +301,6 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-021-03 Require staff confirmation of identity and authorization.
 - [ ] DEV-FEAT-021-04 Prevent reuse after successful checkout.
 - [ ] DEV-FEAT-021-05 Record failed and successful verification attempts appropriately.
-- [ ] DEV-FEAT-024-01 Create incident drafts and submit complete reports.
-- [ ] DEV-FEAT-024-02 Define severity and escalation rules through approved policy.
-- [ ] DEV-FEAT-024-03 Notify relevant managers immediately for critical incidents.
-- [ ] DEV-FEAT-024-04 Track parent notification, manager review, and acknowledgement.
-- [ ] DEV-FEAT-024-05 Control post-submission amendment and preserve history.
-
-## S09 Private media and messaging
-
-Consent-aware media and scoped conversations with private attachments.
-
-Exit: Revoked-consent, unrelated-child and unauthorized-participant denial tests pass.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-022 Photo and Video Sharing with Consent — depends on FEAT-007, FEAT-008, FEAT-013, FEAT-035; branch `feat/FEAT-022-photo-and-video-sharing-with-consent`
-- [ ] FEAT-023 Direct Messaging — depends on FEAT-005, FEAT-008, FEAT-009; branch `feat/FEAT-023-direct-messaging`
-
-- [ ] TW-057 Implement child tagging, consent-aware media sharing and revocation behavior — depends on TW-033,TW-037,TW-052; owner Backend, Mobile and Privacy
-- [ ] TW-058 Implement controlled guardian and staff conversations with private attachments — depends on TW-023,TW-033,TW-044; owner Backend and Mobile
-
 - [ ] DEV-FEAT-022-01 Upload, process, view, and remove media within authorized scope.
 - [ ] DEV-FEAT-022-02 Tag children visible in each item.
 - [ ] DEV-FEAT-022-03 Enforce consent before sharing or marketing use.
@@ -329,21 +312,11 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-023-03 Show read and delivery states.
 - [ ] DEV-FEAT-023-04 Retain conversation history according to policy.
 - [ ] DEV-FEAT-023-05 Remove access when staff assignments or guardian relationships change.
-
-## S10 Billing and payment reminders
-
-Fee rules, invoices, immutable balances and reminder delivery.
-
-Exit: Finance accepts minor-unit calculations, corrections, access filtering and balances.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-026 Fee Plans Discounts and Charge Rules — depends on FEAT-001, FEAT-002, FEAT-005; branch `feat/FEAT-026-fee-plans-discounts-and-charge-rules`
-- [ ] FEAT-027 Invoices Balances and Payment History — depends on FEAT-008, FEAT-026, FEAT-034; branch `feat/FEAT-027-invoices-balances-and-payment-history`
-- [ ] FEAT-029 Automated Payment Reminders — depends on FEAT-017, FEAT-027; branch `feat/FEAT-029-automated-payment-reminders`
-
-- [ ] TW-060 Implement fee rules, invoices, balances, payment history and reminders — depends on TW-003,TW-036,TW-044; owner Backend, Web and Finance
-
+- [ ] DEV-FEAT-024-01 Create incident drafts and submit complete reports.
+- [ ] DEV-FEAT-024-02 Define severity and escalation rules through approved policy.
+- [ ] DEV-FEAT-024-03 Notify relevant managers immediately for critical incidents.
+- [ ] DEV-FEAT-024-04 Track parent notification, manager review, and acknowledgement.
+- [ ] DEV-FEAT-024-05 Control post-submission amendment and preserve history.
 - [ ] DEV-FEAT-026-01 Create, version, activate, and retire fee plans.
 - [ ] DEV-FEAT-026-02 Define recurrence, due dates, eligible branches or services, and currency.
 - [ ] DEV-FEAT-026-03 Apply approved discounts with traceable rules.
@@ -354,47 +327,17 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-027-03 Apply payments and preserve payment history.
 - [ ] DEV-FEAT-027-04 Show guardians only invoices they are permitted to pay or view.
 - [ ] DEV-FEAT-027-05 Provide printable or exportable invoice details where required.
-- [ ] DEV-FEAT-029-01 Configure schedule, audience, channel, template, and enabled status.
-- [ ] DEV-FEAT-029-02 Use current invoice state before sending.
-- [ ] DEV-FEAT-029-03 Stop or suppress reminders for paid, cancelled, disputed, or otherwise excluded invoices.
-- [ ] DEV-FEAT-029-04 Prevent duplicate delivery for the same reminder occurrence.
-- [ ] DEV-FEAT-029-05 Track reminder outcome.
-
-## S11 Payments and reconciliation
-
-Provider adapter, signature/replay checks and settlement reconciliation.
-
-Exit: Finance/security accept duplicate and out-of-order webhooks and reconciled settlement.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-028 Online Payment Processing — depends on FEAT-027, FEAT-034; branch `feat/FEAT-028-online-payment-processing`
-
-- [ ] TW-061 Implement provider adapter, signed webhooks, immutable events and reconciliation — depends on TW-008,TW-060; owner Backend, Finance and Security
-
 - [ ] DEV-FEAT-028-01 Initiate payment for an eligible invoice.
 - [ ] DEV-FEAT-028-02 Handle success, failure, cancellation, duplicate, delayed, and reversed outcomes.
 - [ ] DEV-FEAT-028-03 Update financial records only from authoritative payment confirmation.
 - [ ] DEV-FEAT-028-04 Use a consistent product contract across providers.
 - [ ] DEV-FEAT-028-05 Reconcile provider and invoice records.
 - [ ] DEV-FEAT-028-06 Protect payment details according to applicable specialist guidance.
-
-## S12 Admissions and operational analytics
-
-Admissions pipeline, waiting list and approved metric projections.
-
-Exit: Operations accepts capacity and metric definitions; Phase 2 release tests pass.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-030 Admissions Pipeline — depends on FEAT-002, FEAT-005; branch `feat/FEAT-030-admissions-pipeline`
-- [ ] FEAT-031 Waiting List and Capacity Opportunity — depends on FEAT-009, FEAT-030; branch `feat/FEAT-031-waiting-list-and-capacity-opportunity`
-- [ ] FEAT-032 Operational and Nursery Analytics — depends on FEAT-011, FEAT-016, FEAT-023, FEAT-027, FEAT-030, FEAT-031; branch `feat/FEAT-032-operational-and-nursery-analytics`
-
-- [ ] TW-062 Implement admissions pipeline, waiting list and capacity opportunity — depends on TW-036,TW-037; owner Backend and Web
-- [ ] TW-063 Implement approved operational projections and metric definitions — depends on TW-009,TW-060,TW-062; owner Backend, Web and Product
-- [ ] TW-064 Execute safeguarding, finance, consent and end-to-end Phase 2 tests — depends on TW-056,TW-063; owner QA and Specialists
-
+- [ ] DEV-FEAT-029-01 Configure schedule, audience, channel, template, and enabled status.
+- [ ] DEV-FEAT-029-02 Use current invoice state before sending.
+- [ ] DEV-FEAT-029-03 Stop or suppress reminders for paid, cancelled, disputed, or otherwise excluded invoices.
+- [ ] DEV-FEAT-029-04 Prevent duplicate delivery for the same reminder occurrence.
+- [ ] DEV-FEAT-029-05 Track reminder outcome.
 - [ ] DEV-FEAT-030-01 Create and assign leads.
 - [ ] DEV-FEAT-030-02 Move leads through valid pipeline states.
 - [ ] DEV-FEAT-030-03 Schedule visits and trial days.
@@ -412,22 +355,42 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-032-04 Show freshness and incomplete-data conditions.
 - [ ] DEV-FEAT-032-05 Support drill-down only where the viewer may access underlying records.
 
-## S13 Later approved modules
+## S04 Advanced and optional modules
 
-Medication, transportation and platform KPIs; scope requires separate approval.
+Medication, transport, platform KPIs, staff attendance, community and commerce readiness, subject to the original separate approvals.
 
-Exit: Medical, transport, privacy and metric owners approve before implementation.
+Exit: Separate product and specialist approvals precede affected implementation; all approved feature tests and web/mobile UAT pass.
 
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
+Approval: pending. To be estimated from unchanged scope, team capacity and gates; no committed duration or dates.
+
+### Retained milestone work packages
+
+- Original S13: Later approved modules. Medication, transportation and platform KPIs; scope requires separate approval. Exit: Medical, transport, privacy and metric owners approve before implementation.
+- Original S14: Optional future modules. Staff attendance, community and commerce; scope requires separate approval. Exit: Separate product case, safeguards and feature acceptance are approved.
+
+### Features
 
 - [ ] FEAT-025 Medication Instructions and Administration Record — depends on FEAT-007, FEAT-013, FEAT-034; branch `feat/FEAT-025-medication-instructions-and-administration-record`
 - [ ] FEAT-033 Transportation Operations — depends on FEAT-005, FEAT-007, FEAT-017; branch `feat/FEAT-033-transportation-operations`
 - [ ] FEAT-038 Platform Commercial KPI Dashboard — depends on FEAT-006, FEAT-027, FEAT-032, FEAT-037; branch `feat/FEAT-038-platform-commercial-kpi-dashboard`
+- [ ] FEAT-012 Staff Attendance — depends on FEAT-010; branch `feat/FEAT-012-staff-attendance`
+- [ ] FEAT-039 Optional Parent Community — depends on FEAT-008, FEAT-035, FEAT-037; branch `feat/FEAT-039-optional-parent-community`
+- [ ] FEAT-040 Commerce Extension Readiness — depends on FEAT-027, FEAT-028, FEAT-037; branch `feat/FEAT-040-commerce-extension-readiness`
+
+### Technical tasks
 
 - [ ] TW-065 Complete medical policy review before medication record implementation — depends on TW-001,TW-003; owner Medical and Safeguarding
 - [ ] TW-066 Complete transport operating model before route and confirmation implementation — depends on TW-003; owner Operations and Product
 - [ ] TW-067 Implement platform commercial KPIs after metric and privacy approval — depends on TW-009,TW-052; owner Product and Finance
+- [ ] TW-068 Complete moderation and safeguarding design before enabling the parent community — depends on TW-001,TW-003; owner Product and Safeguarding
+- [ ] TW-069 Approve commerce business case and boundaries before implementation — depends on TW-008; owner Product and Finance
 
+### Feature tasks
+
+- [ ] DEV-FEAT-012-01 Record staff attendance with timestamp and branch.
+- [ ] DEV-FEAT-012-02 Permit authorized corrections with reason and audit history.
+- [ ] DEV-FEAT-012-03 Restrict employee attendance details to approved roles.
+- [ ] DEV-FEAT-012-04 Provide basic daily staff-presence reporting.
 - [ ] DEV-FEAT-025-01 Create and approve medication instructions.
 - [ ] DEV-FEAT-025-02 Require active authorization before administration recording.
 - [ ] DEV-FEAT-025-03 Record medication, dosage, time, staff member, and notes for every administration.
@@ -444,26 +407,6 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-038-03 Separate operational usage from billed revenue.
 - [ ] DEV-FEAT-038-04 Protect tenant-sensitive details in platform views.
 - [ ] DEV-FEAT-038-05 Show freshness, exclusions, and data-quality limitations.
-
-## S14 Optional future modules
-
-Staff attendance, community and commerce; scope requires separate approval.
-
-Exit: Separate product case, safeguards and feature acceptance are approved.
-
-Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no committed dates.
-
-- [ ] FEAT-012 Staff Attendance — depends on FEAT-010; branch `feat/FEAT-012-staff-attendance`
-- [ ] FEAT-039 Optional Parent Community — depends on FEAT-008, FEAT-035, FEAT-037; branch `feat/FEAT-039-optional-parent-community`
-- [ ] FEAT-040 Commerce Extension Readiness — depends on FEAT-027, FEAT-028, FEAT-037; branch `feat/FEAT-040-commerce-extension-readiness`
-
-- [ ] TW-068 Complete moderation and safeguarding design before enabling the parent community — depends on TW-001,TW-003; owner Product and Safeguarding
-- [ ] TW-069 Approve commerce business case and boundaries before implementation — depends on TW-008; owner Product and Finance
-
-- [ ] DEV-FEAT-012-01 Record staff attendance with timestamp and branch.
-- [ ] DEV-FEAT-012-02 Permit authorized corrections with reason and audit history.
-- [ ] DEV-FEAT-012-03 Restrict employee attendance details to approved roles.
-- [ ] DEV-FEAT-012-04 Provide basic daily staff-presence reporting.
 - [ ] DEV-FEAT-039-01 Require organization enablement before the module is available.
 - [ ] DEV-FEAT-039-02 Collect explicit parent privacy choices.
 - [ ] DEV-FEAT-039-03 Keep community identity and content separate from child records.
@@ -473,3 +416,5 @@ Approval: pending. Planning envelope: 2 weeks; re-estimate after refinement; no 
 - [ ] DEV-FEAT-040-02 Avoid coupling current billing assumptions to tuition only.
 - [ ] DEV-FEAT-040-03 Identify regulatory, tax, refund, and fulfillment decisions before build.
 - [ ] DEV-FEAT-040-04 Keep commerce disabled until a separately approved scope exists.
+
+Stable UAT identifiers and evidence links are retained. Each source case additionally has a currentUat alias for its new sprint. Cross-cutting and technical tests repeat in each affected sprint and reach final Phase 1 verification in S02. Separate approvals for advanced/future modules remain mandatory in S04.

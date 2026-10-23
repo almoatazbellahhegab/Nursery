@@ -75,9 +75,11 @@ try {
     await page.setViewportSize({ width: 1440, height: 1100 });
     await page.goto(base);
     await page.getByText('41 features · 204 checklist items · 216 source tests').waitFor();
-    await page.locator('#S02 > summary').click();
+    assert.equal(await page.locator('details.sprint').count(), 4);
+    await page.locator('#S01 > summary').click();
     await page.locator('#TC-FEAT-001-01 > summary').click();
     await page.getByText('UAT-S02-TC-FEAT-001-01', { exact: true }).waitFor();
+    await page.getByText('UAT-S01-TC-FEAT-001-01', { exact: true }).waitFor();
     await page.locator('select[name=caseId]').selectOption('UAT-S01-05');
     await page.locator('select[name=device]').selectOption('Emulated mobile browser');
     const note = `<img src=x onerror="window.__injected=true"> synthetic browser check ${Date.now()}`;

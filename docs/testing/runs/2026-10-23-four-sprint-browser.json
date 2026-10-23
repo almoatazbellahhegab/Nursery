@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-23T20:23:01.576Z",
+  "codeCommit": "a575a4bdb12ed52d8698ab504a1033a6147f325c",
+  "workingTreeChanges": "?? docs/testing/runs/2026-10-23T20-22-55-797Z-unit.json",
+  "environment": {
+    "platform": "win32",
+    "node": "v20.11.1",
+    "browser": "Headless desktop Chrome; mobile viewport emulation only"
+  },
+  "command": "node tools/browser-checks.mjs",
+  "cases": [
+    {
+      "id": "RV-005",
+      "uat": [
+        "UAT-S01-01",
+        "UAT-S01-03"
+      ],
+      "name": "Desktop navigation and bilingual layout in headless Chrome on Windows",
+      "result": "Pass"
+    },
+    {
+      "id": "RV-006",
+      "uat": [
+        "UAT-S01-02",
+        "UAT-S01-03"
+      ],
+      "name": "Mobile 390px and 320px viewports, staff/parent navigation and RTL",
+      "result": "Pass"
+    },
+    {
+      "id": "RV-007",
+      "uat": [
+        "UAT-S01-04",
+        "UAT-S01-05"
+      ],
+      "name": "Plan-to-UAT mapping, safe saved observations and reload persistence",
+      "result": "Pass"
+    }
+  ],
+  "consoleErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

@@ -9,6 +9,29 @@ import { createReviewServer, root, validateResult } from '../../tools/review-ser
 test('RV-001 preserves every source feature, checklist item and acceptance case exactly once', async () => {
   const raw = JSON.parse((await fs.readFile(path.join(root, 'docs/source/catalogue.json'), 'utf8')).replace(/^\uFEFF/, ''));
   const plan = JSON.parse(await fs.readFile(path.join(root, 'docs/delivery/plan.json'), 'utf8'));
+  const previous = JSON.parse(await fs.readFile(path.join(root, 'docs/delivery/baselines/14-sprint-plan.json'), 'utf8'));
+  assert.deepEqual(plan.sprints.map(s => s.id), ['S01', 'S02', 'S03', 'S04']);
+  assert.equal(plan.sprints.flatMap(s => s.workPackages).length, 14);
+  for (const oldSprint of previous.sprints) {
+    const retained = plan.sprints.flatMap(s => s.workPackages).find(p => p.id === oldSprint.id);
+    for (const key of ['title', 'features', 'milestone', 'exit']) assert.deepEqual(retained[key], oldSprint[key]);
+  }
+  for (const key of ['features', 'todos', 'technical', 'cases']) {
+    assert.equal(plan[key].length, previous[key].length);
+    for (const oldItem of previous[key]) {
+      const item = plan[key].find(value => value.id === oldItem.id);
+      assert.ok(item);
+      assert.equal(item.previousSprint, oldItem.sprint);
+      for (const field of Object.keys(oldItem)) {
+        if (field === 'sprint') continue;
+        const expected = key === 'features' && oldItem.id === 'FEAT-036' && field === 'status'
+          ? oldItem[field].replace('pending S04', 'pending S01') : oldItem[field];
+        assert.deepEqual(item[field], expected, `${oldItem.id}.${field} must retain its content`);
+      }
+    }
+  }
+  assert.deepEqual(plan.controls, previous.controls);
+  assert.deepEqual(plan.decisions, previous.decisions);
   const sources = [['Release Roadmap', 'features', /^FEAT-/], ['Feature Checklist', 'todos', /^DEV-/], ['Technical Work', 'technical', /^TW-/], ['Test Catalogue', 'cases', /^(TC-|XCT-|TECH-)/]];
   for (const [sheet, key, regex] of sources) {
     const ids = raw[sheet].slice(4).map(row => (row.value ?? row)[0]).filter(id => regex.test(id)).sort();
@@ -20,6 +43,7 @@ test('RV-001 preserves every source feature, checklist item and acceptance case 
     assert.ok(item.uat.includes(item.id));
     assert.equal(item.status, 'Not run');
     assert.equal(item.evidence, null);
+    assert.equal(item.currentUat, `UAT-${item.sprint}-${item.id}`);
   }
   for (const feature of plan.features) {
     for (const dependency of feature.dependencies.match(/FEAT-\d+/g) ?? []) {

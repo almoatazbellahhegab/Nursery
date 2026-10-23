@@ -12,7 +12,7 @@ The iPhone view is a browser prototype, not a compiled Flutter application. Nati
 
 ## Review and tests
 
-- The portal shows 14 sprint milestones, 41 features, 204 itemized feature tasks, 69 technical tasks and 216 source tests with linked UAT IDs.
+- The portal shows four sprints retaining all 14 original milestone work packages, 41 features, 204 itemized feature tasks, 69 technical tasks and 216 source tests with stable UAT IDs and current-sprint aliases. Duration is to be estimated; no scope is removed.
 - Review both interfaces, switch English/Arabic and record results under the actual device used. Download the UAT log from the portal; local observations are appended to `review-results/uat.jsonl` and excluded from Git.
 - Double-click **Test-Sprint.cmd** or run `npm test` for automated plan, server and safety checks. These are supplemental prototype tests; source product tests remain Not run.
 - See [sprint tasks](docs/delivery/SPRINTS.md), [workflow](docs/delivery/WORKFLOW.md), [S01 status](docs/delivery/S01-REVIEW.md) and [test case mapping](docs/testing/CASES.md).
