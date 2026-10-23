@@ -1,7 +1,7 @@
 {
   "sprints": [],
-  "pushAuthorized": true,
-  "currentRevisionPushStatus": "User authorized the existing four-sprint and S02 commits through 5bff76e, plus this approval record; subsequent Sprint 3 work needs a new push instruction",
+  "pushAuthorized": false,
+  "currentRevisionPushStatus": "Authorized planning/S02 work pushed through 775b1ff; new Sprint 3 commits require a new push instruction",
   "pushApprovals": [
     {
       "date": "2026-10-23",

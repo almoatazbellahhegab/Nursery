@@ -32,3 +32,7 @@ Product test execution, physical-device acceptance and native builds retain thei
 ## Sprint 2 FEAT-011 domain increment
 
 Sprint 2 is active at the user's request, without accepting unfinished Sprint 1. FEAT-011 is the only active feature. [Attendance test log](S02-ATTENDANCE.md) records 28 passing pytest scenarios, Ruff lint/format, strict mypy and dependency-consistency checks against `a271e83`. The four review unit checks and three desktop/emulated-mobile browser checks also pass. All five source attendance API/mobile acceptance cases remain Not run; physical-device/native UAT and durable authorization/database/QR/offline integrations are not claimed complete.
+
+## Sprint 3 FEAT-030 domain increment
+
+At the user's instruction, existing commits were pushed through `775b1ff`, S02/FEAT-011 was deferred without acceptance, and S03/FEAT-030 became the sole active feature. [Admissions test log](S03-ADMISSIONS.md) records 51 passing pytest scenarios, coding/dependency checks, four review unit checks and three preview browser checks against `eb29e67`. Source admissions cases remain Not run at their required API/component/E2E levels. New S03 commits stay local pending another push instruction.

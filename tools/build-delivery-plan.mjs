@@ -81,6 +81,10 @@ if (fs.existsSync('docs/delivery/execution.json')) {
   data.execution = JSON.parse(fs.readFileSync('docs/delivery/execution.json', 'utf8'));
   const active = sprints.find(s => s.id === data.execution.activeSprint);
   if (active) active.status = data.execution.status;
+  for (const id of data.execution.deferredSprints ?? []) {
+    const deferred = sprints.find(s => s.id === id);
+    if (deferred) deferred.status = 'Deferred — incomplete and unaccepted';
+  }
 }
 fs.mkdirSync('docs/delivery', { recursive: true });
 fs.writeFileSync('docs/delivery/plan.json', JSON.stringify(data, null, 2) + '\n');

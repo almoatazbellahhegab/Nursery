@@ -136,7 +136,7 @@
           "exit": "Blocking release controls pass with named specialist signoffs and rollback evidence."
         }
       ],
-      "status": "In progress — attendance domain increment; operational prerequisites blocked",
+      "status": "Deferred — incomplete and unaccepted",
       "approval": "Pending",
       "duration": "To be estimated from unchanged scope, team capacity and gates; no committed duration or dates"
     },
@@ -220,7 +220,7 @@
           "exit": "Operations accepts capacity and metric definitions; Phase 2 release tests pass."
         }
       ],
-      "status": "Planned",
+      "status": "In progress — admissions domain increment; operational prerequisites blocked",
       "approval": "Pending",
       "duration": "To be estimated from unchanged scope, team capacity and gates; no committed duration or dates"
     },
@@ -7941,22 +7941,29 @@
     }
   ],
   "execution": {
-    "activeSprint": "S02",
-    "activeFeature": "FEAT-011",
-    "branch": "feat/FEAT-011-child-attendance",
+    "activeSprint": "S03",
+    "activeFeature": "FEAT-030",
+    "branch": "feat/FEAT-030-admissions-pipeline",
     "featureConcurrencyLimit": 1,
-    "status": "In progress — attendance domain increment; operational prerequisites blocked",
+    "status": "In progress — admissions domain increment; operational prerequisites blocked",
     "sprintOneAcceptance": "Incomplete and unaccepted",
-    "policyDecision": "DEC-06 requested; unresolved",
+    "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
+    "deferredFeatures": [
+      "FEAT-011"
+    ],
+    "deferredSprints": [
+      "S02"
+    ],
+    "policyDecision": "Admissions workflow, inquiry fields, loss reasons and report definitions require approval; DEC-06 remains open for deferred attendance",
     "operationalDependencies": [
-      "FEAT-007",
-      "FEAT-009",
-      "server-owned identity and authorization",
+      "FEAT-002",
+      "FEAT-005",
+      "approved workflow and field definitions",
       "PostgreSQL RLS and durable transactions"
     ],
     "sourceAcceptanceStatus": "Not run",
-    "implementedIncrement": "Immutable check-in/check-out decisions, scope/expiry checks, operation retry/conflict decisions and UTC/version invariants",
-    "domainVerification": "28 pytest scenarios including health and fail-closed API guard; Ruff lint/format, strict mypy and pip check",
+    "implementedIncrement": "Immutable lead stage/history decisions, explicit policy edges, branch/organization scope, UTC/version invariants and enrollment conversion guard",
+    "domainVerification": "51 pytest scenarios including 22 admissions, 26 attendance and three transport guards; Ruff lint/format, strict mypy and pip check pass",
     "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
     "pushAuthorized": false
   }

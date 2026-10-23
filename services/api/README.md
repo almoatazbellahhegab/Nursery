@@ -9,3 +9,5 @@ The project now has an isolated `.venv` with FastAPI/pytest and coding tools; th
 `requirements-dev.lock` pins the resolved runtime/test environment (Python 3.12 on Windows); it excludes the editable local project path. To recreate, make a project virtual environment, run `python -m pip install -r requirements-dev.lock -e .`, then `python -m pip check`. The lock pins versions, not artifact hashes. Build-backend pin remains in pyproject.toml.
 
 Run the implemented attendance increment with `Test-Attendance.cmd` from the repository root. See `docs/delivery/S02-FEAT-011.md` for the transaction/authorization integration requirements. No attendance HTTP route is present. Resolved dependencies currently emit an upstream Starlette/AnyIO deprecation warning in TestClient; it is preserved in test output rather than suppressed.
+
+S03 adds a PII-free admissions stage/history decision module. Run `Test-Admissions.cmd` for its checks and attendance regressions; see `docs/delivery/S03-FEAT-030.md`. No admissions HTTP route, default workflow policy, enrollment conversion or persisted family inquiry model is implemented.

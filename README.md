@@ -12,7 +12,7 @@ The iPhone view is a browser prototype, not a compiled Flutter application. Nati
 
 ## Review and tests
 
-- Active work: Sprint 2, one feature at a time. See [TODO.md](TODO.md). FEAT-011 attendance is a domain increment only; double-click **Test-Attendance.cmd** to run its executable checks. Operational web/mobile integration remains gated by unfinished S01 dependencies.
+- Active work: Sprint 3, one feature at a time. See [TODO.md](TODO.md). FEAT-030 admissions is a domain increment only; double-click **Test-Admissions.cmd** for its checks. Deferred attendance checks remain available through **Test-Attendance.cmd**. Operational web/mobile integration remains gated by unfinished prerequisites and approvals.
 
 - The portal shows four sprints retaining all 14 original milestone work packages, 41 features, 204 itemized feature tasks, 69 technical tasks and 216 source tests with stable UAT IDs and current-sprint aliases. Duration is to be estimated; no scope is removed.
 - Review both interfaces, switch English/Arabic and record results under the actual device used. Download the UAT log from the portal; local observations are appended to `review-results/uat.jsonl` and excluded from Git.
