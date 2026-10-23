@@ -1,6 +1,7 @@
 {
   "sprints": [],
-  "pushAuthorized": true,
+  "pushAuthorized": false,
+  "currentRevisionPushStatus": "Four-sprint revision has no push authorization; the historical approval below applies only to the previously pushed work",
   "pushApprovals": [
     {
       "date": "2026-10-23",

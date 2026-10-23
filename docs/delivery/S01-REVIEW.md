@@ -2,6 +2,8 @@
 
 Status: **In progress, environment blocked. Not accepted. No push authorized.**
 
+This handoff records the original foundation increment. The current four-sprint plan expands S01 to include original milestones S01–S04; see SPRINTS.md for its full unchanged scope. Previous pushed work was authorized separately; this plan revision is local pending a new push instruction.
+
 ## Result available now
 
 - One click Windows review: double-click `Start-Sprint-Review.cmd` or open http://localhost:3100 while the server is running.
@@ -32,6 +34,6 @@ Complete the actual web/Flutter build and agreed device checks before closing Sp
 
 - `chore/S01-review-portal`: dependency-free prototype and traceability checks.
 - `chore/S01-stack-skeletons`: production directory and source foundations.
-- `feat/FEAT-036-localization-foundation`: isolated public-shell localization groundwork; full feature stays in S04.
+- `feat/FEAT-036-localization-foundation`: isolated public-shell localization groundwork; full feature now belongs to consolidated S01 (original S04).
 - `test/S01-browser-evidence`: regression checks, test evidence, launchers and handoff.
 - `sprint/01-review`: local integration result. Feature and work branches are retained. `main` remains the original baseline.

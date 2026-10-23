@@ -30,6 +30,13 @@ try {
     const cases = plan.cases.filter(t => t.sprint === s.id);
     return `<details class="sprint" id="${s.id}"><summary><span class="sprint-id">${s.id}</span><strong>${escape(s.title)}</strong><span class="sprint-status">${escape(s.status)}</span></summary><div class="sprint-body"><p>${escape(s.milestone)}</p><p><strong>Exit milestone:</strong> ${escape(s.exit)}</p><p class="muted">${escape(s.duration)}. Approval pending.</p><h3>Feature branches</h3><ul>${features.map(f => `<li>${escape(f.id)} · ${escape(f.title)}<br><small>Depends on ${escape(f.dependencies)}</small><br><code>${escape(f.branch)}</code></li>`).join('') || '<li>Enabling work; no full product feature claimed.</li>'}</ul><h3>Itemized work</h3><ul>${[...technical, ...tasks].map(t => `<li><strong>${escape(t.id)}</strong> ${escape(t.title)} <small>· ${escape(t.status)} · depends on ${escape(t.dependencies)}</small></li>`).join('')}</ul><h3>Source tests and linked UAT</h3>${cases.map(c => `<details class="source-case" id="${escape(c.id)}"><summary>${escape(c.id)} · ${escape(c.area)} · ${escape(c.status)}</summary><p><strong>Precondition:</strong> ${escape(c.preconditions)}</p><p class="preserve">${escape(c.steps)}</p><p><strong>Expected:</strong> ${escape(c.expected)}</p><p><strong>UAT:</strong> <span id="${escape(c.uat)}">${escape(c.uat)}</span> · Pending manual acceptance</p><p>${escape(c.priority)} · ${escape(c.target)}</p></details>`).join('') || '<p>See the supplemental S01 preview checklist below. Source product tests remain Not run.</p>'}</div></details>`;
   }).join('');
+  for (const sprint of plan.sprints) {
+    const body = document.querySelector(`#${sprint.id} .sprint-body`);
+    body.insertAdjacentHTML('afterbegin', '<h3>Retained milestone work packages</h3><ul>' + sprint.workPackages.map(p => `<li><strong>Original ${escape(p.id)} · ${escape(p.title)}</strong><p>${escape(p.milestone)}</p><p>Exit: ${escape(p.exit)}</p></li>`).join('') + '</ul>');
+  }
+  for (const item of plan.cases) {
+    if (item.currentUat !== item.uat) document.getElementById(item.id).insertAdjacentHTML('beforeend', `<p><strong>Current sprint UAT alias:</strong> <span id="${escape(item.currentUat)}">${escape(item.currentUat)}</span>. Original UAT link retained above.</p>`);
+  }
   await refreshResults();
 } catch (error) { document.querySelector('#counts').textContent = error.message; }
 form.onsubmit = async event => {

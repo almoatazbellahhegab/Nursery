@@ -1,6 +1,6 @@
 # Localization groundwork scope
 
-Owner: Technical Lead. Status: implementation experiment; full FEAT-036 acceptance pending S04.
+Owner: Technical Lead. Status: implementation experiment; full FEAT-036 acceptance pending consolidated S01 (original S04).
 
 The dedicated FEAT-036 branch adds typed Next.js catalogues and Flutter ARB files with framework-generated localization. Only public shell strings and direction switching are included. No organization preferences, notification templates, currency/date policy or authorization is implemented. These require FEAT-001 and approved requirements.
 
