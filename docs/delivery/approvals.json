@@ -1,4 +1,22 @@
 {
   "sprints": [],
-  "pushAuthorized": false
+  "pushAuthorized": true,
+  "pushApprovals": [
+    {
+      "date": "2026-10-23",
+      "userInstruction": "now push what has been already done",
+      "scope": "Existing committed baseline, Sprint 1 work and retained feature/work branches, plus this approval record",
+      "reviewedWorkCommit": "eaa39c3",
+      "branches": [
+        "main",
+        "sprint/01-review",
+        "chore/S01-review-portal",
+        "chore/S01-stack-skeletons",
+        "feat/FEAT-036-localization-foundation",
+        "test/S01-browser-evidence"
+      ],
+      "sprintAcceptance": "Not granted; Sprint 1 remains incomplete and environment blocked",
+      "productionDeploymentAuthorized": false
+    }
+  ]
 }
