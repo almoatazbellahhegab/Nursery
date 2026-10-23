@@ -12,6 +12,12 @@ test('RV-001 preserves every source feature, checklist item and acceptance case 
   const previous = JSON.parse(await fs.readFile(path.join(root, 'docs/delivery/baselines/14-sprint-plan.json'), 'utf8'));
   assert.deepEqual(plan.sprints.map(s => s.id), ['S01', 'S02', 'S03', 'S04']);
   assert.equal(plan.sprints.flatMap(s => s.workPackages).length, 14);
+  if (plan.execution) {
+    assert.equal(plan.execution.featureConcurrencyLimit, 1);
+    assert.ok(plan.features.some(f => f.id === plan.execution.activeFeature && f.sprint === plan.execution.activeSprint));
+    assert.equal(plan.execution.sourceAcceptanceStatus, 'Not run');
+    assert.equal(plan.execution.pushAuthorized, false);
+  }
   for (const oldSprint of previous.sprints) {
     const retained = plan.sprints.flatMap(s => s.workPackages).find(p => p.id === oldSprint.id);
     for (const key of ['title', 'features', 'milestone', 'exit']) assert.deepEqual(retained[key], oldSprint[key]);

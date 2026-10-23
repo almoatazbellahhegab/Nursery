@@ -22,6 +22,7 @@ try {
   const response = await fetch('/review/plan');
   if (!response.ok) throw new Error('Could not load the delivery plan.');
   const plan = await response.json();
+  if (plan.execution) document.querySelector('.review-header .pill').textContent = `${plan.execution.activeSprint} · ${plan.execution.activeFeature} · In progress`;
   document.querySelector('#counts').textContent = `${plan.features.length} features · ${plan.todos.length} checklist items · ${plan.cases.length} source tests`;
   document.querySelector('#sprints').innerHTML = plan.sprints.map(s => {
     const features = plan.features.filter(f => f.sprint === s.id);

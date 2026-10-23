@@ -1,0 +1,159 @@
+{
+  "startedAt": "2026-10-23T20:40:19.314Z",
+  "completedAt": "2026-10-23T20:40:48.711Z",
+  "feature": "FEAT-011",
+  "sprint": "S02",
+  "codeCommit": "e3535f720491f84f81209f8456a3a9d4cc776bdf",
+  "workingTreeChanges": "M README.md\n M docs/delivery/SPRINTS.md\n M docs/delivery/plan.json\n M services/api/README.md\n M services/api/tests/test_health.py\n?? Test-Attendance.cmd\n?? docs/delivery/S02-FEAT-011.md\n?? docs/testing/S02-ATTENDANCE.md\n?? services/api/requirements-dev.lock\n?? services/api/src/nursery_api/attendance/\n?? services/api/tests/test_attendance_decisions.py\n?? tools/run-attendance-checks.mjs",
+  "python": "Python 3.12.14",
+  "platform": "win32",
+  "dependencyLockSha256": "73996445c1b1f755422f88171789ecc114132f5036704bb462a90434c350d8dd",
+  "result": "Pass",
+  "checks": [
+    {
+      "id": "pytest",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\attendance-2026-10-23T20-40-19-314Z.xml"
+      ],
+      "result": "Pass",
+      "output": "............................                                             [100%]\r\n============================== warnings summary ===============================\r\n.venv\\Lib\\site-packages\\starlette\\testclient.py:51\r\n  C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.venv\\Lib\\site-packages\\starlette\\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\r\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\r\n\r\n.venv\\Lib\\site-packages\\_pytest\\cacheprovider.py:475\r\n  C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.venv\\Lib\\site-packages\\_pytest\\cacheprovider.py:475: PytestCacheWarning: could not create cache path C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.pytest_cache\\v\\cache\\nodeids: [WinError 5] Access is denied: 'C:\\\\Users\\\\localadmin\\\\Documents\\\\Nursery\\\\services\\\\api\\\\.pytest_cache\\\\v\\\\cache'\r\n    config.cache.set(\"cache/nodeids\", sorted(self.cached_nodeids))\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n- generated xml file: C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\attendance-2026-10-23T20-40-19-314Z.xml -\r\n28 passed, 2 warnings in 0.74s\r\n"
+    },
+    {
+      "id": "ruff-lint",
+      "args": [
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "All checks passed!\n"
+    },
+    {
+      "id": "ruff-format",
+      "args": [
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "7 files already formatted\n"
+    },
+    {
+      "id": "mypy-strict",
+      "args": [
+        "-m",
+        "mypy",
+        "--strict",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "Success: no issues found in 7 source files\r\n"
+    },
+    {
+      "id": "dependency-consistency",
+      "args": [
+        "-m",
+        "pip",
+        "check"
+      ],
+      "result": "Pass",
+      "output": "No broken requirements found.\r\n"
+    }
+  ],
+  "mappings": [
+    {
+      "cases": [
+        "ATT-UNIT-001"
+      ],
+      "source": "TC-FEAT-011-01",
+      "uat": "UAT-S02-TC-FEAT-011-01",
+      "coverage": "Partial: event decision only; no persistence/audit integration"
+    },
+    {
+      "cases": [
+        "ATT-UNIT-002",
+        "ATT-UNIT-004",
+        "ATT-UNIT-012"
+      ],
+      "source": "TC-FEAT-011-02",
+      "uat": "UAT-S02-TC-FEAT-011-02",
+      "coverage": "Partial: transition decisions only; no real PostgreSQL concurrency"
+    },
+    {
+      "cases": [
+        "ATT-UNIT-003"
+      ],
+      "source": "TC-FEAT-011-03",
+      "uat": "UAT-S02-TC-FEAT-011-03",
+      "coverage": "Partial: matching event/state instant; timeline integration not run"
+    },
+    {
+      "cases": [
+        "ATT-UNIT-005",
+        "ATT-UNIT-006",
+        "ATT-UNIT-007",
+        "ATT-UNIT-013",
+        "ATT-UNIT-014",
+        "ATT-UNIT-017"
+      ],
+      "source": "TC-FEAT-011-04",
+      "uat": "UAT-S02-TC-FEAT-011-04",
+      "coverage": "Partial: retry/conflict decisions; durable receipt and device offline integration not run"
+    },
+    {
+      "cases": [
+        "ATT-UNIT-008",
+        "ATT-UNIT-009",
+        "ATT-UNIT-010",
+        "ATT-UNIT-011"
+      ],
+      "source": "XCT-02",
+      "uat": "UAT-S02-XCT-02",
+      "coverage": "Supplemental grant-scope decisions only; no authoritative policy or QR verification"
+    }
+  ],
+  "executedCases": [
+    "test_att_unit_001_check_in_records_scope_actor_and_utc_time",
+    "test_att_unit_002_duplicate_check_in_does_not_change_existing_state",
+    "test_att_unit_003_check_out_has_matching_state_and_event_timestamp",
+    "test_att_unit_004_checkout_without_presence_is_rejected",
+    "test_att_unit_005_exact_retry_returns_original_event_without_a_new_write",
+    "test_att_unit_006_retry_after_later_checkout_returns_historical_response_only",
+    "test_att_unit_007_changed_retry_payload_is_rejected[action]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[occurred_at]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[expected_version]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[organization_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[branch_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[classroom_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[child_id]",
+    "test_att_unit_009_wrong_snapshot_scope_is_denied",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[False]",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[True]",
+    "test_att_unit_011_another_actor_cannot_replay_a_receipt",
+    "test_att_unit_012_stale_concurrent_command_requires_reload",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[-1]",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[1]",
+    "test_att_unit_014_offset_timestamps_are_normalized_and_retries_compare_as_instants",
+    "test_att_unit_015_naive_time_is_rejected",
+    "test_att_unit_016_invalid_version_is_rejected[-1]",
+    "test_att_unit_016_invalid_version_is_rejected[True]",
+    "test_att_unit_017_corrupt_receipt_cannot_claim_a_successful_replay",
+    "test_att_unit_018_event_and_snapshot_are_immutable",
+    "test_health_exposes_no_operational_records",
+    "test_attendance_has_no_public_mutation_route_before_authorization_exists"
+  ],
+  "sourceAcceptanceCases": "All five remain Not run at their required integration levels",
+  "TC_FEAT_011_05": "Not run: QR and authoritative authorization not implemented",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

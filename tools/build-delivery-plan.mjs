@@ -77,6 +77,11 @@ for (const collection of [features, todos, technical, cases]) {
 }
 for (const item of cases) item.currentUat = `UAT-${item.sprint}-${item.id}`;
 const data = { baseline: '2026-10-23', planRevision: 'four-sprint-consolidation', previousPlan: 'baselines/14-sprint-plan.json', sprints, features, todos, technical, cases, controls, decisions };
+if (fs.existsSync('docs/delivery/execution.json')) {
+  data.execution = JSON.parse(fs.readFileSync('docs/delivery/execution.json', 'utf8'));
+  const active = sprints.find(s => s.id === data.execution.activeSprint);
+  if (active) active.status = data.execution.status;
+}
 fs.mkdirSync('docs/delivery', { recursive: true });
 fs.writeFileSync('docs/delivery/plan.json', JSON.stringify(data, null, 2) + '\n');
 const overview = '| Sprint | Scope | Features | Feature tasks | Technical tasks | Source tests |\n| --- | --- | ---: | ---: | ---: | ---: |\n' + sprints.map(s => `| ${s.id} | ${s.title} | ${features.filter(f => f.sprint === s.id).length} | ${todos.filter(t => t.sprint === s.id).length} | ${technical.filter(t => t.sprint === s.id).length} | ${cases.filter(t => t.sprint === s.id).length} |`).join('\n');
