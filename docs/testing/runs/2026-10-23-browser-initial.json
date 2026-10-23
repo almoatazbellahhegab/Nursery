@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-23T19:04:29.657Z",
+  "codeCommit": "81d62b4d812d26b2ddf720a9a73974e380ccf966",
+  "environment": {
+    "platform": "win32",
+    "node": "v20.11.1",
+    "browser": "Headless desktop Chrome; mobile viewport emulation only"
+  },
+  "command": "node tools/browser-checks.mjs",
+  "cases": [
+    {
+      "id": "RV-005",
+      "uat": [
+        "UAT-S01-01",
+        "UAT-S01-03"
+      ],
+      "name": "Desktop navigation and bilingual layout in headless Chrome on Windows",
+      "result": "Fail",
+      "detail": "page.addStyleTag: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-VQvkR2fRYVRrz9ORBgd8yWIM1jHHyiKJJhxKXuRIY0g='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked."
+    },
+    {
+      "id": "RV-006",
+      "uat": [
+        "UAT-S01-02",
+        "UAT-S01-03"
+      ],
+      "name": "Mobile 390px and 320px viewports, staff/parent navigation and RTL",
+      "result": "Pass"
+    },
+    {
+      "id": "RV-007",
+      "uat": [
+        "UAT-S01-04",
+        "UAT-S01-05"
+      ],
+      "name": "Plan-to-UAT mapping, safe saved observations and reload persistence",
+      "result": "Pass"
+    }
+  ],
+  "consoleErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

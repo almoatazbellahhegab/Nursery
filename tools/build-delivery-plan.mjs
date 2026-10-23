@@ -22,6 +22,8 @@ const featureId = n => `FEAT-${String(n).padStart(3, '0')}`;
 const sprints = definitions.map(([id, title, numbers, milestone, exit]) => ({ id, title, features: numbers.map(featureId), milestone, exit, status: id === 'S01' ? 'In progress — environment blocked' : Number(id.slice(1)) > 12 ? 'Requires separate approval' : 'Planned', approval: 'Pending', duration: 'Planning envelope: 2 weeks; re-estimate after refinement; no committed dates' }));
 const sprintFor = id => sprints.find(s => s.features.includes(id))?.id ?? 'S07';
 const features = rows('Release Roadmap').filter(r => /^FEAT-/.test(r[0])).map(r => ({ id: r[0], title: r[1], release: r[2], dependencies: r[4], sprint: sprintFor(r[0]), branch: `feat/${r[0]}-${r[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '')}`, status: 'Not started' }));
+features.find(f => f.id === 'FEAT-036').branch = 'feat/FEAT-036-localization-foundation';
+features.find(f => f.id === 'FEAT-036').status = 'Groundwork only; full feature acceptance pending S04';
 const todos = rows('Feature Checklist').filter(r => /^DEV-/.test(r[0])).map(r => ({ id: r[0], feature: r[1], title: r[5], dependencies: r[6], sprint: sprintFor(r[1]), status: 'Not started' }));
 function technicalSprint(id) {
   const n = Number(id.slice(3));
@@ -41,7 +43,12 @@ function technicalSprint(id) {
   return n <= 67 ? 'S13' : 'S14';
 }
 const technical = rows('Technical Work').filter(r => /^TW-/.test(r[0])).map(r => ({ id: r[0], title: r[3], evidence: r[4], dependencies: r[5], owner: r[6], sprint: technicalSprint(r[0]), status: 'Not started' }));
+for (const item of technical) {
+  if (['TW-011', 'TW-013', 'TW-030', 'TW-034', 'TW-035'].includes(item.id)) item.status = 'Partial groundwork; production builds or prerequisites blocked';
+  if (item.id === 'TW-020') item.status = 'Partial synthetic preview fixtures; operational scenario seeding not started';
+}
 const cases = rows('Test Catalogue').filter(r => /^(TC-|XCT-|TECH-)/.test(r[0])).map(r => ({ id: r[0], requirement: r[1], area: r[2], release: r[3], type: r[4], priority: r[5], preconditions: r[6], steps: r[7], expected: r[8], target: r[9], sprint: sprintFor(r[1]), uat: `UAT-${sprintFor(r[1])}-${r[0]}`, status: 'Not run', evidence: null }));
+for (const item of cases) item.repeatEachAffectedSprint = item.requirement === 'CROSS-CUTTING' || item.requirement === 'TECHNICAL';
 const controls = rows('Release Controls').filter(r => r[0]).map(r => ({ id: r[0], source: r, status: 'Not run' }));
 const decisions = rows('Decisions Risks').filter(r => r[0]).map(r => ({ id: r[0], type: r[1], question: r[2], impact: r[3], requiredBy: r[4], owner: r[5], status: r[6] }));
 const data = { baseline: '2026-10-23', sprints, features, todos, technical, cases, controls, decisions };

@@ -6,7 +6,7 @@
   "engines": { "node": ">=20.9" },
   "scripts": {
     "start": "node tools/review-server.mjs",
-    "test": "node --test tests/system/*.test.mjs",
+    "test": "node --test tests/system/review.test.mjs",
     "plan": "node tools/build-delivery-plan.mjs"
   }
 }

@@ -10,3 +10,5 @@
 8. Record the user's explicit sprint confirmation with date, exact wording and approved commit in approvals.json. Only then push the confirmed sprint and feature branches. Approval does not waive specialist gates or authorize production deployment.
 
 S01 preview checks are supplemental UAT-S01 cases. Source product test cases remain Not run because the preview has no real API, authentication, database or native app. Source test IDs are preserved without claiming full-feature coverage.
+
+Cross-cutting XCT and TECH cases are repeated in every affected sprint; their S07 assignment is the final release verification milestone, not permission to defer changed-area security or quality checks. Every new run appends evidence and preserves prior failures. Source TODO text stays unchanged; partial groundwork is reported separately from completed outcomes.

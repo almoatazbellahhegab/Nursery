@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import { execFile } from 'node:child_process';
 
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const publicFiles = new Map([
@@ -82,5 +83,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       if (address.family === 'IPv4' && !address.internal) console.log(`iPhone on the same Wi-Fi: http://${address.address}:${port}`);
     }
     console.log('Synthetic local review only. Keep this terminal open. Ctrl+C stops it.');
+    if (process.platform === 'win32' && process.argv.includes('--open')) {
+      execFile('explorer.exe', [`http://localhost:${port}`], error => {
+        if (error) console.log(`Open http://localhost:${port} in your browser.`);
+      });
+    }
   });
 }
