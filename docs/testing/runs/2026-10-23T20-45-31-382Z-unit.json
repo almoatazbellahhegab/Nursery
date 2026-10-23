@@ -1,0 +1,46 @@
+{
+  "startedAt": "2026-10-23T20:45:31.382Z",
+  "completedAt": "2026-10-23T20:45:31.859Z",
+  "codeCommit": "a271e83cd691d95cf513c0b01e091858f66c5667",
+  "workingTreeChanges": null,
+  "environment": {
+    "node": "v20.11.1",
+    "platform": "win32"
+  },
+  "command": "node --test tests/system/review.test.mjs",
+  "result": "Pass",
+  "cases": [
+    {
+      "id": "RV-001",
+      "uat": [
+        "UAT-S01-04"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-002",
+      "uat": [
+        "UAT-S01-03"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-003",
+      "uat": [
+        "UAT-S01-05",
+        "UAT-S01-06"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-004",
+      "uat": [
+        "UAT-S01-05"
+      ],
+      "result": "Pass"
+    }
+  ],
+  "output": "TAP version 13\n# Subtest: RV-001 preserves every source feature, checklist item and acceptance case exactly once\nok 1 - RV-001 preserves every source feature, checklist item and acceptance case exactly once\n  ---\n  duration_ms: 25.7993\n  ...\n# Subtest: RV-002 requires matching bilingual keys and rejects blank translation entries\nok 2 - RV-002 requires matching bilingual keys and rejects blank translation entries\n  ---\n  duration_ms: 1.9417\n  ...\n# Subtest: RV-003 rejects unknown cases, oversized notes and misleading native passes\nok 3 - RV-003 rejects unknown cases, oversized notes and misleading native passes\n  ---\n  duration_ms: 0.5019\n  ...\n# Subtest: RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\nok 4 - RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\n  ---\n  duration_ms: 153.517\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 327.0463\n",
+  "sourceProductTests": "Not run",
+  "userAcceptance": "Pending"
+}

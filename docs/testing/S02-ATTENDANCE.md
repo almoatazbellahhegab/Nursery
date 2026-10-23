@@ -14,3 +14,19 @@ Automated domain cases are supplemental to the original acceptance catalogue. Th
 | TC-FEAT-011-05 | Unauthorized QR cannot change attendance | UAT-S02-TC-FEAT-011-05 | Not run; QR not implemented |
 
 The run script appends UTC timestamps, code commit, working-tree state, dependency-lock hash, individual check outputs, executed test names and UAT mappings. Pytest parameterization expands several unit cases into separate scenarios. Physical Windows interaction, physical iPhone Safari, native app and user acceptance remain separate pending checks.
+
+## Recorded increment result
+
+Code under test: `a271e83cd691d95cf513c0b01e091858f66c5667`.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| 26 attendance domain scenarios plus health and fail-closed route guard | 28 passed | [Attendance run](runs/2026-10-23T20-45-31-381Z-attendance.json) |
+| Ruff lint and format | Passed | Same attendance run |
+| Strict mypy over source and tests | Passed; 7 files | Same attendance run |
+| Locked dependency consistency | Passed | Same attendance run |
+| Four plan/server regression checks | Passed | [Review unit run](runs/2026-10-23T20-45-31-382Z-unit.json) |
+| Three desktop/emulated-mobile portal checks | Passed; active S02/FEAT-011 displayed | [Portal browser run](runs/2026-10-23-S02-attendance-portal.json) |
+| All five source attendance acceptance cases | Not run at required integration levels | Dependencies and DEC-06 remain open |
+
+The Starlette TestClient/AnyIO dependency combination emits one upstream deprecation warning; it is retained in the output. No warnings indicate failed attendance assertions. The initial run also recorded a pytest cache-permission warning; the repeatable runner now disables the optional cache and the final run has no cache warning. The CI job is authored but has not run remotely because this increment has not been pushed.

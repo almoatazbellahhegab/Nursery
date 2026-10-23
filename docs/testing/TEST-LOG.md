@@ -28,3 +28,7 @@ Code under test: `a575a4bdb12ed52d8698ab504a1033a6147f325c`. All seven supplemen
 - [Browser run](runs/2026-10-23-four-sprint-browser.json): RV-005 through RV-007 pass. Its only working-tree change was the generated unit evidence record, not application code.
 
 Product test execution, physical-device acceptance and native builds retain their previous Not run, Pending or Blocked states. This planning revision changes no feature acceptance or historical test outcome.
+
+## Sprint 2 FEAT-011 domain increment
+
+Sprint 2 is active at the user's request, without accepting unfinished Sprint 1. FEAT-011 is the only active feature. [Attendance test log](S02-ATTENDANCE.md) records 28 passing pytest scenarios, Ruff lint/format, strict mypy and dependency-consistency checks against `a271e83`. The four review unit checks and three desktop/emulated-mobile browser checks also pass. All five source attendance API/mobile acceptance cases remain Not run; physical-device/native UAT and durable authorization/database/QR/offline integrations are not claimed complete.
