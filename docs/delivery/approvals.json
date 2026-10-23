@@ -1,8 +1,17 @@
 {
   "sprints": [],
-  "pushAuthorized": false,
-  "currentRevisionPushStatus": "Four-sprint revision has no push authorization; the historical approval below applies only to the previously pushed work",
+  "pushAuthorized": true,
+  "currentRevisionPushStatus": "User authorized the existing four-sprint and S02 commits through 5bff76e, plus this approval record; subsequent Sprint 3 work needs a new push instruction",
   "pushApprovals": [
+    {
+      "date": "2026-10-23",
+      "userInstruction": "push the commits and start the next sprint, and show the markdown todolist progress on the terminal while working",
+      "scope": "Existing four-sprint plan and Sprint 2 attendance commits, retained planning/feature branches, plus this approval record; excludes untracked run artifacts and subsequent Sprint 3 implementation",
+      "reviewedWorkCommit": "5bff76e00e04847cd96ceea4fd7b68a149c4895f",
+      "branches": ["sprint/01-review", "sprint/02-review", "chore/four-sprint-plan", "feat/FEAT-011-child-attendance"],
+      "sprintAcceptance": "S01 and S02 remain incomplete; next-sprint instruction defers unfinished work rather than accepting its UAT",
+      "productionDeploymentAuthorized": false
+    },
     {
       "date": "2026-10-23",
       "userInstruction": "now push what has been already done",
