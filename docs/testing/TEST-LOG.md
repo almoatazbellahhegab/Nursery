@@ -19,3 +19,12 @@ Code under test: `e424992b0c4be74cb2ca01cd6170134ca9a8c991`. Automated checks ra
 | Native iPhone application | Blocked | UAT-S01-06 | macOS/Xcode/signing and Flutter build unavailable |
 
 The [initial failed browser run](runs/2026-10-23-browser-initial.json) is retained. DEF-S01-001 documents the corrected test harness issue. Automated observations use an isolated test evidence directory and do not populate the user's review log. Human acceptance and sprint push approval remain pending.
+
+## Four sprint plan revision verification
+
+Code under test: `a575a4bdb12ed52d8698ab504a1033a6147f325c`. All seven supplemental checks pass after consolidation. RV-001 additionally verifies exact content preservation against the archived 14-sprint plan, four sprint assignments, all 14 retained milestone exit criteria, unchanged decisions/controls and stable UAT identifiers. RV-007 verifies the four-group portal and both original and current-sprint UAT links.
+
+- [Unit/content preservation run](runs/2026-10-23T20-22-55-797Z-unit.json): RV-001 through RV-004 pass.
+- [Browser run](runs/2026-10-23-four-sprint-browser.json): RV-005 through RV-007 pass. Its only working-tree change was the generated unit evidence record, not application code.
+
+Product test execution, physical-device acceptance and native builds retain their previous Not run, Pending or Blocked states. This planning revision changes no feature acceptance or historical test outcome.
