@@ -30,9 +30,17 @@ try{
     await web.getByRole('button',{name:'Set up authenticator',exact:true}).click();
     const input=web.getByLabel('Setup key',{exact:true});await input.waitFor();secret=await input.inputValue();sensitive.add(secret);
     const code=otp(secret);sensitive.add(code);
+    const operations=[];let lost=false;
+    await web.route('**/api/v1/auth/mfa/confirm',async route=>{
+      operations.push(route.request().headers()['idempotency-key']);
+      if(!lost){lost=true;await route.fetch();await route.abort('failed');}
+      else{await route.continue();}
+    });
     await web.getByLabel('Verification code',{exact:true}).fill(code);
     await web.getByRole('button',{name:'Verify code',exact:true}).click();
     await web.getByRole('heading',{name:'Save your recovery codes',exact:true}).waitFor();
+    assert.equal(operations.length,2);assert.equal(operations[0],operations[1]);
+    await web.unroute('**/api/v1/auth/mfa/confirm');
     recovery=await web.locator('section.panel li code').allTextContents();assert.equal(recovery.length,10);recovery.forEach(value=>sensitive.add(value));
     assert.equal(await web.getByRole('button',{name:'Continue to workspace',exact:true}).isEnabled(),false);
     await web.getByLabel('I saved these codes securely',{exact:true}).check();

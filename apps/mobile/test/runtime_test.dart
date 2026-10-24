@@ -18,6 +18,53 @@ Map<String, dynamic> profile() => {
 };
 
 void main() {
+  test(
+    'MFA rotation replaces native credentials and invalidates older requests',
+    () async {
+      final pending = Completer<http.Response>();
+      final api = NurseryApi(
+        base: Uri.parse('https://fixture.invalid/api/v1/'),
+        client: MockClient((request) async {
+          if (request.url.path.endsWith('/auth/login')) {
+            return http.Response(jsonEncode(profile()), 200);
+          }
+          if (request.url.path.endsWith('/older-request'))
+            return pending.future;
+          if (request.url.path.endsWith('/mfa/verify')) {
+            return http.Response(
+              jsonEncode({
+                'profile': {
+                  ...profile(),
+                  'csrf_token': 'rotated-csrf',
+                  'access_token': 'rotated-session',
+                },
+              }),
+              200,
+            );
+          }
+          expect(request.headers['Authorization'], 'Bearer rotated-session');
+          expect(request.headers['X-CSRF-Token'], 'rotated-csrf');
+          return http.Response('{}', 200);
+        }),
+      );
+      await api.login('fictional@example.test', 'noncredential fixture');
+      final older = api.request('older-request');
+      await api.request('auth/mfa/verify', body: {'code': '123456'});
+      final assertion = expectLater(
+        older,
+        throwsA(
+          isA<ApiException>().having((e) => e.code, 'code', 'session_changed'),
+        ),
+      );
+      pending.complete(
+        http.Response('{"code":"authentication_required"}', 401),
+      );
+      await assertion;
+      await api.request('staff-attendance/transitions', body: {});
+      api.close();
+    },
+  );
+
   testWidgets('administrator branch entry keeps its Arabic accessible label', (
     tester,
   ) async {

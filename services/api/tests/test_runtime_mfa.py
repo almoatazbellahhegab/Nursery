@@ -16,6 +16,7 @@ from conftest import Workspace
 from nursery_api.runtime.api import now_utc
 from nursery_api.runtime.bootstrap import identifier
 from nursery_api.runtime.database import set_context
+from nursery_api.runtime.security import digest
 
 
 @pytest.fixture
@@ -28,11 +29,14 @@ def secured(workspace: Workspace) -> Workspace:
 
 
 def send(client: TestClient, path: str, body: dict[str, Any], operation: str | None = None) -> Any:
-    return client.post(
+    response = client.post(
         "/api/v1/auth/mfa/" + path,
         json=body,
         headers={"Idempotency-Key": operation or str(uuid4())},
     )
+    if response.status_code == 200 and "profile" in response.json():
+        client.headers["x-csrf-token"] = response.json()["profile"]["csrf_token"]
+    return response
 
 
 def enroll(workspace: Workspace, operation: str | None = None) -> tuple[pyotp.TOTP, Any]:
@@ -123,7 +127,7 @@ def test_mfa_003_exact_confirm_retry_is_bound_to_session_and_current_scope(
     assert len(retry.json()["recovery_codes"]) == 10
     assert send(secured.client, "confirm", {"code": "changed"}, operation).status_code == 409
     with psycopg.connect(secured.owner_url) as connection:
-        assert connection.execute("SELECT count(*) FROM app.auth_receipts").fetchone() == (1,)
+        assert connection.execute("SELECT count(*) FROM app.auth_receipts").fetchone() == (2,)
         assert connection.execute(
             "SELECT count(*) FROM app.audit WHERE action='mfa.enrollment_confirmed'"
         ).fetchone() == (1,)
@@ -207,7 +211,8 @@ def test_mfa_008_stale_second_factor_cannot_manage_branch_access(secured: Worksp
     enroll(secured)
     with psycopg.connect(secured.owner_url) as connection:
         connection.execute(
-            "UPDATE app.sessions SET mfa_at=%s", (now_utc() - timedelta(minutes=16),)
+            "UPDATE app.sessions SET authenticated_at=%s,mfa_at=%s",
+            (now_utc() - timedelta(minutes=20), now_utc() - timedelta(minutes=16)),
         )
     assert secured.client.get("/api/v1/branches").status_code == 200
     assert (
@@ -288,3 +293,109 @@ def test_mfa_011_rls_prevents_other_users_reading_or_changing_factor_material(
             "INSERT INTO app.mfa_enrollments(user_id) VALUES(%s)",
             (identifier("parent@garden.example.test"),),
         )
+
+
+def test_mfa_012_rotation_bridge_only_recovers_exact_response_and_cannot_survive_logout(
+    secured: Workspace,
+) -> None:
+    secured.login()
+    previous = secured.client.cookies.get("nursery_session")
+    previous_csrf = secured.client.headers["x-csrf-token"]
+    assert previous is not None
+    otp = pyotp.TOTP(send(secured.client, "begin", {}).json()["secret"])
+    body = {"code": otp.now()}
+    operation = str(uuid4())
+    assert send(secured.client, "confirm", body, operation).status_code == 200
+    current = secured.client.cookies.get("nursery_session")
+    assert current is not None and digest(current) != digest(previous)
+    old = TestClient(
+        secured.client.app,
+        headers={"origin": "http://localhost:3000", "x-csrf-token": previous_csrf},
+    )
+    old.cookies.set("nursery_session", previous, domain="testserver.local", path="/api/v1")
+    try:
+        assert old.get("/api/v1/branches").status_code == 401
+        assert send(old, "verify", body).status_code == 401
+        assert send(old, "confirm", body, operation).json()["replayed"]
+        assert old.get("/api/v1/branches").status_code == 200
+        assert secured.client.post("/api/v1/auth/logout").status_code == 204
+        assert old.get("/api/v1/branches").status_code == 401
+        old.cookies.clear()
+        old.cookies.set("nursery_session", previous, domain="testserver.local", path="/api/v1")
+        old.headers["x-csrf-token"] = previous_csrf
+        assert send(old, "confirm", body, operation).status_code == 401
+    finally:
+        old.close()
+
+
+def test_mfa_013_second_factor_does_not_extend_primary_absolute_expiry(secured: Workspace) -> None:
+    secured.login()
+    cap = now_utc() + timedelta(minutes=2)
+    with psycopg.connect(secured.owner_url) as connection:
+        connection.execute(
+            "UPDATE app.sessions SET absolute_expires_at=%s,expires_at=%s", (cap, cap)
+        )
+    enroll(secured)
+    with psycopg.connect(secured.owner_url) as connection:
+        rows = connection.execute(
+            "SELECT expires_at,absolute_expires_at FROM app.sessions"
+        ).fetchall()
+        assert len(rows) == 2 and all(row[0] <= cap and row[1] == cap for row in rows)
+
+
+def test_mfa_014_native_rotation_returns_new_bearer_and_retires_old_authority(
+    secured: Workspace,
+) -> None:
+    client = TestClient(secured.client.app)
+    email = "administrator@garden.example.test"
+    login = client.post(
+        "/api/v1/auth/login",
+        json={"email": email, "password": secured.accounts[email], "native": True},
+    )
+    assert login.status_code == 200
+    previous = login.json()["access_token"]
+    client.headers["authorization"] = "Bearer " + previous
+    otp = pyotp.TOTP(send(client, "begin", {}).json()["secret"])
+    body = {"code": otp.now()}
+    operation = str(uuid4())
+    try:
+        confirmed = send(client, "confirm", body, operation)
+        assert confirmed.status_code == 200
+        current = confirmed.json()["profile"]["access_token"]
+        assert digest(current) != digest(previous)
+        assert client.get("/api/v1/branches").status_code == 401
+        replay = send(client, "confirm", body, operation)
+        assert replay.status_code == 200 and replay.json()["replayed"]
+        if digest(replay.json()["profile"]["access_token"]) != digest(current):
+            raise AssertionError("Exact retry must recover the same rotated session")
+        client.headers["authorization"] = "Bearer " + current
+        assert client.get("/api/v1/branches").status_code == 200
+    finally:
+        client.close()
+
+
+def test_mfa_015_logout_racing_enrollment_cannot_leave_an_elevated_session_live(
+    secured: Workspace,
+) -> None:
+    secured.login()
+    otp = pyotp.TOTP(send(secured.client, "begin", {}).json()["secret"])
+    logout_client = TestClient(
+        secured.client.app,
+        headers={
+            "origin": "http://localhost:3000",
+            "x-csrf-token": secured.client.headers["x-csrf-token"],
+        },
+    )
+    logout_client.cookies.update(secured.client.cookies)
+    try:
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            elevation = pool.submit(send, secured.client, "confirm", {"code": otp.now()})
+            logout = pool.submit(logout_client.post, "/api/v1/auth/logout")
+            assert elevation.result().status_code in {200, 401}
+            assert logout.result().status_code == 204
+    finally:
+        logout_client.close()
+    with psycopg.connect(secured.owner_url) as connection:
+        assert connection.execute(
+            "SELECT count(*) FROM app.sessions WHERE NOT revoked AND replaced_by_hash IS NULL"
+        ).fetchone() == (0,)

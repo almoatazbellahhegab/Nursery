@@ -60,6 +60,7 @@ function operationId() {
 
 export default function Workspace() {
   const sessionGeneration = useRef(0);
+  const csrfRef = useRef("");
   const [securityOpen, setSecurityOpen] = useState(false);
   const [ar, setAr] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -97,31 +98,73 @@ export default function Workspace() {
     }).format(new Date(value));
 
   async function api<T>(path: string, body?: object): Promise<T> {
+    if (path === "auth/mfa/confirm" || path === "auth/mfa/verify")
+      sessionGeneration.current++;
     const generation = sessionGeneration.current;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
     if (body) {
-      headers["X-CSRF-Token"] = profile?.csrf_token ?? "";
+      headers["X-CSRF-Token"] = csrfRef.current || profile?.csrf_token || "";
       headers["Idempotency-Key"] = operationId();
     }
-    const response = await fetch(`/api/v1/${path}`, {
-      method: body ? "POST" : "GET",
-      headers,
-      credentials: "same-origin",
-      body: body ? JSON.stringify(body) : undefined,
-      signal: AbortSignal.timeout(15000),
-    });
+    let response: Response | undefined;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      if (generation !== sessionGeneration.current)
+        throw new Error("session_changed");
+      try {
+        response = await fetch(`/api/v1/${path}`, {
+          method: body ? "POST" : "GET",
+          headers,
+          credentials: "same-origin",
+          body: body ? JSON.stringify(body) : undefined,
+          signal: AbortSignal.timeout(15000),
+        });
+        break;
+      } catch (error) {
+        if (attempt === 1 || path === "auth/login" || path === "auth/logout")
+          throw error;
+        if (body) {
+          try {
+            const current = await fetch("/api/v1/auth/me", {
+              credentials: "same-origin",
+              signal: AbortSignal.timeout(5000),
+            });
+            if (current.ok) {
+              const value = await current.json();
+              if (typeof value.csrf_token === "string")
+                headers["X-CSRF-Token"] = value.csrf_token;
+            }
+          } catch {
+            /* The original receipt may still be recovered with its old cookie. */
+          }
+        }
+      }
+    }
+    if (!response) throw new Error("service_unavailable");
     if (generation !== sessionGeneration.current)
       throw new Error("session_changed");
-    if (response.status === 401 && path !== "auth/login") {
-      setProfile(null);
-      setRows([]);
-    }
     const data = response.status === 204 ? {} : await response.json();
     if (generation !== sessionGeneration.current)
       throw new Error("session_changed");
-    if (!response.ok) throw new Error(data.code ?? "service_unavailable");
+    if (!response.ok) {
+      if (response.status === 401 && path !== "auth/login") {
+        setProfile(null);
+        setRows([]);
+        csrfRef.current = "";
+        sessionGeneration.current++;
+      }
+      throw new Error(data.code ?? "service_unavailable");
+    }
+    if (path.startsWith("auth/")) {
+      const credentials = data.profile ?? data;
+      if (typeof credentials.csrf_token === "string") {
+        if (credentials.csrf_token !== csrfRef.current)
+          sessionGeneration.current++;
+        csrfRef.current = credentials.csrf_token;
+      }
+      if (path === "auth/logout") csrfRef.current = "";
+    }
     return data as T;
   }
   async function run(action: () => Promise<void>) {
@@ -185,6 +228,7 @@ export default function Workspace() {
         if (response.ok && active) {
           const data: Profile = await response.json();
           if (!active || generation !== sessionGeneration.current) return;
+          csrfRef.current = data.csrf_token;
           setProfile(data);
           setBranch(data.branches[0]?.id ?? "");
         }

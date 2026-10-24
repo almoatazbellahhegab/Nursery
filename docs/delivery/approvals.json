@@ -3,8 +3,20 @@
 
                 ],
     "pushAuthorized":  true,
-    "currentRevisionPushStatus":  "User explicitly authorized all committed S03 work through 20fc0be plus this approval record on 2026-10-24; S04 start authorized separately, without specialist/UAT approval.",
+    "currentRevisionPushStatus":  "2026-10-24: user explicitly authorized commit and push of all current local project work and branches as a WIP checkpoint; no sprint completion or UAT acceptance.",
     "pushApprovals":  [
+                          {
+                              "date": "2026-10-24",
+                              "userInstruction": "commit and push everything later we will continue",
+                              "scope": "All current local project branches and reachable commits, all pending tracked source changes, draft/installed migration source, untracked verifier/privacy source and tests, all current run artifacts including historical failed and formerly excluded attendance evidence, and updated approval/checkpoint/demo documentation. Excludes ignored secrets, local database/runtime files, generated builds and dependencies. Hosted fictional mobile export is already independently privately deployed through Sites.",
+                              "sourceBase": "7262350",
+                              "branches": "All local refs/heads; integrate this FEAT-003 WIP checkpoint into sprint/01-review and sprint/04-review before pushing. Retain all feature branches; no force push or tags required.",
+                              "testEvidence": ["docs/testing/runs/2026-10-24-checkpoint-security.json", "docs/testing/runs/2026-10-24T16-59-34-881Z-account-security.json"],
+                              "knownLimitations": "Provider flows incomplete;0006 draft not applied; final full current-source regression/build/browser verification pending; earlier evidence has narrower checkpoint scope.",
+                              "status": "Authorized; record committed before push",
+                              "sprintAcceptance": "Not granted. Incomplete implementation and physical/native/human UAT remain pending.",
+                              "productionDeploymentAuthorized": false
+                          },
                           {
                               "date":  "2026-10-23",
                               "userInstruction":  "push the commits and start the next sprint, and show the markdown todolist progress on the terminal while working",

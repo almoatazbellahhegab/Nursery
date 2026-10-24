@@ -2,6 +2,17 @@
 
 ## Ready-to-present links - 2026-10-24
 
+Hosted mobile presentation (works across Wi-Fi/mobile networks, without the PC):
+
+- Parent: https://little-garden-mobile-demo.iken-3017.chatgpt.site/?view=parent
+- Educator: https://little-garden-mobile-demo.iken-3017.chatgpt.site/?view=teacher
+
+This Sites publication is owner-private; sign in with the same ChatGPT account
+when prompted. Public sharing has not been selected. It serves only fictional
+Flutter presentation data and does not expose the connected API/database.
+Deployment succeeded; hosted interactive/physical iPhone checks remain pending.
+Local links below still require the PC, and phone access requires its network.
+
 - Dashboard business presentation: http://localhost:3300/demo
 - Mobile parent presentation: http://192.168.8.154:3400/?view=parent
 - Mobile educator presentation: http://192.168.8.154:3400/?view=teacher
@@ -36,7 +47,8 @@ iPhone delivery are not claimed ready. The live demo uses the tested compiled
 checkpoint; later authentication/rotation work in the working tree is not yet
 included in these compiled artifacts. The broader fictional stories do not
 synchronize between devices. Only the connected staff workflow shares persisted
-state. These are local/same-Wi-Fi links, not public internet hosting.
+state. The connected links are local/same-Wi-Fi. The separately hosted mobile
+presentation above works across networks with owner-account access.
 
 Direct mobile views use `/?view=parent` and `/?view=teacher` on the printed
 mobile address. On the host PC, use `http://localhost:3400/?view=parent` or
@@ -117,7 +129,7 @@ reachability and human acceptance are still separate checks.
 
 - [ ] Windows 11 interactive browser: complete all four stories; record reviewer,
   outcome and observations separately from automated headless results.
-- [ ] Physical iPhone Safari: open the same-Wi-Fi mobile URL, complete the
+- [ ] Physical iPhone Safari: open the hosted HTTPS mobile URL, complete the
   parent/staff story, switch branches/children, inspect Arabic in portrait and
   landscape, and confirm Reset demo restores the baseline.
 - [ ] Native iPhone: repeat after a signed macOS/Xcode build and installation.
@@ -143,5 +155,7 @@ completed operational release of those features.
 The fictional presentation remains on retained `feat/FEAT-041-demo-scenarios`
 history and is served alongside the connected runtime. Connected staff, branch and
 MFA increments are committed and integrated locally through `1678307`. Later
-identity/provider changes remain in progress. No new push, public deployment,
-native iPhone build or human UAT is implied by the presentation links.
+identity/provider changes remain in progress. The hosted fictional mobile
+presentation is privately deployed; it does not deploy the connected product.
+Native iPhone build and human UAT remain pending. The later user instruction
+authorizes a WIP project push separately from presentation or sprint acceptance.

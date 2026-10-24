@@ -1,5 +1,41 @@
 # Session checkpoint and resume instructions
 
+## Paused by user: commit and push everything - 2026-10-24
+
+Latest instruction: `commit and push everything later we will continue`.
+Explicit approval covers all current local project branches, pending source,
+draft migrations, historical test artifacts and checkpoint documentation. Record
+is in `docs/delivery/approvals.json`. This is a WIP backup, not sprint completion
+or human UAT acceptance. Preserve the development scope and next steps below.
+
+Hosted fictional Flutter demo deployed successfully through Sites:
+https://little-garden-mobile-demo.iken-3017.chatgpt.site/?view=parent
+and `?view=teacher`. Owner-private: use the same ChatGPT account if prompted.
+It works independently of the development PC/network; contains no connected
+API/database or real child records. User has not selected public sharing.
+Project `appgprj_6adcf05293908191b4e5d6dc61611c45`, deployed source
+`0f680bfeabfdfa738de0e54b7c7186d3ccb27b8c`, deployment
+`appgdep_6adcf7fe30ec819194c3268a8a9a68f2` reported `succeeded`.
+Isolated source/export `.tools/hosted-mobile-demo` and archive
+`.tools/little-garden-mobile-demo.tar.gz` remain ignored locally. Reuse its
+`.openai/hosting.json`; never create another Site for this same demo. Hosting
+only wraps the existing compiled fictional demo; connected source is not deployed.
+Parent/teacher entry selection and exported secret scan passed. No browser
+surfaces were available for hosted interactive QA; physical iPhone/native checks
+remain pending. Final remote-file probe was interrupted by the pause request.
+Its temporary verifier was stopped. Local preview3500 was asked to stop;
+original connected runtime launcher65585 was left available.
+
+Final checkpoint verification: 24 signed-provider/privacy tests pass; Python
+Ruff lint and formatting pass. Evidence:
+`docs/testing/runs/2026-10-24-checkpoint-security.json`.
+Full backend, builds and browser evidence below applies to earlier checkpoints;
+the full current source regression/build/browser pass remains pending.
+Migration0005 is installed/immutable;0006 remains a draft, not applied. Provider
+callback/native exchange/linking are incomplete. Continue from these files,
+not the old compiled runtime. The formerly unrelated10/23 attendance artifact
+is now included in this explicit all-current-files backup, as historical evidence.
+
 ## Business demo handoff and preserved development checkpoint - 2026-10-24
 
 Latest user request: show a business-ready demonstration from project start to

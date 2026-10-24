@@ -2,6 +2,18 @@
 
 ## Latest execution override
 
+### Pause and backup checkpoint - 2026-10-24
+
+- [x] User authorized committing/pushing all current local work and branches.
+- [x] Hosted owner-private fictional mobile demo; links and Site identity in RESUME.md.
+- [x] Final focused provider/privacy tests: 24 pass; Python lint/format pass.
+- [ ] Resume unfinished provider flow, linking, callback/native exchange and session hardening.
+- [ ] Verify draft migration0006 before applying; preserve installed0001-0005.
+- [ ] Run full current-source regression and rebuild both clients before replacing the compiled demo.
+- [ ] Verify hosted demo interactively and on physical iPhone Safari; native iPhone remains separate.
+
+This is an authorized WIP backup, not Sprint4 completion or UAT acceptance.
+
 ### Connected delivery progress
 
 - [x] Connected application MFA, encrypted enrollment, one-use recovery, throttle and commit-before-response.

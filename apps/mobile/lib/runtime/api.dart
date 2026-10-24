@@ -49,6 +49,13 @@ class NurseryApi {
   }
 
   Future<JsonMap> request(String path, {JsonMap? body}) async {
+    if ({
+      'auth/mfa/confirm',
+      'auth/mfa/verify',
+      'auth/oidc/native/finish',
+    }.contains(path)) {
+      _generation++;
+    }
     final generation = _generation;
     final headers = <String, String>{'Content-Type': 'application/json'};
     if (_bearer.isNotEmpty) headers['Authorization'] = 'Bearer $_bearer';
@@ -57,6 +64,9 @@ class NurseryApi {
       headers['Idempotency-Key'] = operationId();
     }
     for (var attempt = 0; attempt < 2; attempt++) {
+      if (generation != _generation) {
+        throw const ApiException('session_changed', 409);
+      }
       try {
         final message = http.Request(
           body == null ? 'GET' : 'POST',
@@ -77,11 +87,29 @@ class NurseryApi {
           if (response.statusCode == 401) {
             _bearer = '';
             _csrf = '';
+            _generation++;
           }
           throw ApiException(
             data['code'] as String? ?? 'service_unavailable',
             response.statusCode,
           );
+        }
+        if (path.startsWith('auth/')) {
+          final value = data['profile'] is JsonMap
+              ? data['profile'] as JsonMap
+              : data;
+          if (value['csrf_token'] is String) {
+            final csrf = value['csrf_token'] as String;
+            final bearer = value['access_token'] as String? ?? _bearer;
+            if (csrf != _csrf || bearer != _bearer) _generation++;
+            _csrf = csrf;
+            _bearer = bearer;
+          }
+          if (path == 'auth/logout') {
+            _bearer = '';
+            _csrf = '';
+            _generation++;
+          }
         }
         return data;
       } on http.ClientException {
@@ -91,32 +119,48 @@ class NurseryApi {
       } on FormatException {
         throw const ApiException('service_unavailable', 503);
       }
+      if (path == 'auth/login' || path == 'auth/logout') {
+        throw const ApiException('service_unavailable', 503);
+      }
+      if (attempt == 0 && kIsWeb && body != null) {
+        // A rotated HttpOnly cookie can arrive even if its response body was
+        // lost. Refresh only the retry header; accept credentials atomically
+        // when the original operation's durable response is recovered.
+        try {
+          final current = await _client
+              .get(base.resolve('auth/me'))
+              .timeout(const Duration(seconds: 5));
+          final value = jsonDecode(utf8.decode(current.bodyBytes));
+          if (current.statusCode == 200 &&
+              value is JsonMap &&
+              value['csrf_token'] is String) {
+            headers['X-CSRF-Token'] = value['csrf_token'] as String;
+          }
+        } on http.ClientException {
+          // The original operation can still recover through its old session.
+        } on TimeoutException {
+          // Keep the bounded original-operation retry.
+        } on FormatException {
+          // A failed refresh is not an authentication result.
+        }
+      }
     }
     throw const ApiException('service_unavailable', 503);
   }
 
-  Future<JsonMap> login(String email, String password) async {
+  Future<JsonMap> login(String email, String password) {
     _generation++;
-    final profile = await request(
+    return request(
       'auth/login',
       body: {'email': email, 'password': password, 'native': !kIsWeb},
     );
-    _csrf = profile['csrf_token'] as String;
-    _bearer = profile['access_token'] as String? ?? '';
-    return profile;
   }
 
-  Future<JsonMap> restore() async {
-    final profile = await request('auth/me');
-    _csrf = profile['csrf_token'] as String;
-    return profile;
-  }
+  Future<JsonMap> restore() => request('auth/me');
 
   Future<void> logout() async {
     _generation++;
     await request('auth/logout', body: {});
-    _bearer = '';
-    _csrf = '';
   }
 
   void close() => _client.close();

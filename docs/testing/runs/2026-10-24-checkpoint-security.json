@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-24",
+  "feature": "FEAT-003",
+  "purpose": "Focused verification before user-requested WIP commit and push",
+  "sourceBase": "7262350",
+  "workingTree": "Session rotation, OIDC verifier/draft migration and privacy logging groundwork; provider flows incomplete",
+  "checks": [
+    {"command": "services/api/.venv/Scripts/python.exe -m pytest -q -p no:cacheprovider tests/test_oidc_verifier.py tests/test_privacy_logging.py", "cwd": "services/api", "result": "Pass", "passed": 24, "warnings": "Existing Starlette anyio BlockingPortal deprecation"},
+    {"command": "services/api/.venv/Scripts/python.exe -m ruff check src tests", "cwd": "services/api", "result": "Pass"},
+    {"command": "services/api/.venv/Scripts/python.exe -m ruff format --check src tests", "cwd": "services/api", "result": "Pass", "files": 33},
+    {"command": "git diff --check", "result": "Pass"}
+  ],
+  "limitations": ["Not a full current-source backend/build/browser regression", "Draft migration0006 not applied", "No physical or native iPhone UAT", "Earlier test artifacts retain their original result and scope"]
+}

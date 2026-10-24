@@ -16,7 +16,7 @@ from uuid import UUID, uuid4
 
 import pyotp
 from cryptography.fernet import Fernet, InvalidToken
-from fastapi import APIRouter, Header, Request
+from fastapi import APIRouter, Header, Request, Response
 from fastapi.responses import JSONResponse
 from psycopg.types.json import Jsonb
 from pydantic import Field
@@ -29,7 +29,11 @@ from .api import (
     StrictModel,
     now_utc,
     profile,
+    make_actor,
+    lock_session_family,
+    set_session_cookie,
 )
+from .database import set_context
 from .security import digest
 
 router = APIRouter(prefix="/api/v1/auth/mfa", tags=["Account security"], route_class=CommittedRoute)
@@ -63,7 +67,8 @@ def locked_enrollment(actor: Actor) -> dict[str, Any]:
     ).fetchone()
     assert row is not None
     current = actor.connection.execute(
-        "SELECT token_hash FROM app.sessions WHERE token_hash=%s AND user_id=%s AND NOT revoked AND expires_at>%s",
+        "SELECT token_hash FROM app.sessions WHERE token_hash=%s AND user_id=%s AND NOT revoked "
+        "AND replaced_by_hash IS NULL AND expires_at>%s",
         (digest(actor.token), actor.user_id, now_utc()),
     ).fetchone()
     if current is None:
@@ -126,7 +131,27 @@ def request_hash(action: str, body: Verification) -> str:
     ).hexdigest()
 
 
-def retry(actor: Actor, operation: UUID, command_hash: str, key: Fernet) -> dict[str, Any] | None:
+def reply(
+    actor: Actor, payload: dict[str, Any], request: Request, response: Response, *, replayed: bool
+) -> dict[str, Any]:
+    result = profile(actor)
+    if request.headers.get("authorization", "").startswith("Bearer "):
+        result["access_token"] = actor.token
+    else:
+        assert actor.absolute_expires_at is not None
+        set_session_cookie(request, response, actor.token, actor.absolute_expires_at)
+    request.state.runtime_session_hash = digest(actor.token)
+    return {**payload, "profile": result, "replayed": replayed}
+
+
+def retry(
+    actor: Actor,
+    operation: UUID,
+    command_hash: str,
+    key: Fernet,
+    request: Request,
+    response: Response,
+) -> dict[str, Any] | None:
     actor.connection.execute(
         "SELECT pg_advisory_xact_lock(hashtextextended(%s,0))",
         (f"auth:{actor.user_id}:{digest(actor.token)}:{operation}",),
@@ -136,42 +161,135 @@ def retry(actor: Actor, operation: UUID, command_hash: str, key: Fernet) -> dict
         (actor.user_id, digest(actor.token), operation),
     ).fetchone()
     if row is None:
+        if actor.replaced_by_hash is not None:
+            raise ApiError(401, "authentication_required")
         return None
     if row["fingerprint"] != command_hash:
         raise ApiError(409, "operation_conflict")
-    if actor.mfa_at is None:
-        raise ApiError(403, "reauthentication_required")
     try:
         data: dict[str, Any] = json.loads(key.decrypt(row["response_cipher"].encode(), ttl=600))
     except InvalidToken as error:
         raise ApiError(409, "verification_retry_expired") from error
-    return dict(data, profile=profile(actor), replayed=True)
+    token = data.pop("session_token", None)
+    if not isinstance(token, str):
+        raise ApiError(409, "verification_retry_expired")
+    target_hash = digest(token)
+    lock_session_family(actor)
+    original = actor.connection.execute(
+        "SELECT replaced_by_hash FROM app.sessions WHERE token_hash=%s AND user_id=%s AND organization_id=%s "
+        "AND NOT revoked AND expires_at>%s",
+        (digest(actor.token), actor.user_id, actor.organization_id, now_utc()),
+    ).fetchone()
+    if original is None or (original["replaced_by_hash"] or digest(actor.token)) != target_hash:
+        raise ApiError(401, "authentication_required")
+    destination = actor.connection.execute(
+        "SELECT s.authenticated_at,s.mfa_at,s.family_id,"
+        "coalesce(s.absolute_expires_at,s.authenticated_at+interval '12 hours') AS absolute_expires_at "
+        "FROM app.sessions s JOIN app.users u ON u.id=s.user_id WHERE s.token_hash=%s AND s.user_id=%s "
+        "AND s.organization_id=%s AND NOT s.revoked AND u.active AND s.replaced_by_hash IS NULL "
+        "AND s.mfa_at IS NOT NULL AND s.expires_at>%s AND s.last_seen_at>%s",
+        (
+            target_hash,
+            actor.user_id,
+            actor.organization_id,
+            now_utc(),
+            now_utc() - timedelta(minutes=30),
+        ),
+    ).fetchone()
+    membership = actor.connection.execute(
+        "SELECT m.role FROM app.memberships m JOIN app.organizations o ON o.id=m.organization_id "
+        "WHERE m.organization_id=%s AND m.user_id=%s AND m.active AND o.active",
+        (actor.organization_id, actor.user_id),
+    ).fetchone()
+    if destination is None or membership is None:
+        raise ApiError(401, "authentication_required")
+    set_context(actor.connection, actor.user_id, actor.organization_id, membership["role"])
+    current = make_actor(
+        actor.connection,
+        actor.user_id,
+        actor.organization_id,
+        membership["role"],
+        token,
+        request.app.state.require_mfa,
+        destination["authenticated_at"],
+        destination["mfa_at"],
+        destination["absolute_expires_at"],
+        destination["family_id"],
+    )
+    return reply(current, data, request, response, replayed=True)
 
 
 def receipt(
-    actor: Actor, operation: UUID, command_hash: str, result: dict[str, Any], key: Fernet
+    actor: Actor,
+    upgraded: Actor,
+    operation: UUID,
+    command_hash: str,
+    result: dict[str, Any],
+    key: Fernet,
+    request: Request,
+    response: Response,
 ) -> dict[str, Any]:
-    payload = dict(result, replayed=False)
-    encrypted = key.encrypt(json.dumps(payload, default=str).encode()).decode()
-    actor.connection.execute(
-        "INSERT INTO app.auth_receipts VALUES(%s,%s,%s,%s,%s,%s)",
-        (actor.user_id, digest(actor.token), operation, command_hash, encrypted, now_utc()),
-    )
-    return payload
+    encrypted = key.encrypt(
+        json.dumps(dict(result, session_token=upgraded.token), default=str).encode()
+    ).decode()
+    for session_hash in {digest(actor.token), digest(upgraded.token)}:
+        actor.connection.execute(
+            "INSERT INTO app.auth_receipts VALUES(%s,%s,%s,%s,%s,%s)",
+            (actor.user_id, session_hash, operation, command_hash, encrypted, now_utc()),
+        )
+    return reply(upgraded, result, request, response, replayed=False)
 
 
 def upgrade_session(actor: Actor) -> Actor:
+    lock_session_family(actor)
     now = now_utc()
     assert actor.authenticated_at is not None
+    assert actor.absolute_expires_at is not None and actor.family_id is not None
+    if actor.absolute_expires_at <= now:
+        raise ApiError(401, "authentication_required")
+    current = actor.connection.execute(
+        "SELECT token_hash FROM app.sessions WHERE token_hash=%s AND user_id=%s AND NOT revoked "
+        "AND replaced_by_hash IS NULL AND expires_at>%s",
+        (digest(actor.token), actor.user_id, now),
+    ).fetchone()
+    if current is None:
+        raise ApiError(401, "authentication_required")
+    token = secrets.token_urlsafe(32)
     actor.connection.execute(
-        "UPDATE app.sessions SET mfa_at=%s,expires_at=%s WHERE token_hash=%s AND user_id=%s",
-        (now, actor.authenticated_at + timedelta(hours=12), digest(actor.token), actor.user_id),
+        "INSERT INTO app.sessions(token_hash,user_id,organization_id,expires_at,last_seen_at,revoked,"
+        "authenticated_at,mfa_at,absolute_expires_at,family_id) VALUES(%s,%s,%s,%s,%s,false,%s,%s,%s,%s)",
+        (
+            digest(token),
+            actor.user_id,
+            actor.organization_id,
+            actor.absolute_expires_at,
+            now,
+            actor.authenticated_at,
+            now,
+            actor.absolute_expires_at,
+            actor.family_id,
+        ),
     )
+    changed = actor.connection.execute(
+        "UPDATE app.sessions SET replaced_by_hash=%s,family_id=%s,expires_at=%s "
+        "WHERE token_hash=%s AND user_id=%s AND NOT revoked AND replaced_by_hash IS NULL",
+        (
+            digest(token),
+            actor.family_id,
+            min(actor.absolute_expires_at, now + timedelta(minutes=10)),
+            digest(actor.token),
+            actor.user_id,
+        ),
+    ).rowcount
+    if changed != 1:
+        raise ApiError(401, "authentication_required")
     actor.connection.execute(
         "UPDATE app.mfa_enrollments SET failures=0,window_started_at=%s WHERE user_id=%s",
         (now, actor.user_id),
     )
-    return replace(actor, mfa_at=now, mfa_enrolled=True, mfa_required=True)
+    return replace(
+        actor, token=token, mfa_at=now, mfa_enrolled=True, mfa_required=True, replaced_by_hash=None
+    )
 
 
 @router.post(
@@ -215,11 +333,15 @@ def begin(body: Empty, actor: LimitedAuthenticated, request: Request) -> dict[st
     summary="Confirm TOTP, issue recovery codes once and revoke other sessions atomically",
 )
 def confirm(
-    body: Verification, actor: LimitedAuthenticated, request: Request, operation: Operation
+    body: Verification,
+    actor: LimitedAuthenticated,
+    request: Request,
+    operation: Operation,
+    response: Response,
 ) -> dict[str, Any] | JSONResponse:
     key = cipher(request)
     command_hash = request_hash("confirm", body)
-    cached = retry(actor, operation, command_hash, key)
+    cached = retry(actor, operation, command_hash, key, request, response)
     if cached is not None:
         return cached
     row = locked_enrollment(actor)
@@ -257,14 +379,14 @@ def confirm(
             "INSERT INTO app.mfa_recovery_codes VALUES(%s,%s,%s,NULL)",
             (actor.user_id, digest(str(actor.user_id) + "\0" + code), now_utc()),
         )
-    actor.connection.execute(
-        "UPDATE app.sessions SET revoked=true WHERE user_id=%s AND token_hash<>%s",
-        (actor.user_id, digest(actor.token)),
-    )
     upgraded = upgrade_session(actor)
+    actor.connection.execute(
+        "UPDATE app.sessions SET revoked=true WHERE user_id=%s AND token_hash NOT IN (%s,%s)",
+        (actor.user_id, digest(actor.token), digest(upgraded.token)),
+    )
     audit(actor, "mfa.enrollment_confirmed")
     return receipt(
-        actor, operation, command_hash, {"profile": profile(upgraded), "recovery_codes": codes}, key
+        actor, upgraded, operation, command_hash, {"recovery_codes": codes}, key, request, response
     )
 
 
@@ -274,11 +396,15 @@ def confirm(
     summary="Verify a fresh TOTP or consume one recovery code; no reusable role proof",
 )
 def verify(
-    body: Verification, actor: LimitedAuthenticated, request: Request, operation: Operation
+    body: Verification,
+    actor: LimitedAuthenticated,
+    request: Request,
+    operation: Operation,
+    response: Response,
 ) -> dict[str, Any] | JSONResponse:
     key = cipher(request)
     command_hash = request_hash("verify", body)
-    cached = retry(actor, operation, command_hash, key)
+    cached = retry(actor, operation, command_hash, key, request, response)
     if cached is not None:
         return cached
     row = locked_enrollment(actor)
@@ -311,4 +437,4 @@ def verify(
             return deny(actor)
     upgraded = upgrade_session(actor)
     audit(actor, "mfa.verified" if body.kind == "totp" else "mfa.recovery_used")
-    return receipt(actor, operation, command_hash, {"profile": profile(upgraded)}, key)
+    return receipt(actor, upgraded, operation, command_hash, {}, key, request, response)

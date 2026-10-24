@@ -1,0 +1,107 @@
+{
+  "startedAt": "2026-10-24T16:53:30.266Z",
+  "completedAt": "2026-10-24T16:55:58.018Z",
+  "feature": "FEAT-003",
+  "sprint": "S01",
+  "codeCommit": "167830759d281a98f949009eaf826e28995f55ec",
+  "workingTreeChanges": "M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/mfa.py\n M services/api/tests/test_runtime_mfa.py\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? services/api/migrations/versions/0005_session_rotation.py\n?? services/api/src/nursery_api/runtime/oidc_verifier.py\n?? services/api/tests/test_oidc_verifier.py",
+  "python": "Python 3.12.14",
+  "platform": "win32",
+  "dependencyLockSha256": "2d2f4d5a11efcfa7d4f1c75bf3daf5ae982c1b335e2462c687e055e678194059",
+  "result": "Pass",
+  "checks": [
+    {
+      "id": "pytest",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\account-security-2026-10-24T16-53-30-266Z.xml",
+        "tests/test_runtime_mfa.py",
+        "tests/test_runtime_staff.py::test_staff_api_016_deferred_commit_failure_is_not_reported_as_http_success"
+      ],
+      "result": "Pass",
+      "output": "............                                                             [100%]\r\n============================== warnings summary ===============================\r\n.venv\\Lib\\site-packages\\starlette\\testclient.py:51\r\n  C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.venv\\Lib\\site-packages\\starlette\\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\r\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n- generated xml file: C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\account-security-2026-10-24T16-53-30-266Z.xml -\r\n12 passed, 1 warning in 125.01s (0:02:05)\r\n"
+    },
+    {
+      "id": "ruff-lint",
+      "args": [
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "All checks passed!\n"
+    },
+    {
+      "id": "ruff-format",
+      "args": [
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "31 files already formatted\n"
+    },
+    {
+      "id": "mypy-strict",
+      "args": [
+        "-m",
+        "mypy",
+        "--strict",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "Success: no issues found in 31 source files\r\n"
+    },
+    {
+      "id": "dependency-consistency",
+      "args": [
+        "-m",
+        "pip",
+        "check"
+      ],
+      "result": "Pass",
+      "output": "No broken requirements found.\r\n"
+    }
+  ],
+  "mappings": [
+    {
+      "cases": [
+        "SECURITY-MFA",
+        "SECURITY-COMMIT"
+      ],
+      "coverage": "Real encrypted enrollment, self-RLS, current session/scope, TOTP replay, one-use recovery race, persistent throttling, revocation and immediate/deferred audit rollback"
+    }
+  ],
+  "executedCases": [
+    "test_mfa_001_primary_privileged_session_cannot_read_or_write_product_data",
+    "test_mfa_002_enrollment_encrypts_secrets_and_issues_hashed_recovery",
+    "test_mfa_003_exact_confirm_retry_is_bound_to_session_and_current_scope",
+    "test_mfa_004_pending_enrollment_cannot_be_confirmed_from_another_session",
+    "test_mfa_005_totp_replay_denied_and_recovery_consumed_once",
+    "test_mfa_006_failures_persist_across_transactions_and_new_logins",
+    "test_mfa_007_role_promotion_does_not_upgrade_an_existing_weak_session",
+    "test_mfa_008_stale_second_factor_cannot_manage_branch_access",
+    "test_mfa_009_enrollment_audit_failure_rolls_back_proof_and_recovery",
+    "test_mfa_010_two_sessions_racing_one_recovery_code_have_one_winner",
+    "test_mfa_011_rls_prevents_other_users_reading_or_changing_factor_material",
+    "test_staff_api_016_deferred_commit_failure_is_not_reported_as_http_success"
+  ],
+  "sourceAcceptanceCases": "MFA and commit-boundary integration only; complete provider/account-recovery source acceptance and UAT remain pending",
+  "pytestSelection": [
+    "tests/test_runtime_mfa.py",
+    "tests/test_runtime_staff.py::test_staff_api_016_deferred_commit_failure_is_not_reported_as_http_success"
+  ],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

@@ -91,10 +91,22 @@ class Actor:
     mfa_enrolled: bool = False
     mfa_at: datetime | None = None
     authenticated_at: datetime | None = None
+    absolute_expires_at: datetime | None = None
+    family_id: UUID | None = None
+    replaced_by_hash: str | None = field(default=None, repr=False)
 
 
 def now_utc() -> datetime:
     return datetime.now(UTC)
+
+
+def lock_session_family(actor: Actor) -> None:
+    """Serialize elevation/logout so a concurrent rotation cannot escape logout."""
+    assert actor.family_id is not None
+    actor.connection.execute(
+        "SELECT pg_advisory_xact_lock(hashtextextended(%s,0))",
+        (f"session-family:{actor.user_id}:{actor.organization_id}:{actor.family_id}",),
+    )
 
 
 def require_origin(request: Request) -> None:
@@ -121,12 +133,19 @@ def session_actor(request: Request) -> Iterator[Actor]:
         ):
             raise ApiError(403, "csrf_required")
     database: Database = request.app.state.database
+    bridge = request.method == "POST" and request.url.path in {
+        "/api/v1/auth/mfa/confirm",
+        "/api/v1/auth/mfa/verify",
+        "/api/v1/auth/logout",
+    }
     with database.transaction() as connection:
         session = connection.execute(
-            "SELECT s.user_id,s.organization_id,s.authenticated_at,s.mfa_at FROM app.sessions s JOIN app.users u ON u.id=s.user_id "
+            "SELECT s.user_id,s.organization_id,s.authenticated_at,s.mfa_at,s.family_id,s.replaced_by_hash,"
+            "coalesce(s.absolute_expires_at,s.authenticated_at+interval '12 hours') AS absolute_expires_at "
+            "FROM app.sessions s JOIN app.users u ON u.id=s.user_id "
             "WHERE s.token_hash=%s AND NOT s.revoked AND u.active AND s.expires_at>%s "
-            "AND s.last_seen_at>%s",
-            (digest(token), now_utc(), now_utc() - timedelta(minutes=30)),
+            "AND s.last_seen_at>%s AND (s.replaced_by_hash IS NULL OR %s)",
+            (digest(token), now_utc(), now_utc() - timedelta(minutes=30), bridge),
         ).fetchone()
         if session is None:
             raise ApiError(401, "authentication_required")
@@ -152,6 +171,9 @@ def session_actor(request: Request) -> Iterator[Actor]:
             request.app.state.require_mfa,
             session["authenticated_at"],
             session["mfa_at"],
+            session["absolute_expires_at"],
+            session["family_id"],
+            session["replaced_by_hash"],
         )
 
 
@@ -178,6 +200,9 @@ def make_actor(
     enforce_mfa: bool,
     authenticated_at: datetime,
     mfa_at: datetime | None = None,
+    absolute_expires_at: datetime | None = None,
+    family_id: UUID | None = None,
+    replaced_by_hash: str | None = None,
 ) -> Actor:
     enrollment = connection.execute(
         "SELECT activated_at FROM app.mfa_enrollments WHERE user_id=%s",
@@ -195,7 +220,101 @@ def make_actor(
         enrolled,
         mfa_at,
         authenticated_at,
+        absolute_expires_at or authenticated_at + timedelta(hours=12),
+        family_id or UUID(hex=digest(token)[:32]),
+        replaced_by_hash,
     )
+
+
+def set_session_cookie(
+    request: Request, response: Response, token: str, expires_at: datetime
+) -> None:
+    response.set_cookie(
+        "nursery_session",
+        token,
+        max_age=max(1, int((expires_at - now_utc()).total_seconds())),
+        httponly=True,
+        secure=request.app.state.secure_cookies,
+        samesite="strict",
+        path="/api/v1",
+    )
+
+
+def create_session(
+    request: Request,
+    connection: Connection,
+    user_id: UUID,
+    organization_id: UUID,
+    role: str,
+    authenticated_at: datetime,
+    absolute_expires_at: datetime,
+) -> tuple[Actor, datetime]:
+    """Create an application session bounded by primary/provider authentication."""
+    now = now_utc()
+    absolute_expires_at = min(absolute_expires_at, authenticated_at + timedelta(hours=12))
+    if absolute_expires_at <= now:
+        raise ApiError(401, "authentication_required")
+    token = secrets.token_urlsafe(32)
+    actor = make_actor(
+        connection,
+        user_id,
+        organization_id,
+        role,
+        token,
+        request.app.state.require_mfa,
+        authenticated_at,
+        absolute_expires_at=absolute_expires_at,
+        family_id=uuid4(),
+    )
+    expires_at = (
+        min(absolute_expires_at, now + timedelta(minutes=10))
+        if actor.mfa_required
+        else absolute_expires_at
+    )
+    connection.execute(
+        "INSERT INTO app.sessions(token_hash,user_id,organization_id,expires_at,last_seen_at,revoked,"
+        "authenticated_at,absolute_expires_at,family_id) VALUES(%s,%s,%s,%s,%s,false,%s,%s,%s)",
+        (
+            digest(token),
+            user_id,
+            organization_id,
+            expires_at,
+            now,
+            authenticated_at,
+            absolute_expires_at,
+            actor.family_id,
+        ),
+    )
+    return actor, expires_at
+
+
+def session_payload(
+    request: Request, response: Response, actor: Actor, expires_at: datetime, *, native: bool
+) -> dict[str, Any]:
+    result = profile(actor)
+    if native:
+        result["access_token"] = actor.token
+    else:
+        set_session_cookie(request, response, actor.token, expires_at)
+    return result
+
+
+def issue_session(
+    request: Request,
+    response: Response,
+    connection: Connection,
+    user_id: UUID,
+    organization_id: UUID,
+    role: str,
+    authenticated_at: datetime,
+    absolute_expires_at: datetime,
+    *,
+    native: bool,
+) -> dict[str, Any]:
+    actor, expires_at = create_session(
+        request, connection, user_id, organization_id, role, authenticated_at, absolute_expires_at
+    )
+    return session_payload(request, response, actor, expires_at, native=native)
 
 
 def profile(actor: Actor) -> dict[str, Any]:
@@ -285,42 +404,18 @@ def login(body: Login, request: Request, response: Response) -> dict[str, Any]:
             ).fetchone()
             if organization is None:
                 raise ApiError(401, "authentication_required")
-            token = secrets.token_urlsafe(32)
-            actor = make_actor(
+            connection.execute("UPDATE app.login_limits SET failures=0 WHERE key_hash=%s", (key,))
+            result = issue_session(
+                request,
+                response,
                 connection,
                 user["id"],
                 membership["organization_id"],
                 membership["role"],
-                token,
-                request.app.state.require_mfa,
                 now,
+                now + timedelta(hours=12),
+                native=body.native,
             )
-            connection.execute(
-                "INSERT INTO app.sessions(token_hash,user_id,organization_id,expires_at,last_seen_at,revoked,authenticated_at) "
-                "VALUES(%s,%s,%s,%s,%s,false,%s)",
-                (
-                    digest(token),
-                    user["id"],
-                    membership["organization_id"],
-                    now + (timedelta(minutes=10) if actor.mfa_required else timedelta(hours=12)),
-                    now,
-                    now,
-                ),
-            )
-            connection.execute("UPDATE app.login_limits SET failures=0 WHERE key_hash=%s", (key,))
-            result = profile(actor)
-            if body.native:
-                result["access_token"] = token
-            else:
-                response.set_cookie(
-                    "nursery_session",
-                    token,
-                    max_age=43200,
-                    httponly=True,
-                    secure=request.app.state.secure_cookies,
-                    samesite="strict",
-                    path="/api/v1",
-                )
     if invalid:
         raise ApiError(401, "invalid_credentials")
     return result
@@ -333,8 +428,11 @@ def me(actor: LimitedAuthenticated) -> dict[str, Any]:
 
 @auth_router.post("/logout", status_code=204, summary="Revoke the current server session")
 def logout(actor: LimitedAuthenticated, response: Response) -> None:
+    lock_session_family(actor)
     actor.connection.execute(
-        "UPDATE app.sessions SET revoked=true WHERE token_hash=%s", (digest(actor.token),)
+        "UPDATE app.sessions SET revoked=true WHERE user_id=%s AND organization_id=%s "
+        "AND (family_id=%s OR token_hash=%s)",
+        (actor.user_id, actor.organization_id, actor.family_id, digest(actor.token)),
     )
     response.delete_cookie("nursery_session", path="/api/v1")
 

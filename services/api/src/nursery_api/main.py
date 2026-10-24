@@ -5,6 +5,9 @@ import os
 from fastapi import FastAPI
 
 from .runtime.api import configure_runtime
+from .runtime.privacy_logging import install_private_access_logging
+
+install_private_access_logging()
 
 app = FastAPI(title="Nursery API foundation", version="0.1.0")
 
