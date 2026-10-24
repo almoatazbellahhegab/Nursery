@@ -1,0 +1,40 @@
+{
+  "startedAt": "2026-10-24T06:36:58.935Z",
+  "completedAt": "2026-10-24T06:38:35.464Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n?? apps/mobile/assets/\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Formatted 5 files (0 changed) in 0.02 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Analyzing mobile...                                             \nNo issues found! (ran in 14.7s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart\n00:00 +0: switching experience changes the staff heading\n00:01 +1: switching to Arabic changes the shell direction\n00:01 +2: timeline navigation retains the explicit empty foundation state\n00:01 +3: All tests passed!\n"
+    },
+    {
+      "id": "APP-MOBILE-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Compiling lib\\main.dart for the Web...                          \nFont asset \"CupertinoIcons.ttf\" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nFont asset \"MaterialIcons-Regular.otf\" was tree-shaken, reducing it from 1645184 to 8072 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nCompiling lib\\main.dart for the Web...                             69.4s\n✓ Built build\\web\nWasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm\nUse --no-wasm-dry-run to disable these warnings.\n"
+    }
+  ],
+  "selection": "Mobile checks only",
+  "result": "Pass",
+  "scope": "Actual compiled public foundation shells only; operational workflows remain incomplete",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

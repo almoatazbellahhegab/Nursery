@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-10-24T06:38:54.697Z",
+  "completedAt": "2026-10-24T06:38:58.346Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n?? apps/mobile/assets/\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-36-58-935Z-clients.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json",
+  "environment": "Windows Chrome headless; 1440px desktop and 390px mobile emulation; software WebGL",
+  "scope": "Actual Next.js and Flutter web foundation shells; no operational workflow acceptance",
+  "visualReview": "Screenshots require inspection: semantic Arabic text alone does not prove rendered glyphs",
+  "results": [
+    {
+      "id": "APP-BROWSER-WEB",
+      "result": "Pass"
+    },
+    {
+      "id": "APP-BROWSER-MOBILE",
+      "result": "Pass"
+    },
+    {
+      "id": "APP-BROWSER-LINKS",
+      "result": "Pass"
+    }
+  ],
+  "pageErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIOS": "Not run",
+  "userAcceptance": "Pending"
+}

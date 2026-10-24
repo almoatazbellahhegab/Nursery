@@ -1,0 +1,46 @@
+{
+  "startedAt": "2026-10-24T06:37:10.111Z",
+  "completedAt": "2026-10-24T06:37:10.325Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M tools/check-clients.mjs\n?? apps/mobile/assets/\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json",
+  "environment": {
+    "node": "v20.11.1",
+    "platform": "win32"
+  },
+  "command": "node --test tests/system/review.test.mjs",
+  "result": "Fail",
+  "cases": [
+    {
+      "id": "RV-001",
+      "uat": [
+        "UAT-S01-04"
+      ],
+      "result": "Fail"
+    },
+    {
+      "id": "RV-002",
+      "uat": [
+        "UAT-S01-03"
+      ],
+      "result": "Fail"
+    },
+    {
+      "id": "RV-003",
+      "uat": [
+        "UAT-S01-05",
+        "UAT-S01-06"
+      ],
+      "result": "Fail"
+    },
+    {
+      "id": "RV-004",
+      "uat": [
+        "UAT-S01-05"
+      ],
+      "result": "Fail"
+    }
+  ],
+  "output": "TAP version 13\n# node:fs:2711\n#       const stats = binding.lstat(baseLong, true, undefined, true /* throwIfNoEntry */);\n#                             ^\n# Error: EPERM: operation not permitted, lstat 'C:\\\\Users\\\\localadmin'\n#     at Object.realpathSync (node:fs:2711:29)\n#     at toRealPath (node:internal/modules/helpers:55:13)\n#     at Module._findPath (node:internal/modules/cjs/loader:697:22)\n#     at resolveMainPath (node:internal/modules/run_main:26:23)\n#     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:24)\n#     at node:internal/main/run_main_module:28:49 {\n#   errno: -4048,\n#   code: 'EPERM',\n#   syscall: 'lstat',\n#   path: 'C:\\\\\\\\Users\\\\\\\\localadmin'\n# }\n# Node.js v20.11.1\n# Subtest: C:\\\\Users\\\\localadmin\\\\Documents\\\\Nursery\\\\tests\\\\system\\\\review.test.mjs\nnot ok 1 - C:\\\\Users\\\\localadmin\\\\Documents\\\\Nursery\\\\tests\\\\system\\\\review.test.mjs\n  ---\n  duration_ms: 51.8332\n  location: 'C:\\\\Users\\\\localadmin\\\\Documents\\\\Nursery\\\\tests\\\\system\\\\review.test.mjs:1:1'\n  failureType: 'testCodeFailure'\n  exitCode: 1\n  error: 'test failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 58.5991\n",
+  "sourceProductTests": "Not run",
+  "userAcceptance": "Pending"
+}

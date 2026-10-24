@@ -7,3 +7,13 @@ After builds are ready, double-click `Start-Applications.cmd`. It uses Node 24+ 
 Keep the console open; Ctrl+C stops the child services. `NURSERY_APP_NODE` can select the Node 24+ executable. Build files and dependency directories are not committed; lockfiles and source are. See each application's README for reproduction commands.
 
 Flutter web review runs the actual mobile application's Dart code compiled for a browser. It does not verify native plugins, native storage or a signed iPhone installation. Native iOS still requires macOS/Xcode/signing and physical device UAT.
+
+The mobile app bundles an OFL-licensed Arabic font so glyphs work without a
+runtime font CDN. After mobile-only changes, `node tools/check-clients.mjs
+--mobile-only` records format, analyzer, widget and web build checks without
+rebuilding the unchanged dashboard. Inspect the browser screenshots as well:
+semantic text checks alone cannot detect missing glyphs.
+
+If this managed session reports Node `EPERM` while resolving an ancestor path,
+use process-local `NODE_OPTIONS=--preserve-symlinks --preserve-symlinks-main`
+for review commands. Do not change machine security or execution policies.

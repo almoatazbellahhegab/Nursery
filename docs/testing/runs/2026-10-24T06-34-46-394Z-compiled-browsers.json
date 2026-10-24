@@ -1,0 +1,26 @@
+{
+  "startedAt": "2026-10-24T06:34:46.394Z",
+  "completedAt": "2026-10-24T06:34:50.079Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json",
+  "environment": "Windows Chrome headless; 1440px desktop and 390px mobile emulation; software WebGL",
+  "scope": "Actual Next.js and Flutter web foundation shells; no operational workflow acceptance",
+  "results": [
+    {
+      "id": "APP-BROWSER-WEB",
+      "result": "Pass"
+    },
+    {
+      "id": "APP-BROWSER-MOBILE",
+      "result": "Pass"
+    },
+    {
+      "id": "APP-BROWSER-LINKS",
+      "result": "Pass"
+    }
+  ],
+  "pageErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIOS": "Not run",
+  "userAcceptance": "Pending"
+}

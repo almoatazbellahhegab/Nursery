@@ -16,7 +16,17 @@ test('RV-001 preserves every source feature, checklist item and acceptance case 
     assert.equal(plan.execution.featureConcurrencyLimit, 1);
     assert.ok(plan.features.some(f => f.id === plan.execution.activeFeature && f.sprint === plan.execution.activeSprint));
     assert.equal(plan.execution.sourceAcceptanceStatus, 'Not run');
-    assert.equal(plan.execution.pushAuthorized, false);
+    assert.equal(typeof plan.execution.pushAuthorized, 'boolean');
+    if (plan.execution.pushAuthorized) {
+      const approvals = JSON.parse(await fs.readFile(path.join(root, 'docs/delivery/approvals.json'), 'utf8'));
+      const branch = `sprint/${plan.execution.activeSprint.slice(1)}-review`;
+      const approval = approvals.pushApprovals.find(item => item.branches.includes(branch));
+      assert.equal(approvals.pushAuthorized, true);
+      assert.ok(approval, 'Active sprint push authorization must have a scoped approval record');
+      assert.ok(approval.userInstruction.trim());
+      assert.ok(approval.scope.trim());
+      assert.equal(approval.productionDeploymentAuthorized, false);
+    }
   }
   for (const oldSprint of previous.sprints) {
     const retained = plan.sprints.flatMap(s => s.workPackages).find(p => p.id === oldSprint.id);

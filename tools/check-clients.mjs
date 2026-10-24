@@ -22,6 +22,9 @@ const checks = [
 ];
 const results = [];
 for (const [id, command, args, cwd] of checks) {
+  if (process.argv.includes('--mobile-only') && !id.startsWith('APP-MOBILE-')) continue;
+  if (process.argv.includes('--web-only') && !id.startsWith('APP-WEB-')) continue;
+  if (process.argv.includes('--skip-audit') && id === 'APP-WEB-AUDIT') continue;
   console.log(`Starting ${id}`);
   // All shell arguments are fixed internal Flutter options, never request data.
   const result = spawnSync(command, args, { cwd, env: environment, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, windowsHide: true, shell: command.endsWith('.bat') });
@@ -36,6 +39,8 @@ const record = {
   workingTreeChanges: execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim() || null,
   node: execFileSync(node, ['--version'], { encoding: 'utf8' }).trim(),
   flutterSdk: '3.47.8 / Dart 3.13.7', results,
+  selection: process.argv.includes('--mobile-only') ? 'Mobile checks only' : process.argv.includes('--web-only') ? 'Web checks only' : 'All client checks',
+  dependencyAudit: process.argv.includes('--skip-audit') ? 'Not rerun: dependency manifests unchanged; prior audit evidence retained' : 'See selected results',
   result: results.every(r => r.result === 'Pass') ? 'Pass' : 'Fail',
   scope: 'Actual compiled public foundation shells only; operational workflows remain incomplete',
   physicalIPhone: 'Not run', nativeIOSBuild: 'Blocked on macOS/Xcode/signing', userAcceptance: 'Pending',
