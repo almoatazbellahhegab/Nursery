@@ -1,31 +1,36 @@
 {
-  "activeSprint": "S03",
-  "activeFeature": "FEAT-030",
-  "branch": "feat/FEAT-030-appointment-planning",
+  "activeSprint": "S04",
+  "activeFeature": "FEAT-012",
+  "branch": "feat/FEAT-012-staff-attendance",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - admissions appointment planning domain verified against explicit availability; operational prerequisites and specialist gates remain open",
+  "status": "In progress - staff attendance domain groundwork verified; profile/authorization/storage and staff-specific policy prerequisites remain open",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
+  "sprintThreeAcceptance": "Incomplete and unaccepted; committed scope pushed and unfinished work deferred by explicit Sprint 4 start instruction",
   "deferredFeatures": [
-    "FEAT-011"
+    "FEAT-011",
+    "FEAT-030"
   ],
   "deferredSprints": [
-    "S02"
+    "S02",
+    "S03"
   ],
-  "policyDecision": "User approved all recommended S01-S03 product directions and operating targets in S03-DECISION-PACK revision 3, including DEC-06 attendance directions. Exact configuration inputs, specialist names/signoffs and original GATE-01-07 closure remain pending. User is Product owner; DEC-13 community outside this scope remains unapproved",
+  "policyDecision": "S01-S03 revision 3 product directions remain approved. Staff correction/access/report rules are not inferred from child DEC-06; original specialist gates and S04 governed-module approvals remain open",
   "operationalDependencies": [
-    "FEAT-002",
-    "FEAT-005",
-    "approved workflow and field definitions",
-    "PostgreSQL RLS and durable transactions"
+    "FEAT-010 Staff Profiles and Assignments",
+    "authoritative identity, employee status and branch/action permission",
+    "approved staff correction, sensitive-field access and report rules",
+    "PostgreSQL tenant constraints/RLS, organization-wide employee locks, atomic event/receipt/audit"
   ],
   "sourceAcceptanceStatus": "Not run",
-  "implementedIncrement": "Stage/history/retry decisions plus opaque visit/trial scheduling, UTC host availability/overlap checks and versioned reschedule/cancel decisions with reasons/history; no invitations, production policy defaults, operational routes or durable adapters",
-  "domainVerification": "137 pytest scenarios: 50 admissions stage/retry, 58 appointment, 26 attendance, three health/fail-closed routes; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T08-48-51-654Z-admissions.json",
+  "implementedIncrement": "Opaque staff check-in/out proposals with organization-wide employee state, one open session, exact branch/action/current-active grants, UTC/version/chronology checks; no child-grant reuse, correction policy, payroll, API or database",
+  "domainVerification": "168 pytest scenarios: 31 staff, 58 admissions appointment, 50 admissions stage/retry, 26 child attendance, three health/route guards; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T09-12-37-183Z-staff-attendance.json",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
-  "pushAuthorized": true,
-  "pushStatus": "S03 through a9868ba and five retained work branches pushed on 2026-10-24. Subsequent chronology, decision records and appointment development remain local and outside that recorded push scope.",
-  "clientVerification": "Prior demo builds, five mobile widget scenarios and nine browser groups pass; direct parent/teacher views verified on PC; physical/native UAT pending",
-  "nextSprintReadiness": "S04 readiness prepared only; latest user instruction is to continue and finish S03, without advancing sprints",
-  "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md; revision 3 records full approved S01-S03 recommendation package, DEC-01-14 resolution overlay and remaining specialist/configuration inputs; no runtime configuration, deployment or UAT approval"
+  "pushAuthorized": false,
+  "pushStatus": "S03 through 1d8c766 and four new retained work branches pushed on 2026-10-24. S04 and FEAT-012 remain local; no S04 push authorized",
+  "clientVerification": "Existing demo web/mobile builds and prior emulated browser evidence unchanged; no connected staff attendance journey. Human Windows, physical Safari and native iPhone UAT pending",
+  "nextSprintReadiness": "S04 started explicitly; FEAT-012 is the sole active feature. Medical, transport, KPI, community and commerce approvals/prerequisites remain unchanged",
+  "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md revision 3 retained; staff-specific readiness and limits in docs/delivery/S04-FEAT-012-READINESS.md",
+  "priorSprintCarryover": "docs/delivery/S03-TODO.md",
+  "scopeAuthorization": "User: push and start development of sprint 4. Initiates S04 and first-feature technical groundwork; does not constitute staff correction/privacy policy, approval of other governed modules or release/UAT acceptance"
 }

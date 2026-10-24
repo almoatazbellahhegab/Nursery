@@ -1,5 +1,44 @@
 # Session checkpoint and resume instructions
 
+## Latest instruction — S03 pushed, S04 started (2026-10-24)
+
+User: `push and start development of sprint 4`. Exact S03 scope through
+`20fc0be` plus approval record was recorded before push. Push succeeded:
+`sprint/03-review` at `1d8c766`, plus retry-chronology, appointment-planning,
+decision-record and approved-decisions branches. Earlier retained branches
+remain on origin. S01–S03 remain incomplete/unaccepted; starting S04 explicitly
+defers unfinished S03 work. Prior no-advance descriptions below are historical.
+
+Created `sprint/04-review` and retained `feat/FEAT-012-staff-attendance`.
+Archived the prior TODO unchanged at `docs/delivery/S03-TODO.md`. FEAT-012 is
+the only active feature. S04 has no push/deployment/UAT approval; keep it local.
+
+First code increment: opaque staff check-in/out decisions with a distinct staff
+type/grant boundary, organization-wide employee state and one open session,
+branch/actor/UTC timestamps, exact active/action/expiry checks, duplicate and
+chronology/version denial. Child grants/actions are rejected. No staff role,
+correction/read-access/report policy, payroll, personal-data schema, API or
+database was added. Explicit staff correction/report rules are not inferred
+from approved child DEC-06. No S04 medical/transport/community/commerce gate
+was waived by the general sprint-start instruction.
+
+All 168 backend scenarios (31 staff plus prior 137) and Ruff lint/format,
+strict mypy and dependency consistency pass. Evidence:
+`docs/testing/runs/2026-10-24T09-12-37-183Z-staff-attendance.json`.
+Four review checks pass in `2026-10-24T09-11-52-566Z-unit.json`; the S03 TODO
+archive matches the prior committed TODO's Git content hash exactly.
+Read `docs/testing/S04-STAFF-ATTENDANCE.md` for source mappings/UAT/limits and
+`docs/delivery/S04-FEAT-012-READINESS.md` for prerequisites. Commit/integrate
+the tested increment into local S04, retaining its feature branch. Preserve
+the unrelated untracked attendance run. Previous actual web/mobile demos/builds
+are unchanged and not a connected staff workflow; physical/native UAT pending.
+
+Next work: close FEAT-010 and authoritative identity/employee/branch/action
+permissions, staff-specific policy and storage gates before operational
+integration. Real employee-wide PostgreSQL locks, atomic receipt/audit and
+API/client journeys remain unimplemented. Do not mark original source cases,
+S04 acceptance or any specialist gate passed from these domain tests.
+
 ## Latest development — appointment planning, 2026-10-24
 
 User: `Develop according to the updated decision, test the changes`.

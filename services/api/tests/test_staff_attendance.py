@@ -1,0 +1,239 @@
+"""STAFF-UNIT scenarios exercise opaque decisions, not staff-policy approval."""
+
+from dataclasses import FrozenInstanceError, replace
+from datetime import UTC, datetime, timedelta, timezone
+from typing import cast
+from uuid import UUID
+
+import pytest
+
+from nursery_api.attendance.models import (
+    AttendanceAction,
+    AttendanceTarget,
+    VerifiedAttendanceGrant,
+)
+from nursery_api.staff_attendance.presence import (
+    StaffAction,
+    StaffAttendanceCode,
+    StaffAttendanceError,
+    StaffCommand,
+    StaffIdentity,
+    StaffSnapshot,
+    StaffTarget,
+    VerifiedStaffGrant,
+    decide_staff_attendance,
+)
+
+NOW = datetime(2026, 10, 24, 7, tzinfo=UTC)
+IDENTITY = StaffIdentity(UUID(int=301), UUID(int=302))
+TARGET = StaffTarget(IDENTITY, UUID(int=303))
+STATE = StaffSnapshot(IDENTITY)
+COMMAND = StaffCommand(TARGET, UUID(int=304), StaffAction.CHECK_IN, NOW, 0)
+GRANT = VerifiedStaffGrant(
+    TARGET, UUID(int=305), StaffAction.CHECK_IN, True, NOW + timedelta(hours=8)
+)
+
+
+def present() -> StaffSnapshot:
+    return decide_staff_attendance(COMMAND, STATE, GRANT, recorded_at=NOW).snapshot
+
+
+def test_staff_unit_001_checkin_proposes_one_open_session_with_branch_and_trusted_actor() -> None:
+    result = decide_staff_attendance(COMMAND, STATE, GRANT, recorded_at=NOW)
+    assert result.snapshot.identity == IDENTITY
+    assert result.snapshot.open_branch_id == TARGET.branch_id
+    assert result.snapshot.open_session_id == result.event.session_id
+    assert result.snapshot.version == result.event.version == 1
+    assert result.event.target == TARGET
+    assert result.event.actor_id == GRANT.actor_id
+    assert result.event.operation_id == COMMAND.operation_id
+    assert result.event.occurred_at == result.event.recorded_at == NOW
+    assert STATE.open_session_id is None and STATE.version == 0
+    with pytest.raises(FrozenInstanceError):
+        setattr(result.snapshot, "open_session_id", None)
+    with pytest.raises(FrozenInstanceError):
+        setattr(result.event, "actor_id", UUID(int=999))
+
+
+@pytest.mark.parametrize("other_branch", [False, True])
+def test_staff_unit_002_open_session_blocks_duplicate_at_same_or_other_branch(
+    other_branch: bool,
+) -> None:
+    target = replace(TARGET, branch_id=UUID(int=999)) if other_branch else TARGET
+    command = replace(COMMAND, target=target, expected_version=1, operation_id=UUID(int=306))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(command, present(), replace(GRANT, target=target), recorded_at=NOW)
+    assert error.value.code == StaffAttendanceCode.ALREADY_PRESENT
+
+
+def test_staff_unit_003_checkout_closes_original_session_and_retains_its_branch() -> None:
+    current = present()
+    command = replace(
+        COMMAND,
+        action=StaffAction.CHECK_OUT,
+        expected_version=1,
+        occurred_at=NOW + timedelta(hours=1),
+        operation_id=UUID(int=306),
+    )
+    result = decide_staff_attendance(
+        command,
+        current,
+        replace(GRANT, action=StaffAction.CHECK_OUT),
+        recorded_at=command.occurred_at,
+    )
+    assert result.snapshot.open_session_id is None and result.snapshot.open_branch_id is None
+    assert result.event.session_id == current.open_session_id
+    assert result.event.target.branch_id == TARGET.branch_id
+    assert result.snapshot.version == 2
+    assert current.open_session_id is not None
+    next_result = decide_staff_attendance(
+        replace(
+            COMMAND,
+            operation_id=UUID(int=307),
+            expected_version=2,
+            occurred_at=command.occurred_at,
+        ),
+        result.snapshot,
+        GRANT,
+        recorded_at=command.occurred_at,
+    )
+    assert next_result.event.session_id != result.event.session_id
+
+
+def test_staff_unit_004_checkout_without_open_session_is_rejected() -> None:
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(COMMAND, action=StaffAction.CHECK_OUT),
+            STATE,
+            replace(GRANT, action=StaffAction.CHECK_OUT),
+            recorded_at=NOW,
+        )
+    assert error.value.code == StaffAttendanceCode.NOT_PRESENT
+
+
+def test_staff_unit_005_checkout_at_another_branch_cannot_close_an_open_session() -> None:
+    target = replace(TARGET, branch_id=UUID(int=999))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(COMMAND, target=target, action=StaffAction.CHECK_OUT, expected_version=1),
+            present(),
+            replace(GRANT, target=target, action=StaffAction.CHECK_OUT),
+            recorded_at=NOW,
+        )
+    assert error.value.code == StaffAttendanceCode.BRANCH_CONFLICT
+
+
+@pytest.mark.parametrize(
+    "case", ["organization", "employee", "branch", "action", "inactive", "expired"]
+)
+def test_staff_unit_006_denied_grants_hide_state_and_version_details(case: str) -> None:
+    grant = GRANT
+    if case == "organization":
+        grant = replace(
+            grant, target=replace(TARGET, identity=replace(IDENTITY, organization_id=UUID(int=999)))
+        )
+    elif case == "employee":
+        grant = replace(
+            grant, target=replace(TARGET, identity=replace(IDENTITY, employee_id=UUID(int=999)))
+        )
+    elif case == "branch":
+        grant = replace(grant, target=replace(TARGET, branch_id=UUID(int=999)))
+    elif case == "action":
+        grant = replace(grant, action=StaffAction.CHECK_OUT)
+    elif case == "inactive":
+        grant = replace(grant, employee_active=False)
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(COMMAND, expected_version=99),
+            present(),
+            grant,
+            recorded_at=grant.expires_at if case == "expired" else NOW,
+        )
+    assert error.value.code == StaffAttendanceCode.ACCESS_DENIED
+    assert str(error.value) == "staff_attendance_access_denied"
+
+
+@pytest.mark.parametrize("field", ["organization_id", "employee_id"])
+def test_staff_unit_007_other_employees_state_is_denied(field: str) -> None:
+    identity = replace(IDENTITY, **{field: UUID(int=999)})
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(COMMAND, StaffSnapshot(identity), GRANT, recorded_at=NOW)
+    assert error.value.code == StaffAttendanceCode.ACCESS_DENIED
+
+
+def test_staff_unit_008_stale_version_is_rejected_before_presence_conflict() -> None:
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(COMMAND, present(), GRANT, recorded_at=NOW)
+    assert error.value.code == StaffAttendanceCode.VERSION_CONFLICT
+
+
+@pytest.mark.parametrize("case", ["future_event", "past_event", "past_recording"])
+def test_staff_unit_009_future_and_backwards_instants_are_rejected(case: str) -> None:
+    current = present()
+    occurred = NOW + timedelta(seconds=1) if case == "future_event" else NOW
+    recorded = NOW
+    if case == "past_event":
+        occurred = NOW - timedelta(seconds=1)
+    elif case == "past_recording":
+        current = replace(current, last_recorded_at=NOW + timedelta(seconds=1))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(
+                COMMAND, action=StaffAction.CHECK_OUT, expected_version=1, occurred_at=occurred
+            ),
+            current,
+            replace(GRANT, action=StaffAction.CHECK_OUT),
+            recorded_at=recorded,
+        )
+    assert error.value.code == StaffAttendanceCode.CHRONOLOGY_CONFLICT
+
+
+@pytest.mark.parametrize("offset", [-5, 0, 3])
+def test_staff_unit_010_equivalent_offsets_store_one_utc_instant(offset: int) -> None:
+    instant = NOW.astimezone(timezone(timedelta(hours=offset)))
+    result = decide_staff_attendance(
+        replace(COMMAND, occurred_at=instant), STATE, GRANT, recorded_at=instant
+    )
+    assert result.event.occurred_at == NOW and result.event.occurred_at.tzinfo is UTC
+    assert result.snapshot.last_recorded_at == NOW
+
+
+@pytest.mark.parametrize("field", ["occurred", "recorded", "expiry"])
+def test_staff_unit_011_naive_instants_are_rejected(field: str) -> None:
+    naive = NOW.replace(tzinfo=None)
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        command = replace(COMMAND, occurred_at=naive) if field == "occurred" else COMMAND
+        grant = replace(GRANT, expires_at=naive) if field == "expiry" else GRANT
+        decide_staff_attendance(
+            command, STATE, grant, recorded_at=naive if field == "recorded" else NOW
+        )
+
+
+@pytest.mark.parametrize("version", [-1, True])
+def test_staff_unit_012_invalid_versions_are_rejected(version: int) -> None:
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        replace(COMMAND, expected_version=version)
+
+
+@pytest.mark.parametrize("case", ["branch_only", "session_only", "version_zero", "future_record"])
+def test_staff_unit_013_inconsistent_stored_presence_is_rejected(case: str) -> None:
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        if case == "branch_only":
+            replace(present(), open_session_id=None)
+        elif case == "session_only":
+            replace(present(), open_branch_id=None)
+        elif case == "version_zero":
+            replace(present(), version=0)
+        else:
+            replace(present(), last_recorded_at=NOW - timedelta(seconds=1))
+
+
+def test_staff_unit_014_child_grants_and_actions_cannot_be_used_as_staff_authority() -> None:
+    child = AttendanceTarget(
+        IDENTITY.organization_id, TARGET.branch_id, UUID(int=310), UUID(int=311)
+    )
+    grant = VerifiedAttendanceGrant(child, GRANT.actor_id, GRANT.expires_at)
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        decide_staff_attendance(COMMAND, STATE, cast(VerifiedStaffGrant, grant), recorded_at=NOW)
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        replace(COMMAND, action=cast(StaffAction, AttendanceAction.CHECK_IN))

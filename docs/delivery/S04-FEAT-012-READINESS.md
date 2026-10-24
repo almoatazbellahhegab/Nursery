@@ -1,5 +1,34 @@
 # Sprint 4 preparation — FEAT-012 Staff Attendance
 
+## Latest state — Sprint 4 started 2026-10-24
+
+User instruction: `push and start development of sprint 4`. S03 through
+`1d8c766` and four new retained branches were pushed after recording exact
+approval. Created `sprint/04-review` and `feat/FEAT-012-staff-attendance`; archived
+the prior TODO at `S03-TODO.md`. This supersedes the historical Git blocker and
+not-started descriptions below. S01–S03 remain incomplete/unaccepted.
+
+Started a distinct opaque staff presence decision module. It proposes one open
+employee session across the organization, records branch/actor/UTC instants and
+version, links checkout to the original session and rejects invalid transitions.
+Trusted grants bind employee, branch, action, active status and expiry; they
+are not authentication. Child targets/grants/actions cannot substitute for staff
+types. No default staff role/correction/report matrix or personal-data model is
+installed. FEAT-010 and the original governed prerequisites remain open.
+
+[All 168 backend scenarios and coding/dependency checks pass](../testing/runs/2026-10-24T09-12-37-183Z-staff-attendance.json),
+including 31 new staff scenarios and 137 prior regressions. See
+[staff evidence, checklist and limits](../testing/S04-STAFF-ATTENDANCE.md).
+All four original feature tasks and three API acceptance cases remain open.
+This is partial DEV-FEAT-012-01 engineering groundwork, not operational module
+delivery or approval of staff correction/read-access/report policy. The start
+instruction does not approve the other governed S04 modules or an S04 push.
+
+S04 entry actions (push S03, branch creation, archive and single-feature
+activation) are complete. Staff profile/identity/storage and policy evidence,
+transactional persistence and real web/mobile journeys are next. Earlier entry
+checkboxes below are retained as the preparation history.
+
 Prepared on 2026-10-24. Sprint 4 has not started: the session cannot write `.git`,
 so Sprint 3 cannot be committed/integrated/pushed and no new branch can be
 created. This document is readiness preparation on the existing enabling branch,
