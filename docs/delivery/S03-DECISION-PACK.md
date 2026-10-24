@@ -1,9 +1,61 @@
 # Sprint 3 completion decisions — draft for review
 
 Prepared 2026-10-24 after the instruction to continue Sprint 3 through completion.
-**Nothing in this packet is approved policy.** Candidate decisions below are
-reviewable proposals; they are not defaults or configuration in the application.
+The user decisions recorded below supersede the corresponding draft proposals.
+All remaining candidate decisions are unapproved proposals. No decision here
+has been installed as defaults or configuration in the application.
 The original specifications, identifiers, scope and acceptance cases are unchanged.
+
+## User decisions recorded 2026-10-24 — revision 2
+
+Source: the numbered decision questions and user replies in this conversation.
+Decision maker and Product owner: the requesting user. Specialist owner roles
+are assigned below; their individual names are pending. These are explicit product directions, not specialist
+signoff, release acceptance or evidence that all implementation gates are closed.
+
+| Question | Recorded product direction | Conversation evidence |
+| --- | --- | --- |
+| 1 — Inquiry fields | Require branch, adult contact name, one contact method, child age band, desired start date, inquiry source and assigned staff. | User: `1- yes`. |
+| 2 — Workflow | Approve Inquiry → Contacted → Visit scheduled → Trial day → Application → Accepted or Waitlisted. Visits and trials may be skipped; Waitlisted → Accepted is allowed. | User: `2- yes`, followed by the assistant's explicit interpretation. |
+| 3 — Loss reasons | Approve timing, location, capacity, fees, another provider, no longer seeking care and other. A loss reason is mandatory; lost leads may reopen. | User: `3- yes`, followed by the assistant's explicit interpretation. |
+| 3 — Reopening authority | Both branch managers and organization administrators may authorize reopening. | User: `both`, answering the explicit role choice. |
+| 4 — Appointment fields | Require branch, date/time and assigned host for every visit or trial appointment. | User: `yes` to the required-field question; the notification choice was clarified afterward. |
+| 4 — Scheduling effects | Only record the appointment; do not send an invitation as part of scheduling. | User: `only record`. |
+| 5 — Enrollment conversion | Both branch managers and organization administrators may convert accepted leads, carrying over approved inquiry details. Possible duplicate child/family records must be resolved before conversion. | User: `yes` to the explicit conversion proposal. |
+| 6 — Reports | Provide current pipeline counts, leads created during a selected period and enrollment conversion rate. For conversion, use leads created in the selected period as the denominator and display the observation cutoff date. | User: `yes` to all three reports and the explicit denominator/cutoff proposal. |
+| 7 — Admissions access | Branch managers manage leads only within their own branches. Organization administrators manage leads across branches within their organization. Teachers and parents have no admissions access. | User: `yes` to the explicit access proposal. |
+| 8 — Decision ownership | Adopt the recommended owner/reviewer structure below, with the user as Product owner and other individual names pending. | User: `apply your recommendations`, following the explicit proposal to record the role structure. |
+
+### Approved responsibility structure
+
+| Area | Accountable owner | Supporting reviewer | Assignment status |
+| --- | --- | --- | --- |
+| Product/business rules | Requesting user, as Product owner | Nursery operations manager | Product owner assigned; supporting individual's name pending |
+| Privacy and retention | Nursery owner/director | Privacy adviser or local legal counsel | Roles assigned; individual names pending |
+| Safeguarding and sensitive-field permissions | Designated safeguarding lead | Operations manager and Product owner | Roles assigned; individual names pending except Product owner |
+| Finance | Finance manager or accountant | Local tax/legal adviser | Roles assigned; individual names pending |
+| Security and hosting/data residency | Technical/security lead | Privacy/legal adviser; nursery owner approves final hosting choice | Roles assigned; individual names pending |
+
+One person may cover multiple roles in a small team, with appropriate specialist
+review. Role assignment does not record any specialist review as completed.
+The original GATE-01–07 owners and required signoffs below remain in force;
+this structure supplies accountable coordination rather than replacing them.
+In particular, named legal/privacy/security/executive participation for hosting
+and the original Product/Safeguarding field-permission review are still required.
+
+This does not grant branch managers cross-branch access. Exact permission scope,
+reopening destination/reason/audit requirements, free-text handling, validation
+details and specialist privacy/field-access approval remain to be resolved.
+Appointment availability, rescheduling and cancellation rules remain open.
+Conversion field mapping, duplicate matching criteria and duplicate-resolution
+authority remain to be specified; conversion authority alone does not approve
+record merging or cross-branch access. Report timezone/day boundaries, distinct
+lead/enrollment counting, archived/merged/demo exclusions, zero-denominator
+display and attribution details remain open. Question 8's role structure is
+approved; individual specialist names and signoff evidence remain pending.
+The access direction does not establish authentication,
+authoritative branch membership or specialist GATE-02 signoff. The tables below retain their original proposals;
+use this record to distinguish accepted product directions from open details.
 
 ## Current boundary
 

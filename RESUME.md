@@ -1,5 +1,38 @@
 # Session checkpoint and resume instructions
 
+## Latest decisions: admissions questions 1–8 (2026-10-24)
+
+The user answered `1- yes`, `2- yes`, `3- yes` and then `both` for reopening
+authority. Explicit directions and remaining ambiguities are recorded in
+`docs/delivery/S03-DECISION-PACK.md`, User decisions revision 2. All seven
+inquiry fields are required; the proposed workflow and visit/trial skipping
+are accepted; loss reasons are approved and mandatory; reopening is permitted
+for both branch managers and organization administrators. No cross-branch
+permission or specialist approval is inferred. Appointment branch, date/time
+and host are required (`yes`); scheduling only records the appointment
+(`only record`), without sending invitations. Availability and cancellation
+rules remain open. Both manager/admin roles may convert accepted leads with
+approved inquiry details, after possible child/family duplicates are resolved
+(user: `yes`). Exact field mapping, matching criteria and duplicate-resolution
+authority remain open. User approved all three reports: current pipeline counts,
+leads created during a selected period and enrollment conversion rate, with
+leads created in that period as denominator and a displayed observation cutoff.
+Remaining metric details are tracked in the decision pack. User approved
+branch-manager access only within their own branches, organization-administrator
+access across their organization's branches, and no admissions access for
+teachers or parents. Authoritative identity/membership and GATE-02 signoff are
+still prerequisites. The user then instructed `apply your recommendations` for
+ownership: user as Product owner; nursery owner/director for privacy; designated
+safeguarding lead for safeguarding/field permissions; finance manager/accountant
+for finance; technical/security lead for security/hosting. Supporting reviewers
+and final hosting approval are recorded in the decision pack. Other individuals'
+names remain pending, and no specialist signoff or original gate is closed by
+assigning a role. Continue with remaining appointment/conversion/metric rules
+and the original prerequisite and gate evidence.
+Earlier statements that no product decisions have arrived are historical.
+The chronology increment is already committed/integrated as `76f7c39` locally;
+the remote sprint remains `a9868ba`. Keep pending physical/native/human UAT.
+
 ## Latest continuation: S03 pushed, retry chronology fixed (2026-10-24)
 
 User instruction: `push sprint 3 changes and continue development`.

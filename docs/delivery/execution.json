@@ -12,7 +12,7 @@
   "deferredSprints": [
     "S02"
   ],
-  "policyDecision": "Admissions workflow, inquiry fields, loss reasons and report definitions require approval; DEC-06 remains open for deferred attendance",
+  "policyDecision": "Admissions questions 1-8 product directions and responsibility roles approved in S03-DECISION-PACK revision 2; exact remaining rules, named specialist owners and original gate signoffs pending. User is Product owner; DEC-06 remains open for deferred attendance",
   "operationalDependencies": [
     "FEAT-002",
     "FEAT-005",
@@ -27,5 +27,5 @@
   "pushStatus": "S03 through a9868ba and five retained work branches pushed on 2026-10-24. Subsequent retry chronology development remains local and outside that recorded push scope.",
   "clientVerification": "Prior demo builds, five mobile widget scenarios and nine browser groups pass; direct parent/teacher views verified on PC; physical/native UAT pending",
   "nextSprintReadiness": "S04 readiness prepared only; latest user instruction is to continue and finish S03, without advancing sprints",
-  "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md; all candidate policies unapproved"
+  "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md; revision 2 records explicit product directions and responsibility assignments; remaining proposals and specialist gates open"
 }

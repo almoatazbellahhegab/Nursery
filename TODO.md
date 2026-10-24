@@ -1,5 +1,20 @@
 # Development TODO
 
+## Admissions decision collection (2026-10-24)
+
+- [x] Record user directions for required inquiry fields, workflow and loss reasons.
+- [x] Record both branch managers and organization administrators as reopening authorities.
+- [x] Record required appointment branch/date/time/host and record-only scheduling.
+- [x] Record manager/admin conversion authority, approved detail carry-over and required duplicate resolution.
+- [x] Record all three reports, period-created lead denominator and displayed conversion cutoff.
+- [x] Record branch-scoped manager access, organization-wide administrator access and no teacher/parent admissions access.
+- [x] Apply recommended owner/reviewer roles; assign the user as Product owner.
+- [ ] Identify other individual owners and obtain specialist signoffs; resolve remaining appointment, conversion and metric details.
+- [ ] Resolve exact remaining rules and specialist/prerequisite evidence before implementation.
+
+See the decision pack's revision 2 record; earlier blanket unapproved statements
+do not supersede these explicit product directions.
+
 ## Latest continuation (2026-10-24)
 
 - [x] Record the user's expanded S03 push approval before pushing.
