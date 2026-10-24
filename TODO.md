@@ -1,17 +1,75 @@
 # Development TODO
 
-**Session checkpoint saved for reopening: read [RESUME.md](RESUME.md) first.** Sprint 3 remains active; its domain feature is FEAT-030 on `feat/FEAT-030-admissions-pipeline`, and current application verification is on `chore/S03-application-verification`. S01 and S02 remain incomplete and unaccepted. Prior work was pushed through `775b1ff`; the user has now authorized S03 push after application testing and starting S04. Live client browser/link verification is still pending. The S02 checklist below is deferred carryover, not concurrent work.
+## Local commit handoff (2026-10-24)
+
+- [x] Read the saved checkpoint and inspect pending changes and test evidence.
+- [x] Obtain host approval for Git index writes after the user's commit request.
+- [x] Save separate verification, demo and admissions commits for local integration.
+- [ ] Preserve pending policy decisions and physical/native/human UAT; no push requested.
+
+Earlier read-only Git blocker entries below are historical for this handoff.
+
+## Current priority: continue Sprint 3 to actual completion
+
+- [x] Resume S03/FEAT-030; retain prior client-demo/mobile-link work.
+- [x] Add trusted admissions retry receipts, exact historical replay and safe
+  rejection of changed commands, cross-actor/scope and inconsistent stored facts.
+- [x] Pass 73 backend scenarios and all lint/format/strict-type/dependency checks.
+- [x] Pass four review/source-integrity checks; preserve all original identifiers.
+- [x] Prepare [S03 decision pack](docs/delivery/S03-DECISION-PACK.md) with concrete
+  admissions proposals, specialist gates, dependencies and completion evidence.
+- [ ] Resolve admissions field/workflow/loss/conversion/report decisions with
+  named owners; no proposal is approved by this checklist.
+- [ ] Close prerequisite identity/branch/permission/storage features and all
+  applicable specialist gates before operational S03 implementation.
+- [ ] Commit/integrate tested increments in a session authorized to write `.git`.
+- [ ] Complete all original S03 tasks/cases and separate physical/native UAT.
+
+S03 remains active and incomplete. The latest instruction is to finish S03;
+the earlier plan to advance to S04 does not override this priority. New retry
+work is outside the earlier recorded push approval and remains uncommitted.
+
+## Latest request: client demonstration data
+
+- [x] Add and browser-verify direct Parent and Teacher entry links; Reset retains the selected entry role.
+- [ ] Diagnose the user's reported phone connection failure after device/network/error details arrive; PC-local and LAN requests pass, physical phone access is unverified.
+
+- [x] Populate a shared fictional nursery dataset for the actual web/mobile apps.
+- [x] Add four guided value stories: morning operations, parent confidence,
+  fee follow-up and admissions visits.
+- [x] Add local demo actions and reset without opening gated operational APIs.
+- [x] Add mobile parent/staff exploration, daily updates, invoices and notices.
+- [x] Validate fixtures and test demo interactions, Arabic layouts and builds.
+- [x] Write the client presentation script, UAT checklist and known limitations.
+- [ ] Commit on `feat/FEAT-041-demo-scenarios` when `.git` write access is available;
+  preserve/separate prior uncommitted S03 verification work. No new push approved.
+- [ ] Perform Windows human, physical iPhone Safari and native iPhone UAT.
+
+This is presentation groundwork. FEAT-041 operational/API acceptance and its
+predecessors remain open. It does not activate S04 or complete the deferred sprints.
+
+**Session checkpoint saved for reopening: read [RESUME.md](RESUME.md) first.** Sprint 3 remains active; its domain feature is FEAT-030 on `feat/FEAT-030-admissions-pipeline`, and current application verification is on `chore/S03-application-verification`. S01 and S02 remain incomplete and unaccepted. Prior work was pushed through `775b1ff`; the user has authorized S03 push after application testing and starting S04. Live client browser/link verification is complete; Git integration is blocked as detailed below. The S02 checklist below is deferred carryover, not concurrent work.
+
+**2026-10-24 continuation:** application browser/link verification is now complete,
+including a rebuilt local Arabic font fix and inspected screenshots. See
+[application evidence/UAT/limitations](docs/testing/S03-APPLICATIONS.md).
+Commit/merge/push and the S04 branch transition are blocked because this session
+has read-only `.git` access (`index.lock`: Permission denied). Current changes
+are uncommitted; no push occurred. [S04 readiness](docs/delivery/S04-FEAT-012-READINESS.md)
+is prepared, while S03 remains the sole active sprint.
 
 ## Sprint 3 progress
 
 ### Application verification and requested handoff
 
-- [ ] Re-run backend/domain and review-tool regressions.
+- [x] Re-run backend/domain and review-tool regressions.
 - [x] Resolve and lock Next.js dependencies; run type, lint, format, dependency audit and production build checks.
 - [x] Obtain Flutter tooling; generate localizations and pass analyzer, three widget tests and web build.
-- [ ] Verify one dashboard URL and one mobile URL, clearly distinguishing browser and native acceptance.
-- [ ] Record the user's authorization and push the verified Sprint 3 commits.
+- [x] Verify one dashboard URL and one mobile URL, clearly distinguishing browser and native acceptance.
+- [x] Record the preserved S03 push authorization and exact scope; final source commit remains pending.
+- [ ] Commit/integrate and push the verified Sprint 3 commits once `.git` is writable.
 - [ ] Start S04 separately; retain unfinished S01–S03 work and specialist approval gates.
+- [x] Prepare FEAT-012 readiness, source test mapping and prerequisite checklist without policy-dependent implementation.
 
 ### Existing admissions domain increment
 
