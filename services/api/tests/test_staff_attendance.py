@@ -17,7 +17,9 @@ from nursery_api.staff_attendance.presence import (
     StaffAttendanceCode,
     StaffAttendanceError,
     StaffCommand,
+    StaffDecision,
     StaffIdentity,
+    StaffReceipt,
     StaffSnapshot,
     StaffTarget,
     VerifiedStaffGrant,
@@ -237,3 +239,263 @@ def test_staff_unit_014_child_grants_and_actions_cannot_be_used_as_staff_authori
         decide_staff_attendance(COMMAND, STATE, cast(VerifiedStaffGrant, grant), recorded_at=NOW)
     with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
         replace(COMMAND, action=cast(StaffAction, AttendanceAction.CHECK_IN))
+
+
+def original_checkin() -> StaffDecision:
+    return decide_staff_attendance(COMMAND, STATE, GRANT, recorded_at=NOW)
+
+
+@pytest.mark.parametrize("offset", [-5, 0, 3])
+def test_staff_unit_015_exact_retry_preserves_original_session_and_fact(offset: int) -> None:
+    saved = original_checkin()
+    command = replace(COMMAND, occurred_at=NOW.astimezone(timezone(timedelta(hours=offset))))
+    replay = decide_staff_attendance(
+        command,
+        saved.snapshot,
+        GRANT,
+        recorded_at=NOW + timedelta(minutes=1),
+        receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+    )
+    assert replay.replayed and not saved.replayed
+    assert replay.event is saved.event
+    assert replay.snapshot is saved.snapshot
+    assert replay.event.session_id == saved.event.session_id
+
+
+def test_staff_unit_016_retry_after_checkout_does_not_reopen_or_roll_back_state() -> None:
+    saved = original_checkin()
+    checkout = replace(
+        COMMAND,
+        action=StaffAction.CHECK_OUT,
+        expected_version=1,
+        operation_id=UUID(int=312),
+        occurred_at=NOW + timedelta(minutes=5),
+    )
+    later = decide_staff_attendance(
+        checkout,
+        saved.snapshot,
+        replace(GRANT, action=StaffAction.CHECK_OUT),
+        recorded_at=checkout.occurred_at,
+    )
+    replay = decide_staff_attendance(
+        COMMAND,
+        later.snapshot,
+        GRANT,
+        recorded_at=NOW + timedelta(minutes=10),
+        receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+    )
+    assert replay.replayed and replay.snapshot.open_session_id == saved.event.session_id
+    assert later.snapshot.version == 2 and later.snapshot.open_session_id is None
+
+
+@pytest.mark.parametrize("field", ["version", "operation", "action", "time"])
+def test_staff_unit_017_reused_receipt_with_changed_command_fails(field: str) -> None:
+    saved = original_checkin()
+    if field == "version":
+        changed = replace(COMMAND, expected_version=1)
+    elif field == "operation":
+        changed = replace(COMMAND, operation_id=UUID(int=999))
+    elif field == "action":
+        changed = replace(COMMAND, action=StaffAction.CHECK_OUT)
+    else:
+        changed = replace(COMMAND, occurred_at=NOW + timedelta(seconds=1))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            changed,
+            saved.snapshot,
+            replace(GRANT, action=changed.action),
+            recorded_at=NOW + timedelta(minutes=1),
+            receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.OPERATION_CONFLICT
+
+
+@pytest.mark.parametrize("case", ["actor", "branch", "employee", "organization"])
+def test_staff_unit_018_other_actor_or_target_receipt_is_denied_before_payload(case: str) -> None:
+    saved = original_checkin()
+    receipt_actor = UUID(int=999) if case == "actor" else GRANT.actor_id
+    target = TARGET
+    if case == "branch":
+        target = replace(target, branch_id=UUID(int=999))
+    elif case == "employee":
+        target = replace(target, identity=replace(IDENTITY, employee_id=UUID(int=999)))
+    elif case == "organization":
+        target = replace(target, identity=replace(IDENTITY, organization_id=UUID(int=999)))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(COMMAND, expected_version=99),
+            saved.snapshot,
+            GRANT,
+            recorded_at=NOW,
+            receipt=StaffReceipt(replace(COMMAND, target=target), receipt_actor, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.ACCESS_DENIED
+
+
+@pytest.mark.parametrize("case", ["inactive", "expired", "action"])
+def test_staff_unit_019_retry_rechecks_current_grant_before_receipt_conflicts(case: str) -> None:
+    saved = original_checkin()
+    grant = GRANT
+    if case == "inactive":
+        grant = replace(grant, employee_active=False)
+    elif case == "action":
+        grant = replace(grant, action=StaffAction.CHECK_OUT)
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            replace(COMMAND, expected_version=99),
+            saved.snapshot,
+            grant,
+            recorded_at=grant.expires_at if case == "expired" else NOW,
+            receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.ACCESS_DENIED
+
+
+@pytest.mark.parametrize(
+    "part",
+    [
+        "actor",
+        "operation",
+        "action",
+        "target",
+        "session",
+        "branch",
+        "version",
+        "occurred",
+        "recorded",
+        "identity",
+        "replayed",
+    ],
+)
+def test_staff_unit_020_inconsistent_saved_receipt_parts_cannot_claim_success(part: str) -> None:
+    original = original_checkin()
+    saved = original
+    if part == "actor":
+        saved = replace(saved, event=replace(saved.event, actor_id=UUID(int=999)))
+    elif part == "operation":
+        saved = replace(saved, event=replace(saved.event, operation_id=UUID(int=999)))
+    elif part == "action":
+        saved = replace(saved, event=replace(saved.event, action=StaffAction.CHECK_OUT))
+    elif part == "target":
+        saved = replace(
+            saved, event=replace(saved.event, target=replace(TARGET, branch_id=UUID(int=999)))
+        )
+    elif part == "session":
+        saved = replace(saved, snapshot=replace(saved.snapshot, open_session_id=UUID(int=999)))
+    elif part == "branch":
+        saved = replace(saved, snapshot=replace(saved.snapshot, open_branch_id=UUID(int=999)))
+    elif part == "version":
+        saved = replace(saved, event=replace(saved.event, version=2))
+    elif part == "occurred":
+        saved = replace(saved, event=replace(saved.event, occurred_at=NOW - timedelta(seconds=1)))
+    elif part == "recorded":
+        saved = replace(saved, event=replace(saved.event, recorded_at=NOW + timedelta(seconds=1)))
+    elif part == "identity":
+        saved = replace(
+            saved,
+            snapshot=replace(saved.snapshot, identity=replace(IDENTITY, employee_id=UUID(int=999))),
+        )
+    else:
+        saved = replace(saved, replayed=True)
+    # Most cases also supply the corrupt snapshot as current, proving that
+    # agreeing copies cannot hide contradictions with the recorded event.
+    current = original.snapshot if part == "identity" else saved.snapshot
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            COMMAND,
+            current,
+            GRANT,
+            recorded_at=NOW + timedelta(minutes=1),
+            receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.OPERATION_CONFLICT
+
+
+@pytest.mark.parametrize(
+    "case", ["older", "same_version_other_session", "later_older_time", "future"]
+)
+def test_staff_unit_021_contradictory_current_state_is_not_hidden_by_receipt(case: str) -> None:
+    saved = original_checkin()
+    if case == "older":
+        current = STATE
+    elif case == "same_version_other_session":
+        current = replace(saved.snapshot, open_session_id=UUID(int=999))
+    elif case == "later_older_time":
+        current = replace(
+            saved.snapshot,
+            version=2,
+            last_occurred_at=NOW - timedelta(seconds=1),
+            last_recorded_at=NOW - timedelta(seconds=1),
+        )
+    else:
+        current = replace(saved.snapshot, version=2, last_recorded_at=NOW + timedelta(seconds=1))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            COMMAND,
+            current,
+            GRANT,
+            recorded_at=NOW,
+            receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.OPERATION_CONFLICT
+
+
+def test_staff_unit_022_checkout_replay_preserves_closed_state_and_original_session() -> None:
+    initial = original_checkin()
+    command = replace(
+        COMMAND,
+        action=StaffAction.CHECK_OUT,
+        expected_version=1,
+        operation_id=UUID(int=312),
+        occurred_at=NOW + timedelta(minutes=1),
+    )
+    grant = replace(GRANT, action=StaffAction.CHECK_OUT)
+    saved = decide_staff_attendance(
+        command, initial.snapshot, grant, recorded_at=command.occurred_at
+    )
+    receipt = StaffReceipt(command, grant.actor_id, saved)
+    replay = decide_staff_attendance(
+        command, saved.snapshot, grant, recorded_at=command.occurred_at, receipt=receipt
+    )
+    assert replay.replayed and replay.event is saved.event
+    assert replay.event.session_id == initial.event.session_id
+    assert replay.snapshot.open_session_id is None
+    corrupt = replace(
+        saved,
+        snapshot=replace(
+            saved.snapshot, open_session_id=saved.event.session_id, open_branch_id=TARGET.branch_id
+        ),
+    )
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            command,
+            saved.snapshot,
+            grant,
+            recorded_at=command.occurred_at,
+            receipt=replace(receipt, decision=corrupt),
+        )
+    assert error.value.code == StaffAttendanceCode.OPERATION_CONFLICT
+
+
+@pytest.mark.parametrize("version", [0, -1, True])
+def test_staff_unit_023_receipt_events_require_positive_nonboolean_versions(version: int) -> None:
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        replace(original_checkin().event, version=version)
+
+
+def test_staff_unit_024_event_recording_cannot_precede_occurrence() -> None:
+    with pytest.raises(StaffAttendanceError, match="^staff_attendance_invalid_value$"):
+        replace(original_checkin().event, recorded_at=NOW - timedelta(seconds=1))
+
+
+def test_staff_unit_025_future_recorded_receipt_cannot_be_replayed_early() -> None:
+    saved = decide_staff_attendance(COMMAND, STATE, GRANT, recorded_at=NOW + timedelta(seconds=1))
+    with pytest.raises(StaffAttendanceError) as error:
+        decide_staff_attendance(
+            COMMAND,
+            saved.snapshot,
+            GRANT,
+            recorded_at=NOW,
+            receipt=StaffReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert error.value.code == StaffAttendanceCode.OPERATION_CONFLICT

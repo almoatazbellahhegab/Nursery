@@ -1,5 +1,22 @@
 # Development TODO — Sprint 4
 
+## Latest completion request
+
+User: `complete sprint 4 development`. Product intent covers the unchanged S04
+scope; original specialist gates still apply. See the concrete
+[completion checklist](docs/delivery/S04-COMPLETION.md) for all six features and
+the exact required policy/design evidence. The owner/document question is pending.
+
+- [x] Audit all 29 feature tasks, five technical gates and 25 source cases.
+- [x] Add exact staff retry receipts, original session/event replay and corruption rejection.
+- [x] Pass 204 backend scenarios (67 staff), lint/format, strict types and dependencies.
+- [x] Check local database tooling; PostgreSQL/Docker are unavailable here.
+- [ ] Receive the original required named specialist policy/design evidence.
+- [ ] Complete prerequisites, real persistence/API/client journeys and source tests.
+
+The 168-scenario result below is prior evidence. Full S04 remains incomplete;
+no governed module, source acceptance or physical/native UAT is marked complete.
+
 User instruction: `push and start development of sprint 4`.
 Only FEAT-012 Staff Attendance is active. S01–S03 remain incomplete/unaccepted;
 the Sprint 3 checkpoint is preserved at [S03 carryover](docs/delivery/S03-TODO.md).

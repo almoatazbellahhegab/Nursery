@@ -6,7 +6,7 @@ the exact branch/action and current employee activity. They are internal inputs,
 not authenticated credentials or a replacement for FEAT-010/FEAT-005.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from enum import StrEnum
 from uuid import UUID, uuid4
@@ -22,6 +22,7 @@ class StaffAttendanceCode(StrEnum):
     ALREADY_PRESENT = "staff_attendance_already_present"
     NOT_PRESENT = "staff_attendance_not_present"
     BRANCH_CONFLICT = "staff_attendance_branch_conflict"
+    OPERATION_CONFLICT = "staff_attendance_operation_conflict"
 
 
 class StaffAttendanceError(Exception):
@@ -176,6 +177,24 @@ class StaffEvent:
     recorded_at: datetime
     version: int
 
+    def __post_init__(self) -> None:
+        _version(self.version)
+        if (
+            self.version == 0
+            or not isinstance(self.target, StaffTarget)
+            or not isinstance(self.action, StaffAction)
+            or not all(
+                isinstance(value, UUID)
+                for value in (self.event_id, self.operation_id, self.actor_id, self.session_id)
+            )
+        ):
+            raise StaffAttendanceError(StaffAttendanceCode.INVALID_VALUE)
+        occurred, recorded = _utc(self.occurred_at), _utc(self.recorded_at)
+        if occurred > recorded:
+            raise StaffAttendanceError(StaffAttendanceCode.INVALID_VALUE)
+        object.__setattr__(self, "occurred_at", occurred)
+        object.__setattr__(self, "recorded_at", recorded)
+
 
 @dataclass(frozen=True)
 class StaffDecision:
@@ -183,6 +202,29 @@ class StaffDecision:
 
     snapshot: StaffSnapshot
     event: StaffEvent
+    replayed: bool = False
+
+
+@dataclass(frozen=True)
+class StaffReceipt:
+    """Trusted stored original response; it must be committed with state/event/audit.
+
+    A receipt is internal adapter input, never an HTTP/body credential. Loading
+    it must be scoped to organization, employee, branch, actor and operation.
+    This in-memory value is not a durable storage or authentication mechanism.
+    """
+
+    command: StaffCommand
+    actor_id: UUID
+    decision: StaffDecision
+
+    def __post_init__(self) -> None:
+        if (
+            not isinstance(self.command, StaffCommand)
+            or not isinstance(self.actor_id, UUID)
+            or not isinstance(self.decision, StaffDecision)
+        ):
+            raise StaffAttendanceError(StaffAttendanceCode.INVALID_VALUE)
 
 
 def decide_staff_attendance(
@@ -191,13 +233,17 @@ def decide_staff_attendance(
     grant: VerifiedStaffGrant,
     *,
     recorded_at: datetime,
+    receipt: StaffReceipt | None = None,
 ) -> StaffDecision:
-    """Propose a scoped check-in/out after current active/action/expiry checks.
+    """Propose check-in/out or replay a verified original response without writing it.
 
     The caller must lock the employee's organization-wide state, recheck access,
     enforce operation uniqueness and atomically persist state/event/receipt/audit.
     No actual authentication, cross-process concurrency or retry durability is
     established here. Staff correction/report policy is not inferred from DEC-06.
+    Current scope/action/activity/expiry are checked before receipt conflicts.
+    A replay retains its original event/session and must never overwrite newer
+    state or emit a second audit/outbox event.
     """
     now = _utc(recorded_at)
     if (
@@ -214,6 +260,10 @@ def decide_staff_attendance(
         or now >= grant.expires_at
     ):
         raise StaffAttendanceError(StaffAttendanceCode.ACCESS_DENIED)
+    if receipt is not None:
+        if not isinstance(receipt, StaffReceipt):
+            raise StaffAttendanceError(StaffAttendanceCode.INVALID_VALUE)
+        return _replay_staff(command, current, grant, receipt, now=now)
     if command.expected_version != current.version:
         raise StaffAttendanceError(StaffAttendanceCode.VERSION_CONFLICT)
     if (
@@ -256,3 +306,55 @@ def decide_staff_attendance(
         snapshot.version,
     )
     return StaffDecision(snapshot, event)
+
+
+def _replay_staff(
+    command: StaffCommand,
+    current: StaffSnapshot,
+    grant: VerifiedStaffGrant,
+    receipt: StaffReceipt,
+    *,
+    now: datetime,
+) -> StaffDecision:
+    """Fail closed on a mismatched receipt or contradictory current/historical facts."""
+    if receipt.actor_id != grant.actor_id or receipt.command.target != command.target:
+        raise StaffAttendanceError(StaffAttendanceCode.ACCESS_DENIED)
+    if receipt.command != command:
+        raise StaffAttendanceError(StaffAttendanceCode.OPERATION_CONFLICT)
+    saved = receipt.decision
+    event, snapshot = saved.event, saved.snapshot
+    if not isinstance(event, StaffEvent) or not isinstance(snapshot, StaffSnapshot):
+        raise StaffAttendanceError(StaffAttendanceCode.OPERATION_CONFLICT)
+    if (
+        type(saved.replayed) is not bool
+        or saved.replayed
+        or event.target != command.target
+        or event.actor_id != grant.actor_id
+        or event.operation_id != command.operation_id
+        or event.action != command.action
+        or event.occurred_at != command.occurred_at
+        or event.recorded_at > now
+        or (event.version == 1 and event.action != StaffAction.CHECK_IN)
+        or event.version != command.expected_version + 1
+        or snapshot.identity != command.target.identity
+        or snapshot.version != event.version
+        or snapshot.last_occurred_at != event.occurred_at
+        or snapshot.last_recorded_at != event.recorded_at
+        or current.version < snapshot.version
+        or (current.version == snapshot.version and current != snapshot)
+        or current.last_occurred_at is None
+        or current.last_recorded_at is None
+        or current.last_occurred_at < event.occurred_at
+        or current.last_recorded_at < event.recorded_at
+        or current.last_recorded_at > now
+    ):
+        raise StaffAttendanceError(StaffAttendanceCode.OPERATION_CONFLICT)
+    if command.action == StaffAction.CHECK_IN:
+        if (
+            snapshot.open_session_id != event.session_id
+            or snapshot.open_branch_id != command.target.branch_id
+        ):
+            raise StaffAttendanceError(StaffAttendanceCode.OPERATION_CONFLICT)
+    elif snapshot.open_session_id is not None or snapshot.open_branch_id is not None:
+        raise StaffAttendanceError(StaffAttendanceCode.OPERATION_CONFLICT)
+    return replace(saved, replayed=True)

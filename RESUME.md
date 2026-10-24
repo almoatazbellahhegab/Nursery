@@ -1,5 +1,36 @@
 # Session checkpoint and resume instructions
 
+## Latest request — complete Sprint 4 development
+
+User: `complete sprint 4 development`. FEAT-012 remains the sole active feature.
+Audited the six-feature/29-task/five-technical-gate/25-case scope and prepared
+`docs/delivery/S04-COMPLETION.md` with exact owner/policy/design evidence needed
+for staff, medication, transport, KPIs, community and commerce. Requested that
+evidence asynchronously; no answer has arrived. Do not interpret the broad
+completion instruction as Medical/Safeguarding/Finance policy signoff or approval
+of unknown policies. Preserve all previously approved Product directions.
+
+Implemented the next policy-independent staff increment: trusted exact-retry
+receipts preserving original session/event, current scope/action/activity/expiry
+checks before receipt conflicts, safe rejection of changed commands, inconsistent
+saved parts, contradictory current state and future/invalid event times. A
+historical replay must never overwrite current state or emit duplicate side effects.
+No production policy defaults, staff corrections, endpoint or storage model added.
+
+All 204 backend scenarios (67 staff plus 137 earlier regressions), Ruff
+lint/format, strict mypy and dependency consistency pass. Evidence:
+`docs/testing/runs/2026-10-24T09-29-04-273Z-staff-attendance.json`.
+Four source/review checks pass in `2026-10-24T09-31-13-312Z-unit.json`.
+Staff source API cases remain Not run. No PostgreSQL/Docker CLI or matching
+services were found by read-only checks; real database integration has not run.
+Existing clients/demos are unchanged, and physical/native/human UAT remains pending.
+
+Commit/integrate this tested increment locally on the retained FEAT-012 branch;
+no S04 push authorized. Remote S03 remains `1d8c766`; S04 prior local commit
+`234d9ba`. Preserve unrelated untracked attendance evidence. Next work requires
+the named policy/design evidence and FEAT-010/identity/permission/storage
+prerequisites before operational development. Do not report Sprint 4 complete.
+
 ## Latest instruction — S03 pushed, S04 started (2026-10-24)
 
 User: `push and start development of sprint 4`. Exact S03 scope through

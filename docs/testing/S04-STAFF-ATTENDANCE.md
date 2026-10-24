@@ -1,5 +1,34 @@
 # Sprint 4 staff attendance — initial domain evidence
 
+## Latest increment — trusted retry integrity
+
+[204 backend scenarios and all coding/dependency checks pass](runs/2026-10-24T09-29-04-273Z-staff-attendance.json).
+There are 67 staff scenarios and 137 earlier regressions. STAFF-UNIT-015–025
+add exact check-in/checkout replay, equivalent timezone offsets, unchanged
+original session/event, changed-command rejection, actor/target isolation,
+current activity/action/expiry denial, contradictory current/historical facts,
+positive event versions and receipt chronology. These are partial
+TC-FEAT-012-02 / UAT-S04-TC-FEAT-012-02 and supplemental XCT-02 checks, not
+durable idempotency or completed source integration cases.
+
+Trusted `StaffReceipt` must be loaded and committed atomically with state/event/
+audit under actor/employee/branch/organization/operation scope. A replay returns
+the historical snapshot with `replayed=True`; never persist it over current
+state or publish another event. Current scope, action, employee activity and
+grant expiry are checked on retries. Corrupt saved parts or inconsistent
+current state fail closed. StaffEvent now validates identifiers, aware UTC
+times and positive non-boolean version. No staff correction policy is inferred.
+
+No dependencies, migration, runtime policy or UI changed. Earlier client build/
+emulation evidence remains unchanged and does not pass the new staff workflow.
+All original API cases and the independent UAT checklist below remain pending.
+Full S04 blockers and original gate ownership are in
+[the completion checklist](../delivery/S04-COMPLETION.md).
+
+[Four source/review checks pass](runs/2026-10-24T09-31-13-312Z-unit.json);
+the regenerated plan preserves 41 features, 204 feature tasks, 69 technical
+tasks and 216 source cases. `git diff --check` passes.
+
 FEAT-012 is the sole active feature. [Run evidence](runs/2026-10-24T09-12-37-183Z-staff-attendance.json)
 records 168 passing backend scenarios, Ruff lint/format, strict mypy and
 dependency consistency. There are 31 staff, 58 admissions appointment,

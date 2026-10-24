@@ -3,7 +3,7 @@
   "activeFeature": "FEAT-012",
   "branch": "feat/FEAT-012-staff-attendance",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - staff attendance domain groundwork verified; profile/authorization/storage and staff-specific policy prerequisites remain open",
+  "status": "In progress - staff exact-retry integrity verified; full S04 completion awaits original specialist gates, predecessors and operational integration",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "sprintThreeAcceptance": "Incomplete and unaccepted; committed scope pushed and unfinished work deferred by explicit Sprint 4 start instruction",
@@ -23,8 +23,8 @@
     "PostgreSQL tenant constraints/RLS, organization-wide employee locks, atomic event/receipt/audit"
   ],
   "sourceAcceptanceStatus": "Not run",
-  "implementedIncrement": "Opaque staff check-in/out proposals with organization-wide employee state, one open session, exact branch/action/current-active grants, UTC/version/chronology checks; no child-grant reuse, correction policy, payroll, API or database",
-  "domainVerification": "168 pytest scenarios: 31 staff, 58 admissions appointment, 50 admissions stage/retry, 26 child attendance, three health/route guards; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T09-12-37-183Z-staff-attendance.json",
+  "implementedIncrement": "Opaque staff check-in/out plus exact trusted-receipt replay preserving original session/event; current activity/action/scope/expiry and receipt/current-state/UTC integrity checks. No staff policy defaults, actual authentication, database or operational API/UI",
+  "domainVerification": "204 pytest scenarios: 67 staff, 58 admissions appointment, 50 admissions stage/retry, 26 child attendance, three health/route guards; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T09-29-04-273Z-staff-attendance.json",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false,
   "pushStatus": "S03 through 1d8c766 and four new retained work branches pushed on 2026-10-24. S04 and FEAT-012 remain local; no S04 push authorized",
@@ -32,5 +32,7 @@
   "nextSprintReadiness": "S04 started explicitly; FEAT-012 is the sole active feature. Medical, transport, KPI, community and commerce approvals/prerequisites remain unchanged",
   "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md revision 3 retained; staff-specific readiness and limits in docs/delivery/S04-FEAT-012-READINESS.md",
   "priorSprintCarryover": "docs/delivery/S03-TODO.md",
-  "scopeAuthorization": "User: push and start development of sprint 4. Initiates S04 and first-feature technical groundwork; does not constitute staff correction/privacy policy, approval of other governed modules or release/UAT acceptance"
+  "scopeAuthorization": "User: complete sprint 4 development. Authorizes pursuing unchanged S04 scope; does not supply the specialist-approved policy/design evidence required by original gates or release/UAT acceptance",
+  "completionChecklist": "docs/delivery/S04-COMPLETION.md; all six features, 29 tasks, five gates and 25 source cases retained; required owner/document evidence requested and not yet supplied",
+  "databaseTestEnvironment": "Read-only command/service checks found no PostgreSQL or Docker; no real database integration executed"
 }
