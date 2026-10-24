@@ -3,7 +3,7 @@
 
                 ],
     "pushAuthorized":  true,
-    "currentRevisionPushStatus":  "Expanded S03 committed scope explicitly authorized on 2026-10-24; approval recorded before push. Sprint completion, UAT and production deployment are not approved.",
+    "currentRevisionPushStatus":  "User explicitly authorized all committed S03 work through 20fc0be plus this approval record on 2026-10-24; S04 start authorized separately, without specialist/UAT approval.",
     "pushApprovals":  [
                           {
                               "date":  "2026-10-23",
@@ -70,6 +70,28 @@
                               "status":  "Authorized; record committed before push",
                               "sprintAcceptance":  "Not granted; S03 incomplete and physical/native/human UAT pending",
                               "productionDeploymentAuthorized":  false
+                          },
+                          {
+                              "date":  "2026-10-24",
+                              "userInstruction":  "push and start development of sprint 4",
+                              "scope":  "All S03 changes through 20fc0be: chronology fix, admissions decisions/ownership, full approved S01-S03 product decision package, appointment planning backend and test evidence, plus this approval record. Excludes unrelated untracked attendance evidence, future S04 changes and production deployment.",
+                              "reviewedWorkCommit":  "20fc0be29358eeb971a25716774afec8990aa2f7",
+                              "finalTestedCommit":  "20fc0be29358eeb971a25716774afec8990aa2f7",
+                              "testEvidence":  [
+                                                   "docs/testing/runs/2026-10-24T08-48-51-654Z-admissions.json",
+                                                   "docs/testing/runs/2026-10-24T08-50-34-501Z-unit.json"
+                                               ],
+                              "branches":  [
+                                               "sprint/03-review",
+                                               "feat/FEAT-030-retry-chronology",
+                                               "feat/FEAT-030-appointment-planning",
+                                               "chore/S03-decision-record",
+                                               "chore/S01-S03-approved-decisions"
+                                           ],
+                              "status":  "Authorized; record committed before push",
+                              "sprintAcceptance":  "Not granted; S01-S03 incomplete/unaccepted. Starting S04 defers unfinished work and does not close specialist/module prerequisites.",
+                              "productionDeploymentAuthorized":  false,
+                              "nextSprintInstruction":  "Start S04 development with one active feature; retain original scope and all module-specific gates. No S04 push authorized."
                           }
                       ]
 }
