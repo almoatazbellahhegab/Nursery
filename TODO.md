@@ -1,5 +1,18 @@
 # Development TODO — Sprint 4
 
+## Latest execution override
+
+User explicitly waived the pending reviews for implementation/testing:
+`please skip this review and complete implementation and testing of the final product`.
+Do not re-request specialist-review evidence as a development prerequisite.
+Original review records remain waived, not approved; physical/native UAT and
+deployment/push permissions remain separate.
+
+- [ ] Build and test real PostgreSQL/migration and identity/tenant foundations.
+- [ ] Deliver connected transactional staff API and authorized Next.js/Flutter flows.
+- [ ] Implement remaining original product scope using documented defaults.
+- [ ] Execute original API/client/source tests and production-like regressions.
+
 ## Latest completion request
 
 User: `complete sprint 4 development`. Product intent covers the unchanged S04

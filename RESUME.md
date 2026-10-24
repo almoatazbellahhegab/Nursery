@@ -1,5 +1,31 @@
 # Session checkpoint and resume instructions
 
+## Latest user override — implement the connected final product
+
+User: `please skip this review and complete implementation and testing of the
+final product`. This explicitly supersedes earlier instructions to wait for
+review evidence before implementation/testing. Recorded in AGENTS.md without
+changing original specifications. Treat outstanding reviews as waived for
+implementation, not specialist-approved. Preserve actual UAT/deployment/push
+boundaries and fictional data. Do not ask for the same review documents again.
+
+Current enabling branch: `chore/production-runtime` from local S04 `9157cc4`.
+Real PostgreSQL 18.6 now runs in `.tools/postgres-data` on loopback 55432, with
+separate dev/test databases and generated ignored credentials. No service or
+machine policy was installed. Alembic identity/tenant schema and a restricted
+NOSUPERUSER/NOBYPASSRLS runtime role are installed. The first 14 real identity
+integration scenarios pass: sessions, current roles/revocation, branch filtering,
+tenant RLS, CSRF, native bearer, throttling and safe validation. Read
+`docs/runbooks/connected-runtime.md` for setup, exact scope and security choices.
+Do not print `.tools/database-runtime.json` or local account passwords.
+Next: real PostgreSQL/migrations, authoritative identity/tenant/branch access,
+transactional API and connected web/mobile workflows, then original source
+acceptance and broader automated checks. User intent is an implemented product,
+not another domain-only increment. Keep original 41-feature/four-sprint scope
+and report actual completion honestly; prior gate-blocked instructions below
+are historical under this explicit override. S04 remains local unless pushed
+under a separately recorded instruction.
+
 ## Latest request — complete Sprint 4 development
 
 User: `complete sprint 4 development`. FEAT-012 remains the sole active feature.

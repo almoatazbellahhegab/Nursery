@@ -1,8 +1,20 @@
 """Health-only FastAPI application; never returns tenant or child information."""
 
+import os
+
 from fastapi import FastAPI
 
+from .runtime.api import configure_runtime
+
 app = FastAPI(title="Nursery API foundation", version="0.1.0")
+
+if database_url := os.environ.get("NURSERY_DATABASE_URL"):
+    configure_runtime(
+        app,
+        database_url,
+        os.environ.get("NURSERY_ORIGINS", "http://localhost:3000,http://localhost:3200").split(","),
+        os.environ.get("NURSERY_ENV") != "local",
+    )
 
 
 @app.get(

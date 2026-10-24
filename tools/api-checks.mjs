@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export function runApiChecks({ feature, sprint, slug, mappings, sourceAcceptanceCases = 'All five source cases remain Not run at their required integration levels' }) {
+export function runApiChecks({ feature, sprint, slug, mappings, sourceAcceptanceCases = 'All five source cases remain Not run at their required integration levels', requireNoSkips = false }) {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
   const cwd = path.join(root, 'services/api');
   const python = path.join(cwd, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
@@ -30,6 +30,9 @@ export function runApiChecks({ feature, sprint, slug, mappings, sourceAcceptance
     console.log(`${id}: ${result}\n${output}`);
     return { id, args, result, output };
   });
+  if (requireNoSkips && /<skipped\b/.test(fs.readFileSync(junit, 'utf8'))) {
+    results.push({ id: 'required-integration-execution', args: [], result: 'Fail', output: 'Required runtime suite contains skipped tests' });
+  }
   const record = {
     startedAt, completedAt: new Date().toISOString(), feature, sprint,
     codeCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
