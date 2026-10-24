@@ -143,7 +143,7 @@ abstract class AppLocalizations {
   /// No description provided for @staff.
   ///
   /// In en, this message translates to:
-  /// **'Staff'**
+  /// **'Teacher'**
   String get staff;
 
   /// No description provided for @home.

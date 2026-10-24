@@ -1,0 +1,40 @@
+{
+  "startedAt": "2026-10-24T06:58:45.468Z",
+  "completedAt": "2026-10-24T07:00:26.737Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M RESUME.md\n M TODO.md\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M apps/mobile/test/shell_test.dart\n M docs/delivery/approvals.json\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M docs/testing/TEST-LOG.md\n M tests/system/review.test.mjs\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n?? apps/admin-web/app/demo-data.json\n?? apps/mobile/assets/\n?? apps/mobile/lib/demo_data.dart\n?? demo/\n?? docs/delivery/S04-FEAT-012-READINESS.md\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24-S03-review-portal.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-36-58-935Z-clients.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json\n?? docs/testing/runs/2026-10-24T06-38-54-697Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-40-42-059Z-unit.json\n?? docs/testing/runs/2026-10-24T06-40-58-486Z-unit.json\n?? tools/generate-demo.mjs",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Fail",
+      "exitCode": 1,
+      "output": "Changed lib\\demo_data.dart\nFormatted 6 files (1 changed) in 0.04 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Analyzing mobile...                                             \nNo issues found! (ran in 16.9s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Fail",
+      "exitCode": 1,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart\n00:00 +0: parent has a seeded child, invoice and daily events\n00:01 +1: staff update reaches parent timeline and reset restores baseline\n══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════\nThe following StateError was thrown running a test:\nBad state: No element\n\nWhen the exception was thrown, this was the stack:\n#0      Iterable.single (dart:core/iterable.dart:694:25)\n#1      WidgetController.element (package:flutter_test/src/controller.dart:888:30)\n#2      WidgetController.ensureVisible (package:flutter_test/src/controller.dart:2389:32)\n#3      main.<anonymous closure> (file:///C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart:46:20)\n<asynchronous suspension>\n#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)\n<asynchronous suspension>\n#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)\n<asynchronous suspension>\n<asynchronous suspension>\n(elided one frame from package:stack_trace)\n\nThe test description was:\n  staff update reaches parent timeline and reset restores baseline\n════════════════════════════════════════════════════════════════════════════════════════════════════\n00:02 +1 -1: staff update reaches parent timeline and reset restores baseline [E]\n  Test failed. See exception logs above.\n  The test description was: staff update reaches parent timeline and reset restores baseline\n  \n00:02 +1 -1: branch switch selects that branch family\n00:02 +2 -1: Arabic demo keeps readable labels and RTL direction\n══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════\nThe following TestFailure was thrown running a test:\nExpected: at least one matching candidate\n  Actual: _TextWidgetFinder:<Found 0 widgets with text \"آدم التجريبي\": []>\n   Which: means none were found but some were expected\n\nWhen the exception was thrown, this was the stack:\n#4      main.<anonymous closure> (file:///C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart:79:5)\n<asynchronous suspension>\n#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)\n<asynchronous suspension>\n#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)\n<asynchronous suspension>\n<asynchronous suspension>\n(elided one frame from package:stack_trace)\n\nThis was caught by the test expectation on the following line:\n  file:///C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart line 79\nThe test description was:\n  Arabic demo keeps readable labels and RTL direction\n════════════════════════════════════════════════════════════════════════════════════════════════════\n00:02 +2 -2: Arabic demo keeps readable labels and RTL direction [E]\n  Test failed. See exception logs above.\n  The test description was: Arabic demo keeps readable labels and RTL direction\n  \n00:02 +2 -2: Some tests failed.\n\nFailing tests:\n  C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: Arabic demo keeps readable labels and RTL direction\n  C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: staff update reaches parent timeline and reset restores baseline\n"
+    },
+    {
+      "id": "APP-MOBILE-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Compiling lib\\main.dart for the Web...                          \nFont asset \"CupertinoIcons.ttf\" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nFont asset \"MaterialIcons-Regular.otf\" was tree-shaken, reducing it from 1645184 to 8260 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nCompiling lib\\main.dart for the Web...                             71.2s\n✓ Built build\\web\nWasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm\nUse --no-wasm-dry-run to disable these warnings.\n"
+    }
+  ],
+  "selection": "Mobile checks only",
+  "result": "Fail",
+  "scope": "Actual compiled public foundation shells only; operational workflows remain incomplete",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

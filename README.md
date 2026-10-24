@@ -1,6 +1,18 @@
 # Nursery
 
-The four original specifications are preserved in `Document`. Development has started with a traceable delivery plan and an offline review prototype. Sprint 1 is in progress and blocked on production dependencies. No product feature, native app or sprint acceptance is claimed.
+## Client demonstration
+
+The actual web and mobile apps now include a fictional Little Garden nursery
+with two branches, 24 children/families, educator rosters, daily care, attendance,
+invoices and admissions inquiries. Open `Start-Applications.cmd`, then use the
+dashboard's four guided stories. Reset demo restores the starting data.
+
+See the [eight-minute client presentation script](docs/runbooks/client-demo.md)
+for the value stories, exact steps and expected outcomes. Demo actions are local
+simulations; they do not send messages, process payments or synchronize devices.
+The [fixture guide](demo/README.md) documents the shared synthetic dataset.
+
+The four original specifications are preserved in `Document`. Development includes a traceable delivery plan, a client presentation demo and an offline review portal. Sprint 3 remains active; Sprint 4 has readiness preparation only. No complete operational feature, native app or sprint acceptance is claimed.
 
 ## One click review on Windows 11
 

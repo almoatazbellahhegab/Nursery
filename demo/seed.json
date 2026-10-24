@@ -1,0 +1,1781 @@
+{
+  "schemaVersion": 1,
+  "demoOnly": true,
+  "snapshotDate": "2026-10-24",
+  "snapshotTime": "11:30",
+  "timezone": "Africa/Cairo",
+  "currency": "EGP",
+  "organization": {
+    "id": "DEMO-ORG",
+    "name": {
+      "en": "Little Garden Nursery",
+      "ar": "حضانة الحديقة الصغيرة"
+    }
+  },
+  "branches": [
+    {
+      "id": "B001",
+      "name": {
+        "en": "Maadi Garden",
+        "ar": "حديقة المعادي"
+      },
+      "city": {
+        "en": "Cairo · Maadi",
+        "ar": "القاهرة · المعادي"
+      }
+    },
+    {
+      "id": "B002",
+      "name": {
+        "en": "New Cairo Grove",
+        "ar": "روضة القاهرة الجديدة"
+      },
+      "city": {
+        "en": "Cairo · New Cairo",
+        "ar": "القاهرة · القاهرة الجديدة"
+      }
+    }
+  ],
+  "classrooms": [
+    {
+      "id": "R001",
+      "branchId": "B001",
+      "name": {
+        "en": "Sunflowers",
+        "ar": "دوار الشمس"
+      },
+      "ages": "2–3",
+      "capacity": 10
+    },
+    {
+      "id": "R002",
+      "branchId": "B001",
+      "name": {
+        "en": "Olive Trees",
+        "ar": "أشجار الزيتون"
+      },
+      "ages": "3–4",
+      "capacity": 10
+    },
+    {
+      "id": "R003",
+      "branchId": "B002",
+      "name": {
+        "en": "Little Palms",
+        "ar": "النخيل الصغير"
+      },
+      "ages": "2–3",
+      "capacity": 10
+    },
+    {
+      "id": "R004",
+      "branchId": "B002",
+      "name": {
+        "en": "Orange Blossoms",
+        "ar": "زهر البرتقال"
+      },
+      "ages": "3–4",
+      "capacity": 10
+    }
+  ],
+  "staff": [
+    {
+      "id": "S001",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "name": {
+        "en": "Mona Demo",
+        "ar": "منى التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S002",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "name": {
+        "en": "Sara Demo",
+        "ar": "سارة التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S003",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "name": {
+        "en": "Heba Demo",
+        "ar": "هبة التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S004",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "name": {
+        "en": "Dalia Demo",
+        "ar": "داليا التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S005",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "name": {
+        "en": "Nada Demo",
+        "ar": "ندى التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S006",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "name": {
+        "en": "Reem Demo",
+        "ar": "ريم التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S007",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "name": {
+        "en": "Mai Demo",
+        "ar": "مي التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    },
+    {
+      "id": "S008",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "name": {
+        "en": "Hala Demo",
+        "ar": "هالة التجريبية"
+      },
+      "role": {
+        "en": "Classroom educator",
+        "ar": "معلمة الفصل"
+      }
+    }
+  ],
+  "children": [
+    {
+      "id": "C001",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G001",
+      "name": {
+        "en": "Adam Demo",
+        "ar": "آدم التجريبي"
+      },
+      "ageMonths": 30,
+      "status": "present"
+    },
+    {
+      "id": "C002",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G002",
+      "name": {
+        "en": "Lina Demo",
+        "ar": "لينا التجريبي"
+      },
+      "ageMonths": 33,
+      "status": "present"
+    },
+    {
+      "id": "C003",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G003",
+      "name": {
+        "en": "Youssef Demo",
+        "ar": "يوسف التجريبي"
+      },
+      "ageMonths": 36,
+      "status": "present"
+    },
+    {
+      "id": "C004",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G004",
+      "name": {
+        "en": "Salma Demo",
+        "ar": "سلمى التجريبي"
+      },
+      "ageMonths": 39,
+      "status": "present"
+    },
+    {
+      "id": "C005",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G005",
+      "name": {
+        "en": "Omar Demo",
+        "ar": "عمر التجريبي"
+      },
+      "ageMonths": 42,
+      "status": "present"
+    },
+    {
+      "id": "C006",
+      "branchId": "B001",
+      "classroomId": "R001",
+      "guardianId": "G006",
+      "name": {
+        "en": "Nour Demo",
+        "ar": "نور التجريبي"
+      },
+      "ageMonths": 45,
+      "status": "present"
+    },
+    {
+      "id": "C007",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G007",
+      "name": {
+        "en": "Malak Demo",
+        "ar": "ملك التجريبي"
+      },
+      "ageMonths": 30,
+      "status": "present"
+    },
+    {
+      "id": "C008",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G008",
+      "name": {
+        "en": "Ali Demo",
+        "ar": "علي التجريبي"
+      },
+      "ageMonths": 33,
+      "status": "present"
+    },
+    {
+      "id": "C009",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G009",
+      "name": {
+        "en": "Farida Demo",
+        "ar": "فريدة التجريبي"
+      },
+      "ageMonths": 36,
+      "status": "expected"
+    },
+    {
+      "id": "C010",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G010",
+      "name": {
+        "en": "Zain Demo",
+        "ar": "زين التجريبي"
+      },
+      "ageMonths": 39,
+      "status": "expected"
+    },
+    {
+      "id": "C011",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G011",
+      "name": {
+        "en": "Mariam Demo",
+        "ar": "مريم التجريبي"
+      },
+      "ageMonths": 42,
+      "status": "home"
+    },
+    {
+      "id": "C012",
+      "branchId": "B001",
+      "classroomId": "R002",
+      "guardianId": "G012",
+      "name": {
+        "en": "Hassan Demo",
+        "ar": "حسن التجريبي"
+      },
+      "ageMonths": 45,
+      "status": "absent"
+    },
+    {
+      "id": "C013",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G013",
+      "name": {
+        "en": "Layla Demo",
+        "ar": "ليلى التجريبي"
+      },
+      "ageMonths": 30,
+      "status": "present"
+    },
+    {
+      "id": "C014",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G014",
+      "name": {
+        "en": "Karim Demo",
+        "ar": "كريم التجريبي"
+      },
+      "ageMonths": 33,
+      "status": "present"
+    },
+    {
+      "id": "C015",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G015",
+      "name": {
+        "en": "Hana Demo",
+        "ar": "هنا التجريبي"
+      },
+      "ageMonths": 36,
+      "status": "present"
+    },
+    {
+      "id": "C016",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G016",
+      "name": {
+        "en": "Amir Demo",
+        "ar": "أمير التجريبي"
+      },
+      "ageMonths": 39,
+      "status": "present"
+    },
+    {
+      "id": "C017",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G017",
+      "name": {
+        "en": "Jana Demo",
+        "ar": "جنى التجريبي"
+      },
+      "ageMonths": 42,
+      "status": "present"
+    },
+    {
+      "id": "C018",
+      "branchId": "B002",
+      "classroomId": "R003",
+      "guardianId": "G018",
+      "name": {
+        "en": "Taha Demo",
+        "ar": "طه التجريبي"
+      },
+      "ageMonths": 45,
+      "status": "present"
+    },
+    {
+      "id": "C019",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G019",
+      "name": {
+        "en": "Yara Demo",
+        "ar": "يارا التجريبي"
+      },
+      "ageMonths": 30,
+      "status": "present"
+    },
+    {
+      "id": "C020",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G020",
+      "name": {
+        "en": "Seif Demo",
+        "ar": "سيف التجريبي"
+      },
+      "ageMonths": 33,
+      "status": "present"
+    },
+    {
+      "id": "C021",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G021",
+      "name": {
+        "en": "Dina Demo",
+        "ar": "دينا التجريبي"
+      },
+      "ageMonths": 36,
+      "status": "expected"
+    },
+    {
+      "id": "C022",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G022",
+      "name": {
+        "en": "Mostafa Demo",
+        "ar": "مصطفى التجريبي"
+      },
+      "ageMonths": 39,
+      "status": "expected"
+    },
+    {
+      "id": "C023",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G023",
+      "name": {
+        "en": "Rana Demo",
+        "ar": "رنا التجريبي"
+      },
+      "ageMonths": 42,
+      "status": "home"
+    },
+    {
+      "id": "C024",
+      "branchId": "B002",
+      "classroomId": "R004",
+      "guardianId": "G024",
+      "name": {
+        "en": "Bilal Demo",
+        "ar": "بلال التجريبي"
+      },
+      "ageMonths": 45,
+      "status": "absent"
+    }
+  ],
+  "guardians": [
+    {
+      "id": "G001",
+      "name": {
+        "en": "Adam’s family",
+        "ar": "أسرة آدم"
+      },
+      "email": "family01@example.invalid"
+    },
+    {
+      "id": "G002",
+      "name": {
+        "en": "Lina’s family",
+        "ar": "أسرة لينا"
+      },
+      "email": "family02@example.invalid"
+    },
+    {
+      "id": "G003",
+      "name": {
+        "en": "Youssef’s family",
+        "ar": "أسرة يوسف"
+      },
+      "email": "family03@example.invalid"
+    },
+    {
+      "id": "G004",
+      "name": {
+        "en": "Salma’s family",
+        "ar": "أسرة سلمى"
+      },
+      "email": "family04@example.invalid"
+    },
+    {
+      "id": "G005",
+      "name": {
+        "en": "Omar’s family",
+        "ar": "أسرة عمر"
+      },
+      "email": "family05@example.invalid"
+    },
+    {
+      "id": "G006",
+      "name": {
+        "en": "Nour’s family",
+        "ar": "أسرة نور"
+      },
+      "email": "family06@example.invalid"
+    },
+    {
+      "id": "G007",
+      "name": {
+        "en": "Malak’s family",
+        "ar": "أسرة ملك"
+      },
+      "email": "family07@example.invalid"
+    },
+    {
+      "id": "G008",
+      "name": {
+        "en": "Ali’s family",
+        "ar": "أسرة علي"
+      },
+      "email": "family08@example.invalid"
+    },
+    {
+      "id": "G009",
+      "name": {
+        "en": "Farida’s family",
+        "ar": "أسرة فريدة"
+      },
+      "email": "family09@example.invalid"
+    },
+    {
+      "id": "G010",
+      "name": {
+        "en": "Zain’s family",
+        "ar": "أسرة زين"
+      },
+      "email": "family10@example.invalid"
+    },
+    {
+      "id": "G011",
+      "name": {
+        "en": "Mariam’s family",
+        "ar": "أسرة مريم"
+      },
+      "email": "family11@example.invalid"
+    },
+    {
+      "id": "G012",
+      "name": {
+        "en": "Hassan’s family",
+        "ar": "أسرة حسن"
+      },
+      "email": "family12@example.invalid"
+    },
+    {
+      "id": "G013",
+      "name": {
+        "en": "Layla’s family",
+        "ar": "أسرة ليلى"
+      },
+      "email": "family13@example.invalid"
+    },
+    {
+      "id": "G014",
+      "name": {
+        "en": "Karim’s family",
+        "ar": "أسرة كريم"
+      },
+      "email": "family14@example.invalid"
+    },
+    {
+      "id": "G015",
+      "name": {
+        "en": "Hana’s family",
+        "ar": "أسرة هنا"
+      },
+      "email": "family15@example.invalid"
+    },
+    {
+      "id": "G016",
+      "name": {
+        "en": "Amir’s family",
+        "ar": "أسرة أمير"
+      },
+      "email": "family16@example.invalid"
+    },
+    {
+      "id": "G017",
+      "name": {
+        "en": "Jana’s family",
+        "ar": "أسرة جنى"
+      },
+      "email": "family17@example.invalid"
+    },
+    {
+      "id": "G018",
+      "name": {
+        "en": "Taha’s family",
+        "ar": "أسرة طه"
+      },
+      "email": "family18@example.invalid"
+    },
+    {
+      "id": "G019",
+      "name": {
+        "en": "Yara’s family",
+        "ar": "أسرة يارا"
+      },
+      "email": "family19@example.invalid"
+    },
+    {
+      "id": "G020",
+      "name": {
+        "en": "Seif’s family",
+        "ar": "أسرة سيف"
+      },
+      "email": "family20@example.invalid"
+    },
+    {
+      "id": "G021",
+      "name": {
+        "en": "Dina’s family",
+        "ar": "أسرة دينا"
+      },
+      "email": "family21@example.invalid"
+    },
+    {
+      "id": "G022",
+      "name": {
+        "en": "Mostafa’s family",
+        "ar": "أسرة مصطفى"
+      },
+      "email": "family22@example.invalid"
+    },
+    {
+      "id": "G023",
+      "name": {
+        "en": "Rana’s family",
+        "ar": "أسرة رنا"
+      },
+      "email": "family23@example.invalid"
+    },
+    {
+      "id": "G024",
+      "name": {
+        "en": "Bilal’s family",
+        "ar": "أسرة بلال"
+      },
+      "email": "family24@example.invalid"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-26-001",
+      "childId": "C001",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-002",
+      "childId": "C002",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-003",
+      "childId": "C003",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-004",
+      "childId": "C004",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-005",
+      "childId": "C005",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-006",
+      "childId": "C006",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-007",
+      "childId": "C007",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-008",
+      "childId": "C008",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-009",
+      "childId": "C009",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-010",
+      "childId": "C010",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-011",
+      "childId": "C011",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-012",
+      "childId": "C012",
+      "branchId": "B001",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-013",
+      "childId": "C013",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-014",
+      "childId": "C014",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-015",
+      "childId": "C015",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-016",
+      "childId": "C016",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-017",
+      "childId": "C017",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-018",
+      "childId": "C018",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-019",
+      "childId": "C019",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-020",
+      "childId": "C020",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-021",
+      "childId": "C021",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-022",
+      "childId": "C022",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 450000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-023",
+      "childId": "C023",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 300000,
+      "dueDate": "2026-10-20"
+    },
+    {
+      "id": "INV-26-024",
+      "childId": "C024",
+      "branchId": "B002",
+      "period": {
+        "en": "October tuition",
+        "ar": "رسوم أكتوبر"
+      },
+      "amountMinor": 450000,
+      "paidMinor": 0,
+      "dueDate": "2026-10-20"
+    }
+  ],
+  "leads": [
+    {
+      "id": "L001",
+      "branchId": "B001",
+      "name": {
+        "en": "Amira’s family",
+        "ar": "أسرة أميرة"
+      },
+      "stage": "inquiry",
+      "ageGroup": "2–3",
+      "ownerId": "S001",
+      "nextStep": {
+        "en": "Call to understand the family’s needs",
+        "ar": "مكالمة للتعرف على احتياجات الأسرة"
+      },
+      "visitScheduled": false,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    },
+    {
+      "id": "L002",
+      "branchId": "B001",
+      "name": {
+        "en": "Sami’s family",
+        "ar": "أسرة سامي"
+      },
+      "stage": "visit",
+      "ageGroup": "3–4",
+      "ownerId": "S001",
+      "nextStep": {
+        "en": "Follow up on the next step",
+        "ar": "متابعة الخطوة التالية"
+      },
+      "visitScheduled": true,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    },
+    {
+      "id": "L003",
+      "branchId": "B001",
+      "name": {
+        "en": "Habiba’s family",
+        "ar": "أسرة حبيبة"
+      },
+      "stage": "application",
+      "ageGroup": "2–3",
+      "ownerId": "S001",
+      "nextStep": {
+        "en": "Follow up on the next step",
+        "ar": "متابعة الخطوة التالية"
+      },
+      "visitScheduled": false,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    },
+    {
+      "id": "L004",
+      "branchId": "B002",
+      "name": {
+        "en": "Fares’s family",
+        "ar": "أسرة فارس"
+      },
+      "stage": "inquiry",
+      "ageGroup": "3–4",
+      "ownerId": "S005",
+      "nextStep": {
+        "en": "Call to understand the family’s needs",
+        "ar": "مكالمة للتعرف على احتياجات الأسرة"
+      },
+      "visitScheduled": false,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    },
+    {
+      "id": "L005",
+      "branchId": "B002",
+      "name": {
+        "en": "Mila’s family",
+        "ar": "أسرة ميلا"
+      },
+      "stage": "visit",
+      "ageGroup": "2–3",
+      "ownerId": "S005",
+      "nextStep": {
+        "en": "Follow up on the next step",
+        "ar": "متابعة الخطوة التالية"
+      },
+      "visitScheduled": true,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    },
+    {
+      "id": "L006",
+      "branchId": "B002",
+      "name": {
+        "en": "Anas’s family",
+        "ar": "أسرة أنس"
+      },
+      "stage": "waitlist",
+      "ageGroup": "3–4",
+      "ownerId": "S005",
+      "nextStep": {
+        "en": "Follow up on the next step",
+        "ar": "متابعة الخطوة التالية"
+      },
+      "visitScheduled": false,
+      "source": {
+        "en": "Website inquiry",
+        "ar": "استفسار عبر الموقع"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "C001-arrival",
+      "childId": "C001",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C001-meal",
+      "childId": "C001",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C001-activity",
+      "childId": "C001",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C002-arrival",
+      "childId": "C002",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C002-meal",
+      "childId": "C002",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C002-activity",
+      "childId": "C002",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C003-arrival",
+      "childId": "C003",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C003-meal",
+      "childId": "C003",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C003-activity",
+      "childId": "C003",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C004-arrival",
+      "childId": "C004",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C004-meal",
+      "childId": "C004",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C004-activity",
+      "childId": "C004",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C005-arrival",
+      "childId": "C005",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C005-meal",
+      "childId": "C005",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C005-activity",
+      "childId": "C005",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C006-arrival",
+      "childId": "C006",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C006-meal",
+      "childId": "C006",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C006-activity",
+      "childId": "C006",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S001"
+    },
+    {
+      "id": "C007-arrival",
+      "childId": "C007",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C007-meal",
+      "childId": "C007",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C007-activity",
+      "childId": "C007",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C008-arrival",
+      "childId": "C008",
+      "branchId": "B001",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C008-meal",
+      "childId": "C008",
+      "branchId": "B001",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C008-activity",
+      "childId": "C008",
+      "branchId": "B001",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S003"
+    },
+    {
+      "id": "C013-arrival",
+      "childId": "C013",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C013-meal",
+      "childId": "C013",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C013-activity",
+      "childId": "C013",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C014-arrival",
+      "childId": "C014",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C014-meal",
+      "childId": "C014",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C014-activity",
+      "childId": "C014",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C015-arrival",
+      "childId": "C015",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C015-meal",
+      "childId": "C015",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C015-activity",
+      "childId": "C015",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C016-arrival",
+      "childId": "C016",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C016-meal",
+      "childId": "C016",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C016-activity",
+      "childId": "C016",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C017-arrival",
+      "childId": "C017",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C017-meal",
+      "childId": "C017",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C017-activity",
+      "childId": "C017",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C018-arrival",
+      "childId": "C018",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C018-meal",
+      "childId": "C018",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C018-activity",
+      "childId": "C018",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S005"
+    },
+    {
+      "id": "C019-arrival",
+      "childId": "C019",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S007"
+    },
+    {
+      "id": "C019-meal",
+      "childId": "C019",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S007"
+    },
+    {
+      "id": "C019-activity",
+      "childId": "C019",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S007"
+    },
+    {
+      "id": "C020-arrival",
+      "childId": "C020",
+      "branchId": "B002",
+      "time": "08:15",
+      "kind": "arrival",
+      "detail": {
+        "en": "Arrived and settled in with the classroom team.",
+        "ar": "وصل واستقبله فريق الفصل."
+      },
+      "staffId": "S007"
+    },
+    {
+      "id": "C020-meal",
+      "childId": "C020",
+      "branchId": "B002",
+      "time": "09:10",
+      "kind": "meal",
+      "detail": {
+        "en": "Breakfast · fruit and cheese sandwich, ate well.",
+        "ar": "الإفطار · فاكهة وشطيرة جبن، تناول وجبته جيداً."
+      },
+      "staffId": "S007"
+    },
+    {
+      "id": "C020-activity",
+      "childId": "C020",
+      "branchId": "B002",
+      "time": "10:20",
+      "kind": "activity",
+      "detail": {
+        "en": "Built a garden with blocks and practised taking turns.",
+        "ar": "بنى حديقة بالمكعبات وتدرّب على تبادل الأدوار."
+      },
+      "staffId": "S007"
+    }
+  ],
+  "notices": [
+    {
+      "id": "B001-N0",
+      "branchId": "B001",
+      "title": {
+        "en": "A little discovery, every day",
+        "ar": "اكتشاف صغير كل يوم"
+      },
+      "body": {
+        "en": "This week we are exploring seeds, gardens and growing together. Ask your child what a plant needs.",
+        "ar": "نستكشف هذا الأسبوع البذور والحدائق والنمو معاً. اسأل طفلك عما يحتاجه النبات."
+      },
+      "date": "2026-10-24"
+    },
+    {
+      "id": "B001-N1",
+      "branchId": "B001",
+      "title": {
+        "en": "Family morning · 29 October",
+        "ar": "صباح الأسرة · ٢٩ أكتوبر"
+      },
+      "body": {
+        "en": "Join the classroom team at 09:00 for a reading morning. This is a sample event in the demo.",
+        "ar": "انضم إلى فريق الفصل الساعة ٩ صباحاً لوقت القراءة. هذه فعالية تجريبية."
+      },
+      "date": "2026-10-24"
+    },
+    {
+      "id": "B002-N0",
+      "branchId": "B002",
+      "title": {
+        "en": "A little discovery, every day",
+        "ar": "اكتشاف صغير كل يوم"
+      },
+      "body": {
+        "en": "This week we are exploring seeds, gardens and growing together. Ask your child what a plant needs.",
+        "ar": "نستكشف هذا الأسبوع البذور والحدائق والنمو معاً. اسأل طفلك عما يحتاجه النبات."
+      },
+      "date": "2026-10-24"
+    },
+    {
+      "id": "B002-N1",
+      "branchId": "B002",
+      "title": {
+        "en": "Family morning · 29 October",
+        "ar": "صباح الأسرة · ٢٩ أكتوبر"
+      },
+      "body": {
+        "en": "Join the classroom team at 09:00 for a reading morning. This is a sample event in the demo.",
+        "ar": "انضم إلى فريق الفصل الساعة ٩ صباحاً لوقت القراءة. هذه فعالية تجريبية."
+      },
+      "date": "2026-10-24"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "morning",
+      "tab": "attendance",
+      "title": {
+        "en": "Start the day with clarity",
+        "ar": "ابدأ اليوم برؤية واضحة"
+      },
+      "value": {
+        "en": "Know who is here and where attention is needed.",
+        "ar": "اعرف من حضر وأين يحتاج الفريق إلى المتابعة."
+      },
+      "steps": {
+        "en": "Open Attendance. Check in Farida Demo, then compare the attendance total and daily timeline. Switch branches to see a different nursery team.",
+        "ar": "افتح الحضور وسجّل وصول فريدة التجريبية، ثم راجع العدد والسجل اليومي. بدّل الفرع لعرض فريق آخر."
+      }
+    },
+    {
+      "id": "parents",
+      "tab": "timeline",
+      "title": {
+        "en": "Bring parents into the day",
+        "ar": "قرّب ولي الأمر من يوم طفله"
+      },
+      "value": {
+        "en": "Make everyday care visible and build family confidence.",
+        "ar": "أظهر تفاصيل الرعاية اليومية وعزز ثقة الأسرة."
+      },
+      "steps": {
+        "en": "Choose Adam Demo. Add a sample care update and see it appear in the timeline. On mobile, explore the parent summary and staff update flow.",
+        "ar": "اختر آدم التجريبي وأضف تحديث رعاية لعرضه في السجل. على الهاتف استكشف ملخص ولي الأمر وتسجيل التحديث من تجربة الفريق."
+      }
+    },
+    {
+      "id": "fees",
+      "tab": "billing",
+      "title": {
+        "en": "Follow up outstanding fees",
+        "ar": "تابع الرسوم المستحقة"
+      },
+      "value": {
+        "en": "Give the office a clear follow-up list without searching spreadsheets.",
+        "ar": "امنح الإدارة قائمة متابعة واضحة دون البحث في الجداول."
+      },
+      "steps": {
+        "en": "Filter unpaid invoices. Preview a reminder for an outstanding invoice. The demo records a local follow-up; no message or payment is sent.",
+        "ar": "اعرض الفواتير المستحقة ثم عاين تذكيراً. يسجل العرض متابعة محلية؛ لا تُرسل رسائل ولا تُجرى مدفوعات."
+      }
+    },
+    {
+      "id": "growth",
+      "tab": "admissions",
+      "title": {
+        "en": "Turn interest into a visit",
+        "ar": "حوّل الاستفسار إلى زيارة"
+      },
+      "value": {
+        "en": "Give every inquiry an owner and a clear next step.",
+        "ar": "حدد مسؤولاً وخطوة تالية لكل استفسار."
+      },
+      "steps": {
+        "en": "Find Amira’s family. Schedule a sample visit, see the next step change, then reset to repeat the presentation.",
+        "ar": "ابحث عن أسرة أميرة وحدد زيارة تجريبية، وراجع الخطوة التالية ثم أعد ضبط العرض لتكراره."
+      }
+    }
+  ]
+}

@@ -30,7 +30,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get parent => 'ولي الأمر';
 
   @override
-  String get staff => 'الفريق';
+  String get staff => 'المعلم';
 
   @override
   String get home => 'الرئيسية';

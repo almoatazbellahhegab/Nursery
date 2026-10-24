@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-10-24T07:26:51.637Z",
+  "completedAt": "2026-10-24T07:26:59.604Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M README.md\n M RESUME.md\n M TODO.md\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/mobile/lib/l10n/app_ar.arb\n M apps/mobile/lib/l10n/app_en.arb\n M apps/mobile/lib/l10n/app_localizations.dart\n M apps/mobile/lib/l10n/app_localizations_ar.dart\n M apps/mobile/lib/l10n/app_localizations_en.dart\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M apps/mobile/test/shell_test.dart\n M docs/delivery/approvals.json\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M docs/testing/TEST-LOG.md\n M tests/system/review.test.mjs\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n M tools/start-applications.mjs\n?? apps/admin-web/app/demo-data.json\n?? apps/mobile/assets/\n?? apps/mobile/lib/demo_data.dart\n?? demo/\n?? docs/delivery/S04-FEAT-012-READINESS.md\n?? docs/runbooks/client-demo.md\n?? docs/testing/CLIENT-DEMO.md\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24-S03-review-portal.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-36-58-935Z-clients.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json\n?? docs/testing/runs/2026-10-24T06-38-54-697Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-40-42-059Z-unit.json\n?? docs/testing/runs/2026-10-24T06-40-58-486Z-unit.json\n?? docs/testing/runs/2026-10-24T06-58-45-468Z-clients.json\n?? docs/testing/runs/2026-10-24T07-00-57-081Z-clients.json\n?? docs/testing/runs/2026-10-24T07-01-08-042Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-26-029Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-44-639Z-clients.json\n?? docs/testing/runs/2026-10-24T07-06-22-364Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-08-34-269Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-01-124Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-58-940Z-clients.json\n?? docs/testing/runs/2026-10-24T07-10-09-671Z-clients.json\n?? docs/testing/runs/2026-10-24T07-12-14-020Z-unit.json\n?? docs/testing/runs/2026-10-24T07-12-22-845Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-24-22-477Z-clients.json\n?? tools/check-demo-browsers.mjs\n?? tools/generate-demo.mjs",
+  "scope": "Fictional client demo; local UI simulations only. No operational API/RLS acceptance.",
+  "environment": "Windows Chrome headless, desktop 1440px, responsive 390/320px and Flutter 390px mobile emulation",
+  "results": [
+    {
+      "id": "DEMO-WEB-BASELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ATTENDANCE-TIMELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-FEES",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ADMISSIONS-BRANCHES-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ARABIC-REFLOW",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-PARENT-STAFF-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-ARABIC",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-DIRECT-VIEWS",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-LINKS-STATIC-BOUNDARIES",
+      "result": "Pass"
+    }
+  ],
+  "pageErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

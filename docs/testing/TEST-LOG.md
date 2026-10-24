@@ -1,5 +1,18 @@
 # Sprint 1 test execution log
 
+Client demo update: [demo implementation and verification](CLIENT-DEMO.md)
+records the new seeded web/mobile presentation, reset behaviour, scenario tests
+and source acceptance limitations. [Client script](../runbooks/client-demo.md)
+provides the four business stories and separate physical/native UAT checklist.
+
+Latest application verification (2026-10-24): see [Sprint 3 application
+handoff](S03-APPLICATIONS.md). Local web/mobile builds are now verified;
+historical blocked entries below describe their original runs. Backend 51
+scenarios, four review unit checks, three prototype browser checks and three
+compiled-client browser checks pass. The Flutter Arabic font defect found
+during visual inspection was fixed and checked after rebuilding. Physical
+iPhone, native iPhone and human UAT remain pending.
+
 Code under test: `e424992b0c4be74cb2ca01cd6170134ca9a8c991`. Automated checks ran on Windows with Node 20.11.1 and headless desktop Chrome. No physical iPhone, Safari or native app checks were performed.
 
 | Case | Result | Acceptance link | Evidence |

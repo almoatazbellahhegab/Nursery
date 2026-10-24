@@ -30,7 +30,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get parent => 'Parent';
 
   @override
-  String get staff => 'Staff';
+  String get staff => 'Teacher';
 
   @override
   String get home => 'Home';

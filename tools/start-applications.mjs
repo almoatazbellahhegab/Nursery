@@ -24,7 +24,11 @@ const addresses = Object.entries(os.networkInterfaces()).flatMap(([name, values]
 const address = addresses[0] ?? 'localhost';
 console.log(`Dashboard: http://localhost:3000`);
 console.log(`Mobile on the same Wi-Fi: http://${address}:3200`);
-console.log('Compiled foundation shells only; no operational records. Keep this terminal open.');
+console.log('Parent on this PC: http://localhost:3200/?view=parent');
+console.log('Teacher on this PC: http://localhost:3200/?view=teacher');
+console.log(`Parent on the same Wi-Fi: http://${address}:3200/?view=parent`);
+console.log(`Teacher on the same Wi-Fi: http://${address}:3200/?view=teacher`);
+console.log('Fictional client demo; local simulations only. Keep this terminal open.');
 if (process.argv.includes('--open')) {
   let ready = false;
   for (let attempt = 0; attempt < 30 && !ready; attempt++) {
