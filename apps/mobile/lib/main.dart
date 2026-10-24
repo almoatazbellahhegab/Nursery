@@ -19,20 +19,20 @@ class _NurseryAppState extends State<NurseryApp> {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-        locale: _locale,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff285947)),
-          useMaterial3: true,
-        ),
-        home: FoundationShell(
-          onLanguageChanged: () => setState(() {
-            _locale = Locale(_locale.languageCode == 'en' ? 'ar' : 'en');
-          }),
-        ),
-      );
+    onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+    locale: _locale,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff285947)),
+      useMaterial3: true,
+    ),
+    home: FoundationShell(
+      onLanguageChanged: () => setState(() {
+        _locale = Locale(_locale.languageCode == 'en' ? 'ar' : 'en');
+      }),
+    ),
+  );
 }
 
 /// Presentation state only. A selected experience never grants a server role.
@@ -56,7 +56,12 @@ class _FoundationShellState extends State<FoundationShell> {
     return Scaffold(
       appBar: AppBar(
         title: Text(text.appTitle),
-        actions: [TextButton(onPressed: widget.onLanguageChanged, child: Text(text.language))],
+        actions: [
+          TextButton(
+            onPressed: widget.onLanguageChanged,
+            child: Text(text.language),
+          ),
+        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -74,7 +79,10 @@ class _FoundationShellState extends State<FoundationShell> {
               onChanged: (value) => setState(() => _staff = value ?? false),
             ),
             const SizedBox(height: 32),
-            Text(_staff ? text.staffHeading : text.heading, style: Theme.of(context).textTheme.headlineLarge),
+            Text(
+              _staff ? text.staffHeading : text.heading,
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
             const SizedBox(height: 24),
             Text(titles[_tab], style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 12),
@@ -86,9 +94,18 @@ class _FoundationShellState extends State<FoundationShell> {
         selectedIndex: _tab,
         onDestinationSelected: (value) => setState(() => _tab = value),
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.home_outlined), label: text.home),
-          NavigationDestination(icon: const Icon(Icons.schedule), label: text.timeline),
-          NavigationDestination(icon: const Icon(Icons.notifications_outlined), label: text.notices),
+          NavigationDestination(
+            icon: const Icon(Icons.home_outlined),
+            label: text.home,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.schedule),
+            label: text.timeline,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.notifications_outlined),
+            label: text.notices,
+          ),
         ],
       ),
     );

@@ -22,7 +22,7 @@ Headless desktop Chrome is not a physical iPhone or Safari test. Physical Window
 ## Open blockers and next work
 
 - ENV-001 update during S02: registry access is working again, and API/test dependencies have been installed into a project-local virtual environment with a resolved version lock. The original DNS failure is historical; actual web/Flutter builds remain unverified.
-- Flutter SDK and generated platform runners are unavailable. Generate localizations, run format/analyze/widget tests and build the actual app before claiming mobile delivery.
+- Client verification update: Flutter 3.47.8 / Dart 3.13.7, web/iOS runners, localization output and resolved dependencies are now available. Formatter/analyzer, three widget tests and a Flutter web build pass. Next.js also builds with the recorded Node/npm/compiler toolchain. Actual client browser checks are being recorded separately from the historical HTML preview checks. Operational identity/database integration and native iPhone acceptance remain open.
 - FastAPI dependency/setup blocker is resolved during S02. Health and attendance domain tests now run in the project environment; this does not close identity, PostgreSQL or operational API prerequisites.
 - Native iOS needs macOS/Xcode and signing/TestFlight provisioning.
 - TW-006/GATE-05: Windows 11 and iPhone are requested targets. Exact browser/iOS support versions, accessibility target and performance objectives still need a named decision.

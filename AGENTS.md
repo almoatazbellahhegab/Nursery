@@ -1,5 +1,7 @@
 # Delivery rules
 
+- On session reopen, read RESUME.md and TODO.md before continuing; preserve the recorded checkpoint and pending verification scope.
+
 - Preserve the specification files in Document and their identifiers.
 - Show progress as itemized updates. Each sprint ends with a reviewable web and mobile result, test evidence, UAT checklist and known limitations.
 - Use feat/FEAT-NNN-description for one product feature. Use chore/ or test/ branches for enabling work. Integrate locally into sprint/NN-review without deleting feature branches.

@@ -1,0 +1,69 @@
+{
+  "startedAt": "2026-10-24T05:42:34.047Z",
+  "completedAt": "2026-10-24T05:47:23.034Z",
+  "codeCommit": "fb97301ce4f6b3cece1110d97cd85cae646719ce",
+  "workingTreeChanges": "M README.md\n M TODO.md\n M apps/admin-web/README.md\n M apps/admin-web/app/layout.tsx\n M apps/admin-web/app/messages.ts\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/admin-web/eslint.config.mjs\n M apps/admin-web/package.json\n M apps/admin-web/tsconfig.json\n M apps/mobile/README.md\n M apps/mobile/analysis_options.yaml\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M apps/mobile/test/shell_test.dart\n M docs/delivery/S01-REVIEW.md\n?? Start-Applications.cmd\n?? Test-Applications.cmd\n?? apps/admin-web/.node-version\n?? apps/admin-web/.prettierignore\n?? apps/admin-web/next-env.d.ts\n?? apps/admin-web/package-lock.json\n?? apps/mobile/.gitignore\n?? apps/mobile/.metadata\n?? apps/mobile/ios/\n?? apps/mobile/lib/l10n/app_localizations.dart\n?? apps/mobile/lib/l10n/app_localizations_ar.dart\n?? apps/mobile/lib/l10n/app_localizations_en.dart\n?? apps/mobile/pubspec.lock\n?? apps/mobile/web/\n?? docs/adr/ADR-0003-client-build-toolchain.md\n?? docs/runbooks/application-review.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-23T22-08-45-662Z-admissions.json\n?? tools/check-client-browsers.mjs\n?? tools/check-clients.mjs\n?? tools/client-runtime.mjs\n?? tools/serve-mobile.mjs\n?? tools/start-applications.mjs",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-WEB-TYPES",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-LINT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "id": "APP-WEB-AUDIT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "{\n  \"auditReportVersion\": 2,\n  \"vulnerabilities\": {},\n  \"metadata\": {\n    \"vulnerabilities\": {\n      \"info\": 0,\n      \"low\": 0,\n      \"moderate\": 0,\n      \"high\": 0,\n      \"critical\": 0,\n      \"total\": 0\n    },\n    \"dependencies\": {\n      \"prod\": 17,\n      \"dev\": 350,\n      \"optional\": 66,\n      \"peer\": 0,\n      \"peerOptional\": 0,\n      \"total\": 405\n    }\n  }\n}\n"
+    },
+    {
+      "id": "APP-WEB-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "▲ Next.js 16.4.2 (webpack)\n✓ Running next.config took 90ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 4.1s\n  Running TypeScript ...\n  Finished TypeScript in 1393ms ...\n  Collecting page data using 4 workers ...\n  Generating static pages using 4 workers (0/3) ...\n✓ Generating static pages using 4 workers (3/3) in 1851ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n└ ○ /_not-found\n\n\n○  (Static)  prerendered as static content\n\n"
+    },
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Formatted 5 files (0 changed) in 0.11 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Analyzing mobile...                                             \nNo issues found! (ran in 35.2s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart\n00:00 +0: switching experience changes the staff heading\n00:01 +1: switching to Arabic changes the shell direction\n00:01 +2: timeline navigation retains the explicit empty foundation state\n00:01 +3: All tests passed!\n"
+    },
+    {
+      "id": "APP-MOBILE-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Compiling lib\\main.dart for the Web...                          \nFont asset \"MaterialIcons-Regular.otf\" was tree-shaken, reducing it from 1645184 to 8072 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nFont asset \"CupertinoIcons.ttf\" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nCompiling lib\\main.dart for the Web...                             81.8s\n✓ Built build\\web\nWasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm\nUse --no-wasm-dry-run to disable these warnings.\n"
+    }
+  ],
+  "result": "Pass",
+  "scope": "Actual compiled public foundation shells only; operational workflows remain incomplete",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

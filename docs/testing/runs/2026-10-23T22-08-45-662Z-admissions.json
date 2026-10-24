@@ -1,0 +1,171 @@
+{
+  "startedAt": "2026-10-23T22:08:45.662Z",
+  "completedAt": "2026-10-23T22:08:52.653Z",
+  "feature": "FEAT-030",
+  "sprint": "S03",
+  "codeCommit": "fb97301ce4f6b3cece1110d97cd85cae646719ce",
+  "workingTreeChanges": "M TODO.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json",
+  "python": "Python 3.12.14",
+  "platform": "win32",
+  "dependencyLockSha256": "73996445c1b1f755422f88171789ecc114132f5036704bb462a90434c350d8dd",
+  "result": "Pass",
+  "checks": [
+    {
+      "id": "pytest",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\admissions-2026-10-23T22-08-45-662Z.xml"
+      ],
+      "result": "Pass",
+      "output": "...................................................                      [100%]\r\n============================== warnings summary ===============================\r\n.venv\\Lib\\site-packages\\starlette\\testclient.py:51\r\n  C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.venv\\Lib\\site-packages\\starlette\\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\r\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n- generated xml file: C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\admissions-2026-10-23T22-08-45-662Z.xml -\r\n51 passed, 1 warning in 1.18s\r\n"
+    },
+    {
+      "id": "ruff-lint",
+      "args": [
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "All checks passed!\n"
+    },
+    {
+      "id": "ruff-format",
+      "args": [
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "10 files already formatted\n"
+    },
+    {
+      "id": "mypy-strict",
+      "args": [
+        "-m",
+        "mypy",
+        "--strict",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "Success: no issues found in 10 source files\r\n"
+    },
+    {
+      "id": "dependency-consistency",
+      "args": [
+        "-m",
+        "pip",
+        "check"
+      ],
+      "result": "Pass",
+      "output": "No broken requirements found.\r\n"
+    }
+  ],
+  "mappings": [
+    {
+      "cases": [
+        "ADM-UNIT-001",
+        "ADM-UNIT-002",
+        "ADM-UNIT-003",
+        "ADM-UNIT-004",
+        "ADM-UNIT-009",
+        "ADM-UNIT-010",
+        "ADM-UNIT-012",
+        "ADM-UNIT-013",
+        "ADM-UNIT-014",
+        "ADM-UNIT-015",
+        "ADM-UNIT-016",
+        "ADM-UNIT-017"
+      ],
+      "source": "TC-FEAT-030-02",
+      "uat": "UAT-S03-TC-FEAT-030-02",
+      "coverage": "Partial: stage/history decisions with synthetic explicit policy; no API/persistence"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-005",
+        "ADM-UNIT-006",
+        "ADM-UNIT-007",
+        "ADM-UNIT-008"
+      ],
+      "source": "TC-FEAT-030-04",
+      "uat": "UAT-S03-TC-FEAT-030-04",
+      "coverage": "Partial: scope/expiry rejection only; actual branch visibility UI/E2E not run"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-011"
+      ],
+      "source": "TC-FEAT-030-03",
+      "uat": "UAT-S03-TC-FEAT-030-03",
+      "coverage": "Guard only: stage edits cannot create/undo enrollment; real conversion/deduplication not implemented"
+    }
+  ],
+  "executedCases": [
+    "test_adm_unit_001_valid_move_records_prior_stage_actor_time_and_policy",
+    "test_adm_unit_002_missing_policy_edge_is_denied_even_between_adjacent_stages",
+    "test_adm_unit_003_policy_does_not_imply_transitive_stage_skipping",
+    "test_adm_unit_004_reopening_requires_an_explicit_edge",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[organization_id]",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[branch_id]",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[lead_id]",
+    "test_adm_unit_006_unrelated_grant_is_denied[organization_id]",
+    "test_adm_unit_006_unrelated_grant_is_denied[branch_id]",
+    "test_adm_unit_007_other_organization_policy_is_denied",
+    "test_adm_unit_008_expired_grant_is_denied_at_the_exact_boundary",
+    "test_adm_unit_009_repeated_stale_intent_does_not_return_a_fresh_history_fact",
+    "test_adm_unit_010_noop_does_not_increment_history",
+    "test_adm_unit_011_stage_edit_cannot_manufacture_or_undo_enrollment[accepted-enrolled]",
+    "test_adm_unit_011_stage_edit_cannot_manufacture_or_undo_enrollment[enrolled-lost]",
+    "test_adm_unit_012_offsets_are_normalized_to_one_history_instant",
+    "test_adm_unit_013_naive_time_is_rejected",
+    "test_adm_unit_014_history_cannot_go_backwards",
+    "test_adm_unit_015_invalid_command_version_is_rejected[-1]",
+    "test_adm_unit_015_invalid_command_version_is_rejected[True]",
+    "test_adm_unit_016_self_transition_policy_is_rejected",
+    "test_adm_unit_017_history_and_state_are_immutable",
+    "test_att_unit_001_check_in_records_scope_actor_and_utc_time",
+    "test_att_unit_002_duplicate_check_in_does_not_change_existing_state",
+    "test_att_unit_003_check_out_has_matching_state_and_event_timestamp",
+    "test_att_unit_004_checkout_without_presence_is_rejected",
+    "test_att_unit_005_exact_retry_returns_original_event_without_a_new_write",
+    "test_att_unit_006_retry_after_later_checkout_returns_historical_response_only",
+    "test_att_unit_007_changed_retry_payload_is_rejected[action]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[occurred_at]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[expected_version]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[organization_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[branch_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[classroom_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[child_id]",
+    "test_att_unit_009_wrong_snapshot_scope_is_denied",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[False]",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[True]",
+    "test_att_unit_011_another_actor_cannot_replay_a_receipt",
+    "test_att_unit_012_stale_concurrent_command_requires_reload",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[-1]",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[1]",
+    "test_att_unit_014_offset_timestamps_are_normalized_and_retries_compare_as_instants",
+    "test_att_unit_015_naive_time_is_rejected",
+    "test_att_unit_016_invalid_version_is_rejected[-1]",
+    "test_att_unit_016_invalid_version_is_rejected[True]",
+    "test_att_unit_017_corrupt_receipt_cannot_claim_a_successful_replay",
+    "test_att_unit_018_event_and_snapshot_are_immutable",
+    "test_health_exposes_no_operational_records",
+    "test_attendance_has_no_public_mutation_route_before_authorization_exists",
+    "test_admissions_has_no_public_mutation_route_before_branch_authorization_exists"
+  ],
+  "sourceAcceptanceCases": "All five source cases remain Not run at their required integration levels",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

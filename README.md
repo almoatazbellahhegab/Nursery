@@ -4,6 +4,8 @@ The four original specifications are preserved in `Document`. Development has st
 
 ## One click review on Windows 11
 
+For the actual compiled Next.js and Flutter web foundation shells, double-click **Start-Applications.cmd**. It prints one dashboard URL (port 3000) and one same-Wi-Fi mobile URL (port 3200). **Test-Applications.cmd** records client build/quality checks; stop the running application server before rebuilding. These shells have no connected operational APIs or real records, and Flutter web review does not accept a native iPhone app.
+
 Double-click **Start-Sprint-Review.cmd**. Node.js 20.9 or newer must be installed. The launcher starts the server, then opens http://localhost:3100 and prints your computer's local Wi-Fi URL. Keep the terminal open; Ctrl+C stops the server.
 
 On your iPhone, join the same Wi-Fi and open the printed `http://<computer-ip>:3100` URL in Safari. Tap Mobile preview. If Windows Firewall blocks local network access, allow Node on your private network only. No firewall rule is changed automatically. A hosted HTTPS link is a later delivery step once staging exists; no cloud deployment is configured yet.

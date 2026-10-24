@@ -1,8 +1,19 @@
 # Development TODO
 
-**Sprint 3 started. Only FEAT-030 Admissions Pipeline is active**, on `feat/FEAT-030-admissions-pipeline`. S01 and S02 remain incomplete and unaccepted. Prior work was pushed through `775b1ff`; new S03 work requires a new push instruction. The S02 checklist below is preserved as deferred carryover, not concurrent active work.
+**Session checkpoint saved for reopening: read [RESUME.md](RESUME.md) first.** Sprint 3 remains active; its domain feature is FEAT-030 on `feat/FEAT-030-admissions-pipeline`, and current application verification is on `chore/S03-application-verification`. S01 and S02 remain incomplete and unaccepted. Prior work was pushed through `775b1ff`; the user has now authorized S03 push after application testing and starting S04. Live client browser/link verification is still pending. The S02 checklist below is deferred carryover, not concurrent work.
 
 ## Sprint 3 progress
+
+### Application verification and requested handoff
+
+- [ ] Re-run backend/domain and review-tool regressions.
+- [x] Resolve and lock Next.js dependencies; run type, lint, format, dependency audit and production build checks.
+- [x] Obtain Flutter tooling; generate localizations and pass analyzer, three widget tests and web build.
+- [ ] Verify one dashboard URL and one mobile URL, clearly distinguishing browser and native acceptance.
+- [ ] Record the user's authorization and push the verified Sprint 3 commits.
+- [ ] Start S04 separately; retain unfinished S01–S03 work and specialist approval gates.
+
+### Existing admissions domain increment
 
 - [x] Record user authorization and push existing planning/S02 commits and retained branches.
 - [x] Create `sprint/03-review` and the dedicated FEAT-030 branch.
