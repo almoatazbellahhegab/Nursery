@@ -14,6 +14,7 @@ from nursery_api.admissions.stages import (
     LeadSnapshot,
     LeadStage,
     StagePolicy,
+    StageReceipt,
     VerifiedAdmissionsGrant,
     decide_stage_change,
 )
@@ -208,3 +209,201 @@ def test_adm_unit_017_history_and_state_are_immutable() -> None:
         setattr(result.history, "previous_stage", LeadStage.ACCEPTED)
     with pytest.raises(FrozenInstanceError):
         setattr(result.snapshot, "stage", LeadStage.ENROLLED)
+
+
+def test_adm_unit_018_exact_retry_preserves_the_original_history_fact() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    receipt = StageReceipt(COMMAND, GRANT.actor_id, saved)
+    replay = decide_stage_change(
+        COMMAND,
+        saved.snapshot,
+        GRANT,
+        POLICY,
+        changed_at=NOW + timedelta(minutes=1),
+        receipt=receipt,
+    )
+    assert replay.replayed
+    assert replay.history is saved.history
+    assert replay.snapshot is saved.snapshot
+    assert not saved.replayed
+
+
+def test_adm_unit_019_retry_after_a_later_move_returns_history_without_rolling_state_back() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    later = decide_stage_change(
+        replace(
+            COMMAND, operation_id=UUID(int=107), expected_version=1, new_stage=LeadStage.APPLICATION
+        ),
+        saved.snapshot,
+        GRANT,
+        POLICY,
+        changed_at=NOW + timedelta(minutes=1),
+    )
+    replay = decide_stage_change(
+        COMMAND,
+        later.snapshot,
+        GRANT,
+        POLICY,
+        changed_at=NOW + timedelta(minutes=2),
+        receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+    )
+    assert replay.replayed and replay.snapshot.version == 1
+    assert later.snapshot.version == 2 and later.snapshot.stage == LeadStage.APPLICATION
+    assert replay.history.event_id == saved.history.event_id
+
+
+@pytest.mark.parametrize("field", ["expected_version", "new_stage", "operation_id"])
+def test_adm_unit_020_receipt_cannot_be_used_with_a_changed_command(field: str) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    changed = (
+        replace(COMMAND, expected_version=1)
+        if field == "expected_version"
+        else replace(COMMAND, new_stage=LeadStage.APPLICATION)
+        if field == "new_stage"
+        else replace(COMMAND, operation_id=UUID(int=999))
+    )
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            changed,
+            saved.snapshot,
+            GRANT,
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)
+
+
+def test_adm_unit_021_another_actor_cannot_replay_a_stored_response() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            saved.snapshot,
+            replace(GRANT, actor_id=UUID(int=999)),
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.ACCESS_DENIED)
+
+
+def test_adm_unit_022_retry_rechecks_expiry_before_receipt_conflicts() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            replace(COMMAND, expected_version=99),
+            saved.snapshot,
+            GRANT,
+            POLICY,
+            changed_at=GRANT.expires_at,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.ACCESS_DENIED)
+
+
+@pytest.mark.parametrize("field", ["organization_id", "branch_id", "lead_id"])
+def test_adm_unit_023_cross_scope_receipts_fail_before_payload_conflicts(field: str) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    other_command = replace(COMMAND, scope=replace(SCOPE, **{field: UUID(int=999)}))
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            saved.snapshot,
+            GRANT,
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(other_command, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.ACCESS_DENIED)
+
+
+@pytest.mark.parametrize("part", ["actor", "operation", "stage", "time", "snapshot", "replayed"])
+def test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success(part: str) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    history = saved.history
+    if part == "actor":
+        saved = replace(saved, history=replace(history, actor_id=UUID(int=999)))
+    elif part == "operation":
+        saved = replace(saved, history=replace(history, operation_id=UUID(int=999)))
+    elif part == "stage":
+        saved = replace(saved, history=replace(history, new_stage=LeadStage.APPLICATION))
+    elif part == "time":
+        saved = replace(saved, history=replace(history, changed_at=NOW + timedelta(minutes=1)))
+    elif part == "snapshot":
+        saved = replace(saved, snapshot=replace(saved.snapshot, stage=LeadStage.APPLICATION))
+    else:
+        saved = replace(saved, replayed=True)
+    current = LeadSnapshot(SCOPE, LeadStage.CONTACTED, 1, NOW)
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            current,
+            GRANT,
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)
+
+
+def test_adm_unit_025_receipt_cannot_replay_against_state_older_than_its_result() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            STATE,
+            GRANT,
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)
+
+
+def test_adm_unit_026_retry_does_not_reapply_new_policy_edges_to_historical_success() -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    new_policy = replace(POLICY, revision=2, allowed_edges=frozenset())
+    replay = decide_stage_change(
+        COMMAND,
+        saved.snapshot,
+        GRANT,
+        new_policy,
+        changed_at=NOW,
+        receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+    )
+    assert replay.replayed and replay.history.policy_revision == 1
+
+
+@pytest.mark.parametrize("field", ["version", "policy_revision"])
+def test_adm_unit_027_history_rejects_boolean_versions(field: str) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    with pytest.raises(AdmissionsError) as error:
+        if field == "version":
+            replace(saved.history, version=True)
+        else:
+            replace(saved.history, policy_revision=True)
+    assert_code(error, AdmissionsErrorCode.INVALID_VALUE)
+
+
+@pytest.mark.parametrize("later_version", [1, 2])
+def test_adm_unit_028_contradictory_current_state_cannot_be_hidden_by_a_receipt(
+    later_version: int,
+) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    current = LeadSnapshot(
+        SCOPE,
+        LeadStage.APPLICATION,
+        later_version,
+        NOW if later_version == 1 else NOW - timedelta(minutes=1),
+    )
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            current,
+            GRANT,
+            POLICY,
+            changed_at=NOW,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)

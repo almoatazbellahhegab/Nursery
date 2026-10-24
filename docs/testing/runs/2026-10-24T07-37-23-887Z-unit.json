@@ -1,0 +1,46 @@
+{
+  "startedAt": "2026-10-24T07:37:23.887Z",
+  "completedAt": "2026-10-24T07:37:24.323Z",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M README.md\n M RESUME.md\n M TODO.md\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/mobile/lib/l10n/app_ar.arb\n M apps/mobile/lib/l10n/app_en.arb\n M apps/mobile/lib/l10n/app_localizations.dart\n M apps/mobile/lib/l10n/app_localizations_ar.dart\n M apps/mobile/lib/l10n/app_localizations_en.dart\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M apps/mobile/test/shell_test.dart\n M docs/delivery/approvals.json\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M docs/testing/TEST-LOG.md\n M services/api/src/nursery_api/admissions/stages.py\n M services/api/tests/test_admissions_stages.py\n M tests/system/review.test.mjs\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n M tools/run-admissions-checks.mjs\n M tools/start-applications.mjs\n?? apps/admin-web/app/demo-data.json\n?? apps/mobile/assets/\n?? apps/mobile/lib/demo_data.dart\n?? demo/\n?? docs/delivery/S04-FEAT-012-READINESS.md\n?? docs/runbooks/client-demo.md\n?? docs/testing/CLIENT-DEMO.md\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24-S03-review-portal.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-36-58-935Z-clients.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json\n?? docs/testing/runs/2026-10-24T06-38-54-697Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-40-42-059Z-unit.json\n?? docs/testing/runs/2026-10-24T06-40-58-486Z-unit.json\n?? docs/testing/runs/2026-10-24T06-58-45-468Z-clients.json\n?? docs/testing/runs/2026-10-24T07-00-57-081Z-clients.json\n?? docs/testing/runs/2026-10-24T07-01-08-042Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-26-029Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-44-639Z-clients.json\n?? docs/testing/runs/2026-10-24T07-06-22-364Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-08-34-269Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-01-124Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-58-940Z-clients.json\n?? docs/testing/runs/2026-10-24T07-10-09-671Z-clients.json\n?? docs/testing/runs/2026-10-24T07-12-14-020Z-unit.json\n?? docs/testing/runs/2026-10-24T07-12-22-845Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-24-22-477Z-clients.json\n?? docs/testing/runs/2026-10-24T07-26-51-637Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-36-25-476Z-admissions.json\n?? docs/testing/runs/2026-10-24T07-37-19-462Z-admissions.json\n?? tools/check-demo-browsers.mjs\n?? tools/generate-demo.mjs",
+  "environment": {
+    "node": "v20.11.1",
+    "platform": "win32"
+  },
+  "command": "node --test tests/system/review.test.mjs",
+  "result": "Pass",
+  "cases": [
+    {
+      "id": "RV-001",
+      "uat": [
+        "UAT-S01-04"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-002",
+      "uat": [
+        "UAT-S01-03"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-003",
+      "uat": [
+        "UAT-S01-05",
+        "UAT-S01-06"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-004",
+      "uat": [
+        "UAT-S01-05"
+      ],
+      "result": "Pass"
+    }
+  ],
+  "output": "TAP version 13\n# Subtest: RV-001 preserves every source feature, checklist item and acceptance case exactly once\nok 1 - RV-001 preserves every source feature, checklist item and acceptance case exactly once\n  ---\n  duration_ms: 32.4853\n  ...\n# Subtest: RV-002 requires matching bilingual keys and rejects blank translation entries\nok 2 - RV-002 requires matching bilingual keys and rejects blank translation entries\n  ---\n  duration_ms: 2.5819\n  ...\n# Subtest: RV-003 rejects unknown cases, oversized notes and misleading native passes\nok 3 - RV-003 rejects unknown cases, oversized notes and misleading native passes\n  ---\n  duration_ms: 0.2359\n  ...\n# Subtest: RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\nok 4 - RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\n  ---\n  duration_ms: 185.944\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 319.0852\n",
+  "sourceProductTests": "Not run",
+  "userAcceptance": "Pending"
+}

@@ -220,7 +220,7 @@
           "exit": "Operations accepts capacity and metric definitions; Phase 2 release tests pass."
         }
       ],
-      "status": "In progress — admissions domain increment; operational prerequisites blocked",
+      "status": "In progress - admissions retry domain increment verified; operational prerequisites and policy gates remain open",
       "approval": "Pending",
       "duration": "To be estimated from unchanged scope, team capacity and gates; no committed duration or dates"
     },
@@ -7945,7 +7945,7 @@
     "activeFeature": "FEAT-030",
     "branch": "feat/FEAT-030-admissions-pipeline",
     "featureConcurrencyLimit": 1,
-    "status": "In progress — admissions domain increment; operational prerequisites blocked",
+    "status": "In progress - admissions retry domain increment verified; operational prerequisites and policy gates remain open",
     "sprintOneAcceptance": "Incomplete and unaccepted",
     "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
     "deferredFeatures": [
@@ -7962,9 +7962,13 @@
       "PostgreSQL RLS and durable transactions"
     ],
     "sourceAcceptanceStatus": "Not run",
-    "implementedIncrement": "Immutable lead stage/history decisions, explicit policy edges, branch/organization scope, UTC/version invariants and enrollment conversion guard",
-    "domainVerification": "51 pytest scenarios including 22 admissions, 26 attendance and three transport guards; Ruff lint/format, strict mypy and pip check pass",
+    "implementedIncrement": "Immutable lead stage/history decisions plus trusted exact-retry receipts, original-fact replay and inconsistent-state rejection; no operational routes or durable adapters",
+    "domainVerification": "73 pytest scenarios: 44 admissions, 26 attendance, three health/fail-closed routes; Ruff lint/format, strict mypy and dependency consistency pass",
     "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
-    "pushAuthorized": false
+    "pushAuthorized": true,
+    "pushStatus": "Not pushed; .git is read-only. Earlier approval excludes later client-demo and admissions retry changes",
+    "clientVerification": "Prior demo builds, five mobile widget scenarios and nine browser groups pass; direct parent/teacher views verified on PC; physical/native UAT pending",
+    "nextSprintReadiness": "S04 readiness prepared only; latest user instruction is to continue and finish S03, without advancing sprints",
+    "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md; all candidate policies unapproved"
   }
 }

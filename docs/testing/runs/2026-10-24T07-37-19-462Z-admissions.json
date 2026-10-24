@@ -1,0 +1,218 @@
+{
+  "startedAt": "2026-10-24T07:37:19.462Z",
+  "completedAt": "2026-10-24T07:37:23.743Z",
+  "feature": "FEAT-030",
+  "sprint": "S03",
+  "codeCommit": "3dde397e8162945f6d730a5993c8d1424b0fe8ec",
+  "workingTreeChanges": "M README.md\n M RESUME.md\n M TODO.md\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/mobile/lib/l10n/app_ar.arb\n M apps/mobile/lib/l10n/app_en.arb\n M apps/mobile/lib/l10n/app_localizations.dart\n M apps/mobile/lib/l10n/app_localizations_ar.dart\n M apps/mobile/lib/l10n/app_localizations_en.dart\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.yaml\n M apps/mobile/test/shell_test.dart\n M docs/delivery/approvals.json\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M docs/runbooks/application-review.md\n M docs/testing/DEFECTS.md\n M docs/testing/TEST-LOG.md\n M services/api/src/nursery_api/admissions/stages.py\n M services/api/tests/test_admissions_stages.py\n M tests/system/review.test.mjs\n M tools/check-client-browsers.mjs\n M tools/check-clients.mjs\n M tools/run-admissions-checks.mjs\n M tools/start-applications.mjs\n?? apps/admin-web/app/demo-data.json\n?? apps/mobile/assets/\n?? apps/mobile/lib/demo_data.dart\n?? demo/\n?? docs/delivery/S04-FEAT-012-READINESS.md\n?? docs/runbooks/client-demo.md\n?? docs/testing/CLIENT-DEMO.md\n?? docs/testing/S03-APPLICATIONS.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24-S03-review-portal.json\n?? docs/testing/runs/2026-10-24T06-33-48-219Z-admissions.json\n?? docs/testing/runs/2026-10-24T06-34-46-394Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-36-58-935Z-clients.json\n?? docs/testing/runs/2026-10-24T06-37-10-111Z-unit.json\n?? docs/testing/runs/2026-10-24T06-37-15-806Z-unit.json\n?? docs/testing/runs/2026-10-24T06-38-54-697Z-compiled-browsers.json\n?? docs/testing/runs/2026-10-24T06-40-42-059Z-unit.json\n?? docs/testing/runs/2026-10-24T06-40-58-486Z-unit.json\n?? docs/testing/runs/2026-10-24T06-58-45-468Z-clients.json\n?? docs/testing/runs/2026-10-24T07-00-57-081Z-clients.json\n?? docs/testing/runs/2026-10-24T07-01-08-042Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-26-029Z-clients.json\n?? docs/testing/runs/2026-10-24T07-03-44-639Z-clients.json\n?? docs/testing/runs/2026-10-24T07-06-22-364Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-08-34-269Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-01-124Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-09-58-940Z-clients.json\n?? docs/testing/runs/2026-10-24T07-10-09-671Z-clients.json\n?? docs/testing/runs/2026-10-24T07-12-14-020Z-unit.json\n?? docs/testing/runs/2026-10-24T07-12-22-845Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-24-22-477Z-clients.json\n?? docs/testing/runs/2026-10-24T07-26-51-637Z-demo-browsers.json\n?? docs/testing/runs/2026-10-24T07-36-25-476Z-admissions.json\n?? tools/check-demo-browsers.mjs\n?? tools/generate-demo.mjs",
+  "python": "Python 3.12.14",
+  "platform": "win32",
+  "dependencyLockSha256": "73996445c1b1f755422f88171789ecc114132f5036704bb462a90434c350d8dd",
+  "result": "Pass",
+  "checks": [
+    {
+      "id": "pytest",
+      "args": [
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\admissions-2026-10-24T07-37-19-462Z.xml"
+      ],
+      "result": "Pass",
+      "output": "........................................................................ [ 98%]\r\n.                                                                        [100%]\r\n============================== warnings summary ===============================\r\n.venv\\Lib\\site-packages\\starlette\\testclient.py:51\r\n  C:\\Users\\localadmin\\Documents\\Nursery\\services\\api\\.venv\\Lib\\site-packages\\starlette\\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\r\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n- generated xml file: C:\\Users\\localadmin\\Documents\\Nursery\\test-results\\admissions-2026-10-24T07-37-19-462Z.xml -\r\n73 passed, 1 warning in 0.88s\r\n"
+    },
+    {
+      "id": "ruff-lint",
+      "args": [
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "All checks passed!\n"
+    },
+    {
+      "id": "ruff-format",
+      "args": [
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "10 files already formatted\n"
+    },
+    {
+      "id": "mypy-strict",
+      "args": [
+        "-m",
+        "mypy",
+        "--strict",
+        "src",
+        "tests"
+      ],
+      "result": "Pass",
+      "output": "Success: no issues found in 10 source files\r\n"
+    },
+    {
+      "id": "dependency-consistency",
+      "args": [
+        "-m",
+        "pip",
+        "check"
+      ],
+      "result": "Pass",
+      "output": "No broken requirements found.\r\n"
+    }
+  ],
+  "mappings": [
+    {
+      "cases": [
+        "ADM-UNIT-018",
+        "ADM-UNIT-019",
+        "ADM-UNIT-020",
+        "ADM-UNIT-024",
+        "ADM-UNIT-025",
+        "ADM-UNIT-026",
+        "ADM-UNIT-027",
+        "ADM-UNIT-028"
+      ],
+      "source": "TC-FEAT-030-02",
+      "uat": "UAT-S03-TC-FEAT-030-02",
+      "coverage": "Partial: trusted receipt exact replay, payload/history integrity and no rollback; no durable database idempotency"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-021",
+        "ADM-UNIT-022",
+        "ADM-UNIT-023"
+      ],
+      "source": "TC-FEAT-030-04",
+      "uat": "UAT-S03-TC-FEAT-030-04",
+      "coverage": "Partial: retry actor/scope/expiry denial; real authentication and branch visibility not implemented"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-001",
+        "ADM-UNIT-002",
+        "ADM-UNIT-003",
+        "ADM-UNIT-004",
+        "ADM-UNIT-009",
+        "ADM-UNIT-010",
+        "ADM-UNIT-012",
+        "ADM-UNIT-013",
+        "ADM-UNIT-014",
+        "ADM-UNIT-015",
+        "ADM-UNIT-016",
+        "ADM-UNIT-017"
+      ],
+      "source": "TC-FEAT-030-02",
+      "uat": "UAT-S03-TC-FEAT-030-02",
+      "coverage": "Partial: stage/history decisions with synthetic explicit policy; no API/persistence"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-005",
+        "ADM-UNIT-006",
+        "ADM-UNIT-007",
+        "ADM-UNIT-008"
+      ],
+      "source": "TC-FEAT-030-04",
+      "uat": "UAT-S03-TC-FEAT-030-04",
+      "coverage": "Partial: scope/expiry rejection only; actual branch visibility UI/E2E not run"
+    },
+    {
+      "cases": [
+        "ADM-UNIT-011"
+      ],
+      "source": "TC-FEAT-030-03",
+      "uat": "UAT-S03-TC-FEAT-030-03",
+      "coverage": "Guard only: stage edits cannot create/undo enrollment; real conversion/deduplication not implemented"
+    }
+  ],
+  "executedCases": [
+    "test_adm_unit_001_valid_move_records_prior_stage_actor_time_and_policy",
+    "test_adm_unit_002_missing_policy_edge_is_denied_even_between_adjacent_stages",
+    "test_adm_unit_003_policy_does_not_imply_transitive_stage_skipping",
+    "test_adm_unit_004_reopening_requires_an_explicit_edge",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[organization_id]",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[branch_id]",
+    "test_adm_unit_005_other_scope_is_denied_before_stale_version[lead_id]",
+    "test_adm_unit_006_unrelated_grant_is_denied[organization_id]",
+    "test_adm_unit_006_unrelated_grant_is_denied[branch_id]",
+    "test_adm_unit_007_other_organization_policy_is_denied",
+    "test_adm_unit_008_expired_grant_is_denied_at_the_exact_boundary",
+    "test_adm_unit_009_repeated_stale_intent_does_not_return_a_fresh_history_fact",
+    "test_adm_unit_010_noop_does_not_increment_history",
+    "test_adm_unit_011_stage_edit_cannot_manufacture_or_undo_enrollment[accepted-enrolled]",
+    "test_adm_unit_011_stage_edit_cannot_manufacture_or_undo_enrollment[enrolled-lost]",
+    "test_adm_unit_012_offsets_are_normalized_to_one_history_instant",
+    "test_adm_unit_013_naive_time_is_rejected",
+    "test_adm_unit_014_history_cannot_go_backwards",
+    "test_adm_unit_015_invalid_command_version_is_rejected[-1]",
+    "test_adm_unit_015_invalid_command_version_is_rejected[True]",
+    "test_adm_unit_016_self_transition_policy_is_rejected",
+    "test_adm_unit_017_history_and_state_are_immutable",
+    "test_adm_unit_018_exact_retry_preserves_the_original_history_fact",
+    "test_adm_unit_019_retry_after_a_later_move_returns_history_without_rolling_state_back",
+    "test_adm_unit_020_receipt_cannot_be_used_with_a_changed_command[expected_version]",
+    "test_adm_unit_020_receipt_cannot_be_used_with_a_changed_command[new_stage]",
+    "test_adm_unit_020_receipt_cannot_be_used_with_a_changed_command[operation_id]",
+    "test_adm_unit_021_another_actor_cannot_replay_a_stored_response",
+    "test_adm_unit_022_retry_rechecks_expiry_before_receipt_conflicts",
+    "test_adm_unit_023_cross_scope_receipts_fail_before_payload_conflicts[organization_id]",
+    "test_adm_unit_023_cross_scope_receipts_fail_before_payload_conflicts[branch_id]",
+    "test_adm_unit_023_cross_scope_receipts_fail_before_payload_conflicts[lead_id]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[actor]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[operation]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[stage]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[time]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[snapshot]",
+    "test_adm_unit_024_inconsistent_receipt_parts_cannot_manufacture_a_success[replayed]",
+    "test_adm_unit_025_receipt_cannot_replay_against_state_older_than_its_result",
+    "test_adm_unit_026_retry_does_not_reapply_new_policy_edges_to_historical_success",
+    "test_adm_unit_027_history_rejects_boolean_versions[version]",
+    "test_adm_unit_027_history_rejects_boolean_versions[policy_revision]",
+    "test_adm_unit_028_contradictory_current_state_cannot_be_hidden_by_a_receipt[1]",
+    "test_adm_unit_028_contradictory_current_state_cannot_be_hidden_by_a_receipt[2]",
+    "test_att_unit_001_check_in_records_scope_actor_and_utc_time",
+    "test_att_unit_002_duplicate_check_in_does_not_change_existing_state",
+    "test_att_unit_003_check_out_has_matching_state_and_event_timestamp",
+    "test_att_unit_004_checkout_without_presence_is_rejected",
+    "test_att_unit_005_exact_retry_returns_original_event_without_a_new_write",
+    "test_att_unit_006_retry_after_later_checkout_returns_historical_response_only",
+    "test_att_unit_007_changed_retry_payload_is_rejected[action]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[occurred_at]",
+    "test_att_unit_007_changed_retry_payload_is_rejected[expected_version]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[organization_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[branch_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[classroom_id]",
+    "test_att_unit_008_other_scope_is_denied_before_state_conflict[child_id]",
+    "test_att_unit_009_wrong_snapshot_scope_is_denied",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[False]",
+    "test_att_unit_010_expired_grant_denies_even_a_previously_successful_retry[True]",
+    "test_att_unit_011_another_actor_cannot_replay_a_receipt",
+    "test_att_unit_012_stale_concurrent_command_requires_reload",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[-1]",
+    "test_att_unit_013_out_of_order_or_future_events_are_not_silently_reordered[1]",
+    "test_att_unit_014_offset_timestamps_are_normalized_and_retries_compare_as_instants",
+    "test_att_unit_015_naive_time_is_rejected",
+    "test_att_unit_016_invalid_version_is_rejected[-1]",
+    "test_att_unit_016_invalid_version_is_rejected[True]",
+    "test_att_unit_017_corrupt_receipt_cannot_claim_a_successful_replay",
+    "test_att_unit_018_event_and_snapshot_are_immutable",
+    "test_health_exposes_no_operational_records",
+    "test_attendance_has_no_public_mutation_route_before_authorization_exists",
+    "test_admissions_has_no_public_mutation_route_before_branch_authorization_exists"
+  ],
+  "sourceAcceptanceCases": "All five source cases remain Not run at their required integration levels",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Blocked",
+  "userAcceptance": "Pending"
+}

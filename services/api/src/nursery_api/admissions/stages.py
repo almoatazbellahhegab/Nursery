@@ -1,6 +1,6 @@
 """Immutable lead-stage decisions; policy edges are explicit, never inferred."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 from enum import StrEnum
 from uuid import UUID, uuid4
@@ -16,6 +16,7 @@ class AdmissionsErrorCode(StrEnum):
     INVALID_TRANSITION = "admissions_transition_not_allowed"
     CONVERSION_REQUIRED = "admissions_enrollment_conversion_required"
     CHRONOLOGY_CONFLICT = "admissions_chronology_conflict"
+    OPERATION_CONFLICT = "admissions_operation_conflict"
 
 
 class AdmissionsError(Exception):
@@ -167,6 +168,22 @@ class StageHistory:
     policy_id: UUID
     policy_revision: int
 
+    def __post_init__(self) -> None:
+        _version(self.version, minimum=1)
+        _version(self.policy_revision, minimum=1)
+        if (
+            not isinstance(self.scope, LeadScope)
+            or not all(
+                isinstance(value, UUID)
+                for value in (self.event_id, self.operation_id, self.actor_id, self.policy_id)
+            )
+            or not isinstance(self.previous_stage, LeadStage)
+            or not isinstance(self.new_stage, LeadStage)
+            or self.previous_stage == self.new_stage
+        ):
+            raise AdmissionsError(AdmissionsErrorCode.INVALID_VALUE)
+        object.__setattr__(self, "changed_at", _utc(self.changed_at))
+
 
 @dataclass(frozen=True)
 class StageDecision:
@@ -174,6 +191,20 @@ class StageDecision:
 
     snapshot: LeadSnapshot
     history: StageHistory
+    replayed: bool = False
+
+
+@dataclass(frozen=True)
+class StageReceipt:
+    """Trusted stored response, scoped by organization, branch, actor and operation.
+
+    A future adapter must load and commit this atomically with state/history/audit.
+    Constructing an in-memory receipt does not establish durable idempotency.
+    """
+
+    command: ChangeLeadStage
+    actor_id: UUID
+    decision: StageDecision
 
 
 def decide_stage_change(
@@ -183,6 +214,7 @@ def decide_stage_change(
     policy: StagePolicy,
     *,
     changed_at: datetime,
+    receipt: StageReceipt | None = None,
 ) -> StageDecision:
     """Return a valid stage/history pair or raise a safe AdmissionsError.
 
@@ -192,7 +224,10 @@ def decide_stage_change(
     stage-edit entry point cannot move into or out of enrollment. The caller
     must lock/compare versions and persist state, history, receipt and audit in
     one tenant-scoped transaction. Operation IDs here do not provide durable
-    deduplication. No side effects, database reads or sensitive logging occur.
+    deduplication. A trusted receipt permits an exact historical retry response,
+    marked replayed; never write that response over the current state. Current
+    scope/authorization/expiry are checked even on retries. No side effects,
+    database reads or sensitive logging occur.
     """
     now = _utc(changed_at)
     if (
@@ -203,6 +238,8 @@ def decide_stage_change(
         or now >= grant.expires_at
     ):
         raise AdmissionsError(AdmissionsErrorCode.ACCESS_DENIED)
+    if receipt is not None:
+        return _replay_stage_change(command, current, grant, receipt)
     if command.expected_version != current.version:
         raise AdmissionsError(AdmissionsErrorCode.VERSION_CONFLICT)
     if command.new_stage == current.stage:
@@ -234,3 +271,41 @@ def decide_stage_change(
         policy_revision=policy.revision,
     )
     return StageDecision(snapshot=next_state, history=history)
+
+
+def _replay_stage_change(
+    command: ChangeLeadStage,
+    current: LeadSnapshot,
+    grant: VerifiedAdmissionsGrant,
+    receipt: StageReceipt,
+) -> StageDecision:
+    """Return one original fact only after checking receipt identity and integrity."""
+    if receipt.actor_id != grant.actor_id or receipt.command.scope != command.scope:
+        raise AdmissionsError(AdmissionsErrorCode.ACCESS_DENIED)
+    if receipt.command != command:
+        raise AdmissionsError(AdmissionsErrorCode.OPERATION_CONFLICT)
+
+    saved = receipt.decision
+    history = saved.history
+    snapshot = saved.snapshot
+    # Fail closed on inconsistent stored parts rather than inventing a new success.
+    if (
+        saved.replayed
+        or history.scope != command.scope
+        or snapshot.scope != command.scope
+        or history.actor_id != grant.actor_id
+        or history.operation_id != command.operation_id
+        or history.new_stage != command.new_stage
+        or history.previous_stage == history.new_stage
+        or LeadStage.ENROLLED in (history.previous_stage, history.new_stage)
+        or history.version != command.expected_version + 1
+        or snapshot.version != history.version
+        or snapshot.stage != history.new_stage
+        or snapshot.last_changed_at != history.changed_at
+        or current.version < snapshot.version
+        or (current.version == snapshot.version and current != snapshot)
+        or current.last_changed_at is None
+        or current.last_changed_at < history.changed_at
+    ):
+        raise AdmissionsError(AdmissionsErrorCode.OPERATION_CONFLICT)
+    return replace(saved, replayed=True)
