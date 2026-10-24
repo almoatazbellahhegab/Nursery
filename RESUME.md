@@ -1,5 +1,33 @@
 # Session checkpoint and resume instructions
 
+## Latest development — appointment planning, 2026-10-24
+
+User: `Develop according to the updated decision, test the changes`.
+Worked on `feat/FEAT-030-appointment-planning`, retaining S03/FEAT-030 as the
+sole active feature. Implemented an opaque pure appointment planner aligned
+with revision 3's scheduling direction: explicit supplied host availability,
+UTC intervals, overlap rejection across branches, versioned reschedule/cancel
+with supplied reason codes and immutable prior/new history. No default hours,
+role matrix, production PII model, public endpoint or invitation was added.
+The trusted caller remains responsible for actual action/branch/host eligibility,
+calendar completeness and transactional locks/receipts/audit after gates close.
+
+All 137 backend scenarios pass (58 appointment, 50 stage/retry, 26 attendance,
+three health/route guards), plus Ruff lint/format, strict mypy and dependency
+consistency. Evidence: `docs/testing/runs/2026-10-24T08-48-51-654Z-admissions.json`.
+Four source/review checks pass in `2026-10-24T08-50-34-501Z-unit.json`.
+See `docs/testing/S03-ADMISSIONS.md` for scenario/source mappings, review checklist
+and limits. DEV-FEAT-030-03 has partial groundwork; original source integration
+cases remain Not run. Existing client demo code/builds are unchanged; prior
+emulation evidence does not establish a connected appointment UI or physical UAT.
+
+Commit/integrate this tested increment locally, retaining its feature branch.
+No push approval extends beyond remote `a9868ba`. Preserve the unrelated
+untracked attendance run. Next operational work still requires the original
+specialist evidence and FEAT-002/005 identity/branch/permission/storage
+prerequisites; this generic component does not waive them. Do not reopen already
+approved Product choices or advance to S04. Sprint 3 remains incomplete.
+
 ## Latest instruction: apply all recommended S01–S03 decisions
 
 User: `apply all your recommended decisions`. The full preceding package is

@@ -1,9 +1,9 @@
 {
   "activeSprint": "S03",
   "activeFeature": "FEAT-030",
-  "branch": "feat/FEAT-030-retry-chronology",
+  "branch": "feat/FEAT-030-appointment-planning",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - admissions retry domain increment verified; operational prerequisites and policy gates remain open",
+  "status": "In progress - admissions appointment planning domain verified against explicit availability; operational prerequisites and specialist gates remain open",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "deferredFeatures": [
@@ -20,11 +20,11 @@
     "PostgreSQL RLS and durable transactions"
   ],
   "sourceAcceptanceStatus": "Not run",
-  "implementedIncrement": "Immutable lead stage/history decisions plus trusted exact-retry receipts, original-fact replay and inconsistent-state rejection; no operational routes or durable adapters",
-  "domainVerification": "79 pytest scenarios: 50 admissions, 26 attendance, three health/fail-closed routes; Ruff lint/format, strict mypy and dependency consistency pass; future-dated retry receipts denied",
+  "implementedIncrement": "Stage/history/retry decisions plus opaque visit/trial scheduling, UTC host availability/overlap checks and versioned reschedule/cancel decisions with reasons/history; no invitations, production policy defaults, operational routes or durable adapters",
+  "domainVerification": "137 pytest scenarios: 50 admissions stage/retry, 58 appointment, 26 attendance, three health/fail-closed routes; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T08-48-51-654Z-admissions.json",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": true,
-  "pushStatus": "S03 through a9868ba and five retained work branches pushed on 2026-10-24. Subsequent retry chronology development remains local and outside that recorded push scope.",
+  "pushStatus": "S03 through a9868ba and five retained work branches pushed on 2026-10-24. Subsequent chronology, decision records and appointment development remain local and outside that recorded push scope.",
   "clientVerification": "Prior demo builds, five mobile widget scenarios and nine browser groups pass; direct parent/teacher views verified on PC; physical/native UAT pending",
   "nextSprintReadiness": "S04 readiness prepared only; latest user instruction is to continue and finish S03, without advancing sprints",
   "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md; revision 3 records full approved S01-S03 recommendation package, DEC-01-14 resolution overlay and remaining specialist/configuration inputs; no runtime configuration, deployment or UAT approval"

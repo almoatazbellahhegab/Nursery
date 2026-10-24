@@ -1,5 +1,20 @@
 # Development TODO
 
+## Updated-decision development — appointment planning
+
+- [x] Review approved revision 3 and isolate work from open specialist gates.
+- [x] Add opaque visit/trial planning with explicit host availability and UTC instants.
+- [x] Reject host overlaps, including another branch; allow adjacent bookings.
+- [x] Add versioned reschedule/cancel, supplied reasons and immutable history.
+- [x] Pass all 137 backend scenarios, lint/format, strict types and dependencies.
+- [x] Record task/source mapping, review checklist, unchanged client evidence and limits.
+- [ ] Obtain required specialist/predecessor evidence before operational integration.
+- [ ] Connect authorized API/storage/calendar transactions and web/mobile journeys.
+- [ ] Execute original source integration cases and separate human/physical/native UAT.
+
+This is partial DEV-FEAT-030-03 domain groundwork, not a completed scheduling
+workflow or sprint. Keep the new increment local and retain its feature branch.
+
 ## Approved S01–S03 recommendation package — revision 3
 
 - [x] Record user's `apply all your recommended decisions` as Product approval.

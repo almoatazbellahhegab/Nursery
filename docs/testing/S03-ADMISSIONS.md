@@ -1,5 +1,48 @@
 # Admissions domain tests and UAT links
 
+## Latest verification — appointment planning (2026-10-24)
+
+Command: `node tools/run-admissions-checks.mjs` with the recorded process-local
+Node resolution flags. [Retained run](runs/2026-10-24T08-48-51-654Z-admissions.json)
+contains 137 passing scenarios and passing Ruff lint/format, strict mypy and
+dependency consistency. There are 58 appointment scenarios, 50 stage/retry,
+26 attendance and three health/route guards. The existing upstream
+Starlette/AnyIO deprecation warning remains; dependencies are unchanged.
+
+[All four review/source-preservation checks pass](runs/2026-10-24T08-50-34-501Z-unit.json).
+Plan regeneration retains all 41 features, 204 feature tasks, 69 technical tasks
+and 216 source cases; `git diff --check` passes.
+
+| Cases | Verified behavior | Traceability / limits |
+| --- | --- | --- |
+| ADM-APPT-001–004 | Visit/trial, opaque identities, immutable history, UTC equivalents, positive duration and aware times | Partial DEV-FEAT-030-03; no production schema |
+| ADM-APPT-005 | Scope/current expiry denial before version/calendar disclosure | Partial TC-FEAT-030-04 / UAT-S03-TC-FEAT-030-04; synthetic trusted grants only |
+| ADM-APPT-006–008, 021 | Full host-window containment, overlap including another branch, adjacency, cancelled/other-host exclusions and microsecond conflict | Partial DEV-FEAT-030-03; supplied calendars only, no concurrent database writes |
+| ADM-APPT-009–012 | Reschedule/cancel, original facts retained, reason/actor/version, consistent self-row and cancellation with no availability | Partial DEV-FEAT-030-03; history is proposed, not persisted |
+| ADM-APPT-013–020, 022 | Required configured reason, cancelled/missing state, stale version/time, no-op, invalid values, foreign/duplicate calendar IDs and command shape | Partial DEV-FEAT-030-03; no actual authorization/receipt adapter |
+
+Scheduling has no dedicated source acceptance case in the original five-case
+catalogue; its new scenarios are mapped honestly to task DEV-FEAT-030-03.
+They do not pass the enrollment conversion case TC-FEAT-030-03. All original
+source cases remain Not run at their required integration levels.
+
+### Review checklist and known limits
+
+- [x] Automated Windows-hosted Python unit scenarios and coding checks.
+- [ ] Real database transactions, host-lock concurrency, durable receipts/audit.
+- [ ] Authoritative action/branch/host membership and current revocation tests.
+- [ ] Branch-local input conversion, DST ambiguity and complete calendar loading.
+- [ ] Real API plus Next.js/Flutter appointment review journeys after gates close.
+- [ ] Human Windows 11 browser UAT.
+- [ ] Physical iPhone Safari UAT.
+- [ ] Native iPhone build/UAT on macOS/Xcode with signing.
+
+No UI code changed; earlier compiled-client/emulated-browser evidence remains
+applicable to the unchanged demo only, not this unconnected backend component.
+No invitations, lead stage change, enrollment, production policy defaults,
+personal-data model or public API were added. Neither tests nor in-memory
+calendar decisions prove durable idempotency or actual concurrent-write safety.
+
 ## Latest verification: retry chronology (2026-10-24)
 
 Retry receipts now reject a saved event later than the supplied server instant
