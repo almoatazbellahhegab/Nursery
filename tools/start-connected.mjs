@@ -3,13 +3,17 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {spawn} from 'node:child_process';
+import {randomBytes} from 'node:crypto';
 import {root,nodeRuntime} from './client-runtime.mjs';
 
 const runtime=JSON.parse(fs.readFileSync(path.join(root,'.tools/database-runtime.json'),'utf8'));
+const securityFile=path.join(root,'.tools/security-runtime.json');
+if(!fs.existsSync(securityFile))fs.writeFileSync(securityFile,JSON.stringify({mfa_key:randomBytes(32).toString('base64url').padEnd(44,'=')}));
+const security=JSON.parse(fs.readFileSync(securityFile,'utf8'));
 const addresses=Object.entries(os.networkInterfaces()).filter(([name])=>!/virtual|vethernet|wsl|vmware|docker/i.test(name)).flatMap(([,items])=>(items??[]).filter(item=>item.family==='IPv4'&&!item.internal).map(item=>item.address));
 const hosts=['localhost','127.0.0.1',...addresses];
 const origins=hosts.flatMap(host=>[3000,3200,3300,3400].map(port=>`http://${host}:${port}`));
-const env={...process.env,NURSERY_DATABASE_URL:runtime.dev_url,NURSERY_ENV:'local',NURSERY_ORIGINS:origins.join(','),NURSERY_MOBILE_PORT:'3400'};
+const env={...process.env,NURSERY_DATABASE_URL:runtime.dev_url,NURSERY_MFA_KEY:security.mfa_key,NURSERY_ENV:'local',NURSERY_ORIGINS:origins.join(','),NURSERY_MOBILE_PORT:'3400'};
 const children=[
   spawn(path.join(root,'services/api/.venv/Scripts/python.exe'),['-m','uvicorn','nursery_api.main:app','--host','0.0.0.0','--port','8000'],{cwd:path.join(root,'services/api'),env,stdio:'inherit',windowsHide:true}),
   spawn(nodeRuntime(),[path.join(root,'apps/admin-web/node_modules/next/dist/bin/next'),'start','--hostname','0.0.0.0','--port','3300'],{cwd:path.join(root,'apps/admin-web'),env,stdio:'inherit',windowsHide:true}),

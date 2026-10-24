@@ -1,16 +1,17 @@
 """Versioned branch administration; tenant and branch reads remain RLS scoped."""
 
 from typing import Annotated, Any, Literal
+from datetime import timedelta
 from uuid import UUID, uuid4
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from fastapi import APIRouter, Header, Query
 from pydantic import Field, StrictInt, field_validator
 
-from .api import Actor, ApiError, Authenticated, StrictModel
+from .api import Actor, ApiError, Authenticated, CommittedRoute, StrictModel, now_utc
 from .commands import complete, fingerprint, replay
 
-router = APIRouter(prefix="/api/v1/branches", tags=["Branches"])
+router = APIRouter(prefix="/api/v1/branches", tags=["Branches"], route_class=CommittedRoute)
 Operation = Annotated[UUID, Header(alias="Idempotency-Key")]
 
 
@@ -61,6 +62,10 @@ class Assignment(StrictModel):
 def require_admin(actor: Actor) -> None:
     if actor.role != "administrator":
         raise ApiError(403, "branch_administration_denied")
+    if actor.mfa_required and (
+        actor.mfa_at is None or now_utc() - actor.mfa_at > timedelta(minutes=15)
+    ):
+        raise ApiError(403, "reauthentication_required")
 
 
 def branch_row(actor: Actor, branch_id: UUID, *, lock: bool = False) -> dict[str, Any]:

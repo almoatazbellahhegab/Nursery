@@ -1,9 +1,9 @@
 {
   "activeSprint": "S01",
-  "activeFeature": "FEAT-002",
-  "branch": "feat/FEAT-002-branch-management",
+  "activeFeature": "FEAT-003",
+  "branch": "feat/FEAT-003-authentication-and-account-recovery",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - returning to original branch-management prerequisite under final-product completion instruction; S04 connected staff and session fixes retained locally",
+  "status": "In progress - provider-backed authentication and account recovery; prior connected branch and staff increments integrated locally; final product unfinished",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "sprintThreeAcceptance": "Incomplete and unaccepted; committed scope pushed and unfinished work deferred by explicit Sprint 4 start instruction",
@@ -73,12 +73,12 @@
       "uatAccepted": false
     }
   ],
-  "implementedIncrement": "Connected FEAT-002 branch metadata/status and member assignments, immediate scope removal, version/receipt/audit and pagination in API/Next.js/Flutter. Prior connected staff, identity/RLS and session fixes retained; remaining original product work unfinished.",
-  "domainVerification": "248 backend scenarios and Ruff lint/format, strict typing and dependency checks pass; evidence 2026-10-24T14-49-27-829Z-runtime.json. Includes 15 branch API/RLS scenarios and original TC-FEAT-002-01/02/03.",
+  "implementedIncrement": "Connected application MFA in API/Next.js/Flutter: encrypted TOTP enrollment, session-bound proof/retries, one-use recovery, throttle, current-scope responses and explicit save acknowledgement. Commit-before-response prevents deferred failure following HTTP success. Prior branch/staff/RLS work retained; provider login/recovery and final product unfinished.",
+  "domainVerification": "259 full backend cases pass with all coding checks (2026-10-24T15-58-32-780Z-runtime.json). 12 focused security checks including new cross-user MFA RLS pass (2026-10-24T16-11-21-404Z-account-security.json).",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false,
   "pushStatus": "S03 through 1d8c766 and four new retained work branches pushed on 2026-10-24. S04 and FEAT-012 remain local; no S04 push authorized",
-  "clientVerification": "Final selected Next.js and Flutter quality checks and both builds pass; 12 Flutter tests. Five branch browser groups pass including Arabic in both clients; five staff browser groups pass. Evidence 2026-10-24T15-04-29-041Z-clients.json, 2026-10-24T15-09-58-298Z-branch-browsers.json and 2026-10-24T15-00-54-786Z-connected-browsers.json. Physical/native/human UAT pending",
+  "clientVerification": "Next quality/build and Flutter build pass (15-51-03-240Z); Flutter quality/14 tests pass (15-58-44-421Z). Four real connected MFA browser groups pass (16-06-26-782Z), including shared authenticator verification, recovery reuse denial and Arabic in both clients. Screenshots inspected without secret material. Human/physical/native UAT pending.",
   "nextSprintReadiness": "Completing original S01 prerequisites sequentially before remaining product workflows; source sprint assignments unchanged",
   "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md revision 3 retained; staff-specific readiness and limits in docs/delivery/S04-FEAT-012-READINESS.md",
   "priorSprintCarryover": "docs/delivery/S03-TODO.md",

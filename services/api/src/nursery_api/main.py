@@ -14,6 +14,8 @@ if database_url := os.environ.get("NURSERY_DATABASE_URL"):
         database_url,
         os.environ.get("NURSERY_ORIGINS", "http://localhost:3000,http://localhost:3200").split(","),
         os.environ.get("NURSERY_ENV") != "local",
+        mfa_key=os.environ.get("NURSERY_MFA_KEY"),
+        require_mfa=os.environ.get("NURSERY_ENV") != "local",
     )
 
 

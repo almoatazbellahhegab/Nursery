@@ -3,9 +3,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BranchManager from "./branch-manager";
+import MfaPanel from "./mfa-panel";
 
 type Profile = {
   role: string;
+  mfa_required?: boolean;
+  mfa_enrolled?: boolean;
   csrf_token: string;
   organization: { name: string };
   branches: { id: string; name: string; active: boolean; timezone: string }[];
@@ -57,6 +60,7 @@ function operationId() {
 
 export default function Workspace() {
   const sessionGeneration = useRef(0);
+  const [securityOpen, setSecurityOpen] = useState(false);
   const [ar, setAr] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [email, setEmail] = useState("");
@@ -269,6 +273,11 @@ export default function Workspace() {
           <button onClick={() => setAr(!ar)}>
             {ar ? "English" : "العربية"}
           </button>
+          {profile && !profile.mfa_required && (
+            <button disabled={busy} onClick={() => setSecurityOpen(true)}>
+              {t("Account security", "أمان الحساب")}
+            </button>
+          )}
           {profile && (
             <button
               disabled={busy}
@@ -277,6 +286,7 @@ export default function Workspace() {
                   sessionGeneration.current++;
                   await api("auth/logout", {});
                   setProfile(null);
+                  setSecurityOpen(false);
                   setRows([]);
                   setHistory(null);
                   setSelected(null);
@@ -374,19 +384,33 @@ export default function Workspace() {
               </select>
             </label>
           </section>
-          {profile.role === "administrator" && (
-            <BranchManager
+          {profile.role === "administrator" &&
+            !profile.mfa_required &&
+            !securityOpen && (
+              <BranchManager
+                api={api}
+                ar={ar}
+                onChanged={async () => {
+                  const current = await api<Profile>("auth/me");
+                  setProfile(current);
+                  if (!current.branches.some((item) => item.id === branch))
+                    setBranch(current.branches[0]?.id ?? "");
+                }}
+              />
+            )}
+          {profile.mfa_required || securityOpen ? (
+            <MfaPanel
               api={api}
               ar={ar}
-              onChanged={async () => {
-                const current = await api<Profile>("auth/me");
+              profile={profile}
+              onClose={() => setSecurityOpen(false)}
+              onReady={(current) => {
                 setProfile(current);
-                if (!current.branches.some((item) => item.id === branch))
-                  setBranch(current.branches[0]?.id ?? "");
+                setBranch(current.branches[0]?.id ?? "");
+                setSecurityOpen(false);
               }}
             />
-          )}
-          {!canUseStaff ? (
+          ) : !canUseStaff ? (
             <section className="panel">
               <h2>
                 {t(

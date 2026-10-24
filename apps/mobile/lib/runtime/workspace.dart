@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'api.dart';
 import 'branches.dart';
+import 'mfa.dart';
 
 class ConnectedApp extends StatefulWidget {
   final NurseryApi? api;
@@ -358,6 +359,36 @@ class _StaffWorkspaceState extends State<StaffWorkspace> {
           onPressed: widget.onLanguage,
           child: Text(widget.ar ? 'English' : 'العربية'),
         ),
+        if (_profile != null && _profile!['mfa_required'] != true)
+          IconButton(
+            tooltip: t('Account security', 'أمان الحساب'),
+            icon: const Icon(Icons.security),
+            onPressed: _busy
+                ? null
+                : () => _run(() async {
+                    final result = await Navigator.push<JsonMap>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                          appBar: AppBar(
+                            title: Text(t('Account security', 'أمان الحساب')),
+                          ),
+                          body: SingleChildScrollView(
+                            padding: const EdgeInsets.all(20),
+                            child: MfaForm(
+                              api: widget.api,
+                              ar: widget.ar,
+                              profile: _profile!,
+                              onReady: (profile) async =>
+                                  Navigator.pop(context, profile),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                    if (result != null && mounted) await _accept(result);
+                  }),
+          ),
         if (_profile != null)
           IconButton(
             tooltip: t('Sign out', 'تسجيل الخروج'),
@@ -432,6 +463,13 @@ class _StaffWorkspaceState extends State<StaffWorkspace> {
                           if (mounted) await _accept(profile);
                         }),
                   child: Text(t('Sign in', 'دخول')),
+                ),
+              ] else if (_profile!['mfa_required'] == true) ...[
+                MfaForm(
+                  api: widget.api,
+                  ar: widget.ar,
+                  profile: _profile!,
+                  onReady: _accept,
                 ),
               ] else ...[
                 Text((_profile!['organization'] as JsonMap)['name'] as String),

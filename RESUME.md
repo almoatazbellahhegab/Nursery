@@ -1,9 +1,77 @@
 # Session checkpoint and resume instructions
 
+## Active FEAT-003 security increment - continue implementation/testing
+
+Current branch `feat/FEAT-003-authentication-and-account-recovery` is based on
+`ec0058c` (FEAT-002 committed/integrated into both local S01 and cumulative S04).
+User still requests the entire final product, with reviews waived; do not stop
+at the MFA increment. The original source sprint for FEAT-003 is S01.
+
+UNCOMMITTED MFA increment: installed immutable `0004_identity_security` migration
+adds provider identity/attempt/token-use tables, session authenticated_at/mfa_at,
+self-RLS encrypted enrollment/recovery and encrypted session-bound auth receipts.
+Never edit installed 0001-0004; use later revisions. MFA endpoints begin/confirm/
+verify use PyOTP, encrypted Fernet seeds, five-fail/five-minute persistent throttle,
+consumed TOTP counters, one-use hashed recovery codes, atomic audit/receipts,
+current-scope retry responses, enrollment session binding and other-session
+revocation on confirmed enrollment. Privileged sessions lack product access until
+MFA when enforcement is configured; enrolled accounts require MFA even locally.
+Branch administration additionally needs proof within 15 minutes.
+
+Current request dependencies refresh last_seen after yielded work, avoiding a
+session/user-lock deadlock when MFA confirmation revokes other sessions. The MFA
+user lock rechecks session revocation after waiting. API quality checks pass and
+all 10 focused real MFA scenarios plus all 14 identity scenarios passed. Two new
+Flutter MFA widgets pass (privileged access gating and recovery-code save ACK).
+Full backend/check evidence: 259 pass, all coding checks,
+`2026-10-24T15-58-32-780Z-runtime.json`, including the new CommittedRoute boundary
+and deferred-commit failure regression. All 12 targeted security checks pass in
+`2026-10-24T16-11-21-404Z-account-security.json`, including a new cross-user RLS case.
+No concurrent database suite should run because fixtures reset the SAME nursery_test. Real thread
+races within a single fixture are deliberate. Dart formatting/analyzer and 14 widgets pass in `15-58-44-421Z-clients.json`;
+Next quality/build and Flutter build pass in `15-51-03-240Z-clients.json` (overall
+failed on a subsequently corrected test-only collection annotation). Next/Flutter MFA UI is present,
+including optional account-security entry and forced verification after login.
+New `tools/check-security-browsers.mjs` passes all four groups in
+`2026-10-24T16-06-26-782Z-security-browsers.json`; Arabic desktop/mobile screenshots
+without secret material were inspected.
+It uses only dedicated synthetic security@garden.example.test (prepared/reset by
+`tools/setup-security-fixture.py`); audit is retained. Never print passwords,
+setup keys, recovery codes, local DSNs or the new ignored security runtime key.
+
+Current owned launcher is TTY session `65585` on3300/3400/8000; use stop on stdin
+before rebuild/restart. PostgreSQL55432 still runs. Launcher now creates ignored `.tools/security-runtime.json` and passes its
+Fernet key only in child env. Restart with TTY after builds for ports3300/3400/8000.
+Credential scan includes security-runtime/security-accounts. Dependencies installed:
+PyJWT[crypto]2.15.1, cryptography50.0.2, PyOTP2.10.0; httpx0.28.1 now production;
+requirements lock regenerated. Existing Next dependencies unchanged.
+
+Provider-backed login/recovery is NOT implemented yet. A nonblocking question asks
+for non-secret Cognito region/pool/domain/client IDs/app URLs or configuration
+templates; no answer yet. No Cognito/AWS connector or config files were found.
+Continue with templates/provider fixtures while pending; no cloud deployment is
+authorized. Read official Cognito token/authorization/JWT/MFA docs and PyJWT/PyOTP/
+Fernet docs already consulted. Do not trust provider roles or auto-link by email;
+application membership remains authoritative. Enforce PKCE/state/nonce, signed
+issuer/client/token-use/expiry, explicit linked issuer/subject, and bounded network
+calls OUTSIDE DB transactions. Privileged MFA uses the independent application
+factor, because Cognito MFA/federation/first-login rules do not themselves prove
+that every privileged session passed an authenticator challenge.
+
+Next: commit this tested MFA increment locally, integrate into S01 and cumulative
+S04, retain/return to FEAT-003, then CONTINUE OIDC/recovery/provider
+configuration and the remaining original account/onboarding/product scope. Before
+final security completion, cover session-ID rotation on MFA elevation, provider
+expiry caps (requires a NEW migration), MFA key rotation/operations and generated
+transport contracts. No physical/native/human UAT is accepted, and no new push or
+production deployment is authorized. Preserve unrelated old attendance evidence.
+
+
 ## Latest prerequisite checkpoint ? keep completing the final product
 
 Local S04 includes `c7315f5` connected staff and `45bf3b6` session/history fixes.
-Current branch `feat/FEAT-002-branch-management` resumes original S01 prerequisites
+FEAT-002 is committed as `ec0058c` and integrated into local S01 and S04.
+Current branch `feat/FEAT-003-authentication-and-account-recovery` resumes S01 security prerequisites
 under the user's final-product instruction. Original feature/sprint IDs remain.
 FEAT-002 connected branch API and Next.js/Flutter admin screens are implemented:
 metadata/status, active/inactive history, IANA timezone, current member scope,
@@ -29,9 +97,7 @@ Use `stop` on stdin before rebuilding. Account/DB secrets remain ignored; genera
 credential scan passed. No pushes, production deployments, real messaging or UAT
 acceptances. Preserve unrelated `2026-10-23T20-50-36-104Z-attendance.json`.
 
-Next: commit FEAT-002 and integrate locally
-into source S01 review and cumulative S04 assembly, retaining all feature branches.
-Then continue account/provider security, invitations, staff/child/classroom onboarding
+Next: continue account/provider security, invitations, staff/child/classroom onboarding
 and remaining original product workflows. Do not stop at this increment or ask again
 for waived specialist reviews. Final product remains unfinished; account/MFA/provider,
 other original modules, generated contracts and operations are pending. Profile branch

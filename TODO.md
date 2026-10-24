@@ -4,6 +4,10 @@
 
 ### Connected delivery progress
 
+- [x] Connected application MFA, encrypted enrollment, one-use recovery, throttle and commit-before-response.
+- [x] 259 full backend cases; 12 targeted security checks; 14 Flutter tests; both builds; four MFA browser groups.
+- [ ] Continue FEAT-003 provider-backed login/recovery and final security hardening.
+
 - [x] Connected FEAT-002 branch API/RLS and paginated Next.js/Flutter administration.
 - [x] 248 backend scenarios; 11 Flutter tests; web/mobile builds; connected branch and staff browser checks.
 - [ ] Commit/integrate the tested branch prerequisite, then continue account security and onboarding.

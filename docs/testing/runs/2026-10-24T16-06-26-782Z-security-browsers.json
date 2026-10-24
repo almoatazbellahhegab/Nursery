@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-24T16:06:26.782Z",
+  "completedAt": "2026-10-24T16:06:44.234Z",
+  "codeCommit": "ec0058c3499db74569867811553e70629b1a43c0",
+  "result": "Pass",
+  "results": [
+    {
+      "id": "MFA-WEB-ENROLL-AND-ACKNOWLEDGE-RECOVERY",
+      "result": "Pass"
+    },
+    {
+      "id": "MFA-FLUTTER-CURRENT-AUTHENTICATOR",
+      "result": "Pass"
+    },
+    {
+      "id": "MFA-WEB-RECOVERY-AND-USED-CODE-DENIAL",
+      "result": "Pass"
+    },
+    {
+      "id": "MFA-ARABIC-CONTROLS-BOTH-CLIENTS",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Real TOTP enrollment, session-bound MFA, recovery and compiled Next.js/Flutter clients against PostgreSQL; synthetic dedicated account only",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

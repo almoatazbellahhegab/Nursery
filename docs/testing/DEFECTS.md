@@ -62,3 +62,14 @@ regression and explicit Arabic select-name browser assertions. The complete clie
 checks and both builds pass in `2026-10-24T15-04-29-041Z-clients.json` (12 Flutter
 tests). Use Unicode-safe patches for localized source; do not rely on Python's
 UTF-8 mode to change PowerShell's outgoing pipe encoding.
+
+## DEF-S01-008 - Commit must precede an HTTP success
+
+Request-scope dependency cleanup can run after response transmission. Added a
+shared route boundary that commits prepared mutations before returning a response;
+deferred commit failure now returns failure and rolls back presence/event/receipt/
+audit. A real deferred PostgreSQL constraint-trigger regression passes in the
+259-case run `2026-10-24T15-58-32-780Z-runtime.json`. MFA session revocation also
+requires user/session lock ordering: activity updates occur after business locks,
+and MFA rechecks session validity after acquiring the user lock. Recovery races,
+immediate audit failures and other identity/staff regressions pass in that run.

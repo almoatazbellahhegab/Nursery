@@ -29,9 +29,11 @@ from nursery_api.staff_attendance.presence import (
     decide_staff_attendance,
 )
 
-from .api import Actor, ApiError, Authenticated, StrictModel, now_utc
+from .api import Actor, ApiError, Authenticated, CommittedRoute, StrictModel, now_utc
 
-router = APIRouter(prefix="/api/v1/staff-attendance", tags=["Staff attendance"])
+router = APIRouter(
+    prefix="/api/v1/staff-attendance", tags=["Staff attendance"], route_class=CommittedRoute
+)
 Operation = Annotated[UUID, Header(alias="Idempotency-Key")]
 
 

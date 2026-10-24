@@ -6,7 +6,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
 values: set[str] = set()
-for name in ("database-runtime.json", "dev-accounts.json", "test-accounts.json"):
+for name in ("database-runtime.json", "dev-accounts.json", "test-accounts.json", "security-runtime.json", "security-accounts.json"):
     file = root / ".tools" / name
     if file.exists():
         values.update(value for value in json.loads(file.read_text()).values()

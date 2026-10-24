@@ -1,0 +1,36 @@
+{
+  "startedAt": "2026-10-24T15:58:44.421Z",
+  "completedAt": "2026-10-24T15:59:32.182Z",
+  "codeCommit": "ec0058c3499db74569867811553e70629b1a43c0",
+  "workingTreeChanges": "M RESUME.md\n M apps/admin-web/app/page.tsx\n M apps/mobile/lib/runtime/workspace.dart\n M docs/delivery/execution.json\n M services/api/pyproject.toml\n M services/api/requirements-dev.lock\n M services/api/src/nursery_api/main.py\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/branches.py\n M services/api/src/nursery_api/runtime/staff.py\n M services/api/tests/test_runtime_staff.py\n M tools/check-local-credentials.py\n M tools/start-connected.mjs\n?? apps/admin-web/app/mfa-panel.tsx\n?? apps/mobile/lib/runtime/mfa.dart\n?? apps/mobile/test/mfa_test.dart\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T15-49-27-864Z-runtime.json\n?? docs/testing/runs/2026-10-24T15-51-03-240Z-clients.json\n?? services/api/migrations/versions/0004_identity_security.py\n?? services/api/src/nursery_api/runtime/mfa.py\n?? services/api/tests/test_runtime_mfa.py\n?? tools/check-security-browsers.mjs\n?? tools/setup-security-fixture.py",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Formatted 15 files (0 changed) in 0.19 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Analyzing mobile...                                             \nNo issues found! (ran in 30.9s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart\n00:00 +0: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:03 +1: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:03 +2: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +3: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +4: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +5: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +6: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +7: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:04 +8: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/mfa_test.dart: enrollment retains recovery codes until the user acknowledges saving them\n00:04 +9: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/mfa_test.dart: enrollment retains recovery codes until the user acknowledges saving them\n00:04 +10: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/mfa_test.dart: enrollment retains recovery codes until the user acknowledges saving them\n00:04 +11: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: staff update reaches parent timeline and reset restores baseline\n00:05 +12: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: branch switch selects that branch family\n00:06 +13: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: Arabic demo keeps readable labels and RTL direction\n00:06 +14: All tests passed!\n"
+    }
+  ],
+  "selection": "Mobile checks only",
+  "dependencyAudit": "npm audit not rerun in this selection; dependency changes and prior evidence are documented separately",
+  "buildSelection": "Build not rerun; retain prior same-source compiled artifact evidence",
+  "result": "Pass",
+  "scope": "Actual compiled clients; connected staff journeys tested separately by check-connected-browsers.mjs; no UAT acceptance implied",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

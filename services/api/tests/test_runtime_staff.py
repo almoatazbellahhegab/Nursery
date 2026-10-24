@@ -277,3 +277,44 @@ def test_staff_api_015_truncated_branch_history_retains_newest_event(workspace: 
     assert data["truncated"] and len(data["events"]) == 1000
     assert data["events"][0]["version"] == 2
     assert data["events"][-1]["version"] == 1001
+
+
+def test_staff_api_016_deferred_commit_failure_is_not_reported_as_http_success(
+    workspace: Workspace,
+) -> None:
+    workspace.login("teacher")
+    with psycopg.connect(workspace.owner_url) as connection:
+        connection.execute("""CREATE FUNCTION app.test_deferred_audit() RETURNS trigger LANGUAGE plpgsql AS
+            $$ BEGIN RAISE EXCEPTION 'simulated deferred commit failure'; END $$;
+            CREATE CONSTRAINT TRIGGER test_deferred_audit AFTER INSERT ON app.audit
+            DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION app.test_deferred_audit();""")
+    client = TestClient(
+        workspace.client.app,
+        raise_server_exceptions=False,
+        headers={
+            "origin": "http://localhost:3000",
+            "x-csrf-token": workspace.client.headers["x-csrf-token"],
+        },
+    )
+    client.cookies.update(workspace.client.cookies)
+    try:
+        response = client.post(
+            "/api/v1/staff-attendance/transitions",
+            json={
+                "employee_id": EMPLOYEE,
+                "branch_id": BRANCH,
+                "action": "check_in",
+                "expected_version": 0,
+            },
+            headers={"Idempotency-Key": str(uuid4())},
+        )
+        assert response.status_code == 500
+    finally:
+        client.close()
+        with psycopg.connect(workspace.owner_url) as connection:
+            connection.execute(
+                "DROP TRIGGER test_deferred_audit ON app.audit; DROP FUNCTION app.test_deferred_audit()"
+            )
+    with psycopg.connect(workspace.owner_url) as connection:
+        for table in ("staff_presence", "staff_events", "staff_receipts", "audit"):
+            assert connection.execute(f"SELECT count(*) FROM app.{table}").fetchone() == (0,)
