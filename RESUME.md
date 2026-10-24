@@ -1,5 +1,53 @@
 # Session checkpoint and resume instructions
 
+## Business demo handoff and preserved development checkpoint - 2026-10-24
+
+Latest user request: show a business-ready demonstration from project start to
+current progress, with working dashboard/mobile links. The existing compiled
+checkpoint is running and verified; do not rebuild it from incomplete identity
+changes during the presentation. Dashboard http://localhost:3300/demo; phone
+parent http://192.168.8.154:3400/?view=parent; educator ?view=teacher. No login for
+fictional presentation. Connected roots3300/3400 require local generated accounts.
+Owned TTY launcher `65585` remains running. All nine presentation groups pass in
+`2026-10-24T17-27-41-681Z-demo-browsers.json`; five connected staff groups pass in
+`2026-10-24T17-30-35-605Z-connected-browsers.json`. HTTP200 also verified at the Wi-Fi
+address for both presentation links. Physical phone/native/human UAT not inferred.
+`docs/runbooks/client-demo.md` now distinguishes connected capabilities from local
+presentation stories and has current links and the four-story walkthrough.
+
+Development is preserved, not completed or pushed: `1678307` MFA/commit-boundary
+increment is committed and integrated locally into S01 and cumulative S04. The
+retained `feat/FEAT-003-authentication-and-account-recovery` contains UNCOMMITTED
+subsequent rotation/provider groundwork. Installed migration0005 adds session
+lineage/absolute caps and OIDC attempt surface. Draft0006 adds encrypted OIDC flow
+receipts and proof-time constraints; it is NOT installed yet. Never edit installed
+0001-0005. Main/backend current source has session rotation, old-token exact retry
+bridges, family logout locks and shared primary-session creation. Web and Dart
+transport edits accept rotated CSRF/bearer credentials and invalidate stale auth
+responses. These source changes are not in the currently served compiled clients.
+
+Verification for unfinished source: 22 signed Cognito verifier fixtures pass;
+15 targeted security scenarios pass in `16-59-34-881Z-account-security.json`
+(before the last family-lock change); isolated new logout/elevation race test
+passes. Nine focused Dart session/MFA tests pass. New privacy log filter removes
+query strings (authorization code/state); its unit tests have not run yet. The
+full last committed backend evidence is259 passes (`15-58-32-780Z-runtime.json`).
+Do not mistake old build/browser passes for verification of the unbuilt source.
+
+Next development: finish provider flow/callback and native exchange, explicit
+issuer/subject linking, PKCE/state/nonce, encrypted one-flow retry results, actual
+web/mobile provider entry and configuration templates. Use0006 for its drafted
+additive fields; apply/verify only when ready. Add OIDC fixture isolation to test
+reset (attempt/token-use tables lack a user FK). Never run two DB-resetting suites
+concurrently. Do not expose ignored secrets or use real email/payment deliveries.
+Provider IDs/config question remains unanswered; continue templates/provider
+fixtures, no cloud deployment. Current source sprint staysS01/FEAT003. Original
+41-feature scope remains; S04 has4 implemented feature tasks of29, three passing
+source API cases of25 and no wholly complete feature. Other25 feature tasks and
+remaining predecessors are still pending. Preserve the unrelated10/23 attendance
+artifact and all unfinished source changes when committing demo documentation.
+
+
 ## Active FEAT-003 security increment - continue implementation/testing
 
 Current branch `feat/FEAT-003-authentication-and-account-recovery` is based on

@@ -1,13 +1,46 @@
 ﻿# Client presentation: one nursery day, four business stories
 
-Open the dashboard using `Start-Applications.cmd`. Use its printed mobile link
-on the same Wi-Fi. Both actual compiled clients contain the fictional Little
-Garden dataset. Start with Reset demo. Guided web stories select Maadi Garden
-so the named examples below are always available. Allow about eight minutes.
+## Ready-to-present links - 2026-10-24
+
+- Dashboard business presentation: http://localhost:3300/demo
+- Mobile parent presentation: http://192.168.8.154:3400/?view=parent
+- Mobile educator presentation: http://192.168.8.154:3400/?view=teacher
+- Connected dashboard: http://localhost:3300/
+- Connected Flutter web application: http://192.168.8.154:3400/
+
+The phone must use the same Wi-Fi as the development PC, which must remain on.
+The Wi-Fi address can change; `Start-Applications.cmd` prints the current address.
+The presentation links need no login and contain only fictional Little Garden
+records. Start with Reset demo. Guided web stories select Maadi Garden so the
+named examples below are available. Allow about eight minutes for the four stories.
+
+The connected links require sign-in. Generated local credentials remain in the
+ignored `.tools/dev-accounts.json`; use administrator, branch_manager and teacher
+accounts for the corresponding business roles. Do not show the credential file
+or authenticator setup/recovery material during a presentation or screen recording.
+
+### What is connected and what is simulated
+
+| Business capability | Demonstration status |
+| --- | --- |
+| Sign-in, current organization/role/branch access | Connected API and PostgreSQL |
+| Branch details, activation and member assignments | Connected web and Flutter administration |
+| Staff attendance, corrections, history and daily report | Shared persisted state across web and Flutter |
+| Authenticator enrollment and one-use recovery | Connected account security in both clients |
+| Child/classroom overview, child attendance and daily care stories | Fictional local presentation |
+| Parent summary, notices, fee follow-up and admissions visit story | Fictional local presentation |
+| English/Arabic and RTL | Available in both experiences |
+
+Provider-backed Google/Apple/phone sign-in, remaining product modules and native
+iPhone delivery are not claimed ready. The live demo uses the tested compiled
+checkpoint; later authentication/rotation work in the working tree is not yet
+included in these compiled artifacts. The broader fictional stories do not
+synchronize between devices. Only the connected staff workflow shares persisted
+state. These are local/same-Wi-Fi links, not public internet hosting.
 
 Direct mobile views use `/?view=parent` and `/?view=teacher` on the printed
-mobile address. On the host PC, use `http://localhost:3200/?view=parent` or
-`http://localhost:3200/?view=teacher`. The Teacher link opens educator tools
+mobile address. On the host PC, use `http://localhost:3400/?view=parent` or
+`http://localhost:3400/?view=teacher`. The Teacher link opens educator tools
 immediately, and Reset retains the view chosen by the link. A phone must use
 the PC's Wi-Fi address; localhost on the phone refers to the phone itself.
 
@@ -77,6 +110,11 @@ Audience: nursery owner, admissions and front-office team.
 
 ## Presentation acceptance checklist
 
+Latest automated presentation verification: all nine groups pass in
+`docs/testing/runs/2026-10-24T17-27-41-681Z-demo-browsers.json`. The dashboard and
+mobile links return HTTP 200, including the current Wi-Fi address. Physical phone
+reachability and human acceptance are still separate checks.
+
 - [ ] Windows 11 interactive browser: complete all four stories; record reviewer,
   outcome and observations separately from automated headless results.
 - [ ] Physical iPhone Safari: open the same-Wi-Fi mobile URL, complete the
@@ -90,7 +128,7 @@ Audience: nursery owner, admissions and front-office team.
 
 ## Known limitations and source mapping
 
-These are in-memory presentation simulations. No authentication, PostgreSQL/RLS,
+The four fictional business stories above are in-memory simulations. No authentication, PostgreSQL/RLS,
 server synchronization, durable audit, real notifications, payments, enrollment,
 media, medical, pickup or transport workflow is connected. Policy gates remain
 open. All financial figures are explicitly demo-only. Demo data is not inserted
@@ -98,10 +136,12 @@ into production storage or real commercial metric inputs.
 
 FEAT-041 gains fictional dataset and presentation/reset groundwork. Its four
 source cases TC-FEAT-041-01 through TC-FEAT-041-04 retain their API-integration
-acceptance status of Not run. The original dependency and policy gates are not
-waived. The demo is not a completed operational release of those features.
+acceptance status of Not run. The user later waived outstanding reviews for
+implementation/testing; this does not accept UAT. The presentation is not a
+completed operational release of those features.
 
-The requested feature branch is `feat/FEAT-041-demo-scenarios`. This session's
-`.git` is read-only, so the changes are uncommitted in the existing working tree;
-no feature branch creation, merge or push is claimed. Preserve prior uncommitted
-S03 verification work and exclude the pre-existing untracked attendance evidence.
+The fictional presentation remains on retained `feat/FEAT-041-demo-scenarios`
+history and is served alongside the connected runtime. Connected staff, branch and
+MFA increments are committed and integrated locally through `1678307`. Later
+identity/provider changes remain in progress. No new push, public deployment,
+native iPhone build or human UAT is implied by the presentation links.

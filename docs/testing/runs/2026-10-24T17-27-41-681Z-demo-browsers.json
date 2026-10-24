@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-10-24T17:27:41.681Z",
+  "completedAt": "2026-10-24T17:27:50.747Z",
+  "codeCommit": "167830759d281a98f949009eaf826e28995f55ec",
+  "workingTreeChanges": "M apps/admin-web/app/page.tsx\n M apps/mobile/lib/runtime/api.dart\n M apps/mobile/test/runtime_test.dart\n M services/api/src/nursery_api/main.py\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/mfa.py\n M services/api/tests/test_runtime_mfa.py\n M tools/check-security-browsers.mjs\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T16-53-30-266Z-account-security.json\n?? docs/testing/runs/2026-10-24T16-59-34-881Z-account-security.json\n?? services/api/migrations/versions/0005_session_rotation.py\n?? services/api/migrations/versions/0006_oidc_results.py\n?? services/api/src/nursery_api/runtime/oidc_verifier.py\n?? services/api/src/nursery_api/runtime/privacy_logging.py\n?? services/api/tests/test_oidc_verifier.py\n?? services/api/tests/test_privacy_logging.py",
+  "scope": "Fictional client demo; local UI simulations only. No operational API/RLS acceptance.",
+  "environment": "Windows Chrome headless, desktop 1440px, responsive 390/320px and Flutter 390px mobile emulation",
+  "results": [
+    {
+      "id": "DEMO-WEB-BASELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ATTENDANCE-TIMELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-FEES",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ADMISSIONS-BRANCHES-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ARABIC-REFLOW",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-PARENT-STAFF-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-ARABIC",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-DIRECT-VIEWS",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-LINKS-STATIC-BOUNDARIES",
+      "result": "Pass"
+    }
+  ],
+  "pageErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

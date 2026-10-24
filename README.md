@@ -15,21 +15,36 @@ features or constitute deployment, specialist signoff or physical/native UAT.
 
 ## Client demonstration
 
+Ready-to-present dashboard: **http://localhost:3300/demo**.
+Mobile parent: **http://192.168.8.154:3400/?view=parent**.
+Mobile educator: **http://192.168.8.154:3400/?view=teacher**.
+Presentation links need no login; the phone must share the PC's Wi-Fi.
+The current IP can change; the launcher prints its current value.
+
 The actual web and mobile apps now include a fictional Little Garden nursery
 with two branches, 24 children/families, educator rosters, daily care, attendance,
-invoices and admissions inquiries. Open `Start-Applications.cmd`, then use the
-dashboard's four guided stories. Reset demo restores the starting data.
+invoices and admissions inquiries. Open `Start-Applications.cmd`, then open the
+dashboard `/demo` route for four guided stories. Reset demo restores starting data.
 
 See the [eight-minute client presentation script](docs/runbooks/client-demo.md)
 for the value stories, exact steps and expected outcomes. Demo actions are local
 simulations; they do not send messages, process payments or synchronize devices.
 The [fixture guide](demo/README.md) documents the shared synthetic dataset.
 
-The four original specifications are preserved in `Document`. Development includes a traceable delivery plan, a client presentation demo and an offline review portal. Sprint 3 remains active; Sprint 4 has readiness preparation only. No complete operational feature, native app or sprint acceptance is claimed.
+The four original specifications are preserved in `Document`. The cumulative
+Sprint 4 assembly includes connected staff attendance, branch administration and
+application MFA. Earlier-sprint account/provider and onboarding prerequisites are
+being completed. The complete product, native iPhone delivery and sprint UAT are
+not accepted or claimed complete.
 
 ## One click review on Windows 11
 
-For the actual compiled Next.js and Flutter web foundation shells, double-click **Start-Applications.cmd**. It prints one dashboard URL (port 3000) and one same-Wi-Fi mobile URL (port 3200). **Test-Applications.cmd** records client build/quality checks; stop the running application server before rebuilding. These shells have no connected operational APIs or real records, and Flutter web review does not accept a native iPhone app.
+For the compiled connected Next.js and Flutter web apps, double-click
+**Start-Applications.cmd**. It prints dashboard port 3300 and same-Wi-Fi mobile
+port 3400. The root routes require sign-in; `/demo` and `?view=parent` or
+`?view=teacher` open the separate fictional presentation. **Test-Applications.cmd**
+records client checks; stop owned app servers before rebuilding. Flutter web
+review does not accept a native iPhone app.
 
 Double-click **Start-Sprint-Review.cmd**. Node.js 20.9 or newer must be installed. The launcher starts the server, then opens http://localhost:3100 and prints your computer's local Wi-Fi URL. Keep the terminal open; Ctrl+C stops the server.
 
@@ -39,7 +54,11 @@ The iPhone view is a browser prototype, not a compiled Flutter application. Nati
 
 ## Review and tests
 
-- Active work: Sprint 3, one feature at a time. See [TODO.md](TODO.md). FEAT-030 admissions is a domain increment only; double-click **Test-Admissions.cmd** for its checks. Deferred attendance checks remain available through **Test-Attendance.cmd**. Operational web/mobile integration remains gated by unfinished prerequisites and approvals.
+- Active work: FEAT-003 identity prerequisites, one feature at a time, with prior
+  connected increments retained in the local cumulative assembly. See [TODO.md](TODO.md).
+  The user waived reviews for implementation/testing. Earlier admissions/child
+  attendance domain groundwork and fictional presentation do not establish
+  connected completion of those modules.
 
 - The portal shows four sprints retaining all 14 original milestone work packages, 41 features, 204 itemized feature tasks, 69 technical tasks and 216 source tests with stable UAT IDs and current-sprint aliases. Duration is to be estimated; no scope is removed.
 - Review both interfaces, switch English/Arabic and record results under the actual device used. Download the UAT log from the portal; local observations are appended to `review-results/uat.jsonl` and excluded from Git.
