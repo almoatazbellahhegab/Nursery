@@ -252,3 +252,28 @@ def test_staff_api_013_failed_audit_rolls_back_state_event_and_receipt(
     with psycopg.connect(workspace.owner_url) as connection:
         for table in ("staff_presence", "staff_events", "staff_receipts", "audit"):
             assert connection.execute(f"SELECT count(*) FROM app.{table}").fetchone() == (0,)
+
+
+def test_staff_api_015_truncated_branch_history_retains_newest_event(workspace: Workspace) -> None:
+    workspace.login("teacher")
+    with psycopg.connect(workspace.owner_url) as connection:
+        connection.execute(
+            """INSERT INTO app.staff_events
+            SELECT %s,gen_random_uuid(),%s,%s,%s,gen_random_uuid(),gen_random_uuid(),
+                'check_in',now() - (1002-n)*interval '1 minute',now(),n
+            FROM generate_series(1,1001)n""",
+            (
+                identifier("garden"),
+                identifier("teacher@garden.example.test:employee"),
+                identifier("gardenmaadi"),
+                identifier("teacher@garden.example.test"),
+            ),
+        )
+    response = workspace.client.get(
+        f"/api/v1/staff-attendance/history?branch_id={BRANCH}&employee_id={EMPLOYEE}"
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["truncated"] and len(data["events"]) == 1000
+    assert data["events"][0]["version"] == 2
+    assert data["events"][-1]["version"] == 1001

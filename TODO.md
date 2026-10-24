@@ -11,7 +11,8 @@
 - [x] 232 backend scenarios, eight Flutter tests, build/quality checks and connected browser groups.
 - [x] Actual API integration coverage of TC-FEAT-012-01, 02 and 03 (UAT not accepted).
 - [ ] Finish profile/account/child/classroom onboarding and privileged MFA.
-- [ ] Harden session-restore races, generated contract clients and large-data pagination.
+- [x] Harden session-restore races and truncated branch-history boundary.
+- [ ] Generate contract clients and complete large-data pagination.
 - [ ] Implement/test the remaining original product features and all S04 modules sequentially.
 
 Earlier review-blocked and domain-only descriptions below are historical under

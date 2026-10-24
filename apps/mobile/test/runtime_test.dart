@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +18,53 @@ Map<String, dynamic> profile() => {
 };
 
 void main() {
+  for (final status in [200, 401]) {
+    test(
+      'late restore $status cannot replace or clear a newer login',
+      () async {
+        final pending = Completer<http.Response>();
+        final api = NurseryApi(
+          client: MockClient((request) async {
+            if (request.url.path.endsWith('/auth/me')) return pending.future;
+            if (request.url.path.endsWith('/auth/login')) {
+              return http.Response(jsonEncode(profile()), 200);
+            }
+            expect(
+              request.headers['Authorization'],
+              'Bearer synthetic-session',
+            );
+            expect(request.headers['X-CSRF-Token'], 'synthetic-csrf');
+            return http.Response('{}', 200);
+          }),
+          base: Uri.parse('https://fixture.invalid/api/v1/'),
+        );
+        final restoring = api.restore();
+        await api.login('fictional@example.test', 'noncredential fixture');
+        final assertion = expectLater(
+          restoring,
+          throwsA(
+            isA<ApiException>().having(
+              (e) => e.code,
+              'code',
+              'session_changed',
+            ),
+          ),
+        );
+        pending.complete(
+          http.Response(
+            status == 200
+                ? jsonEncode({...profile(), 'csrf_token': 'older-session'})
+                : '{"code":"authentication_required"}',
+            status,
+          ),
+        );
+        await assertion;
+        await api.request('staff-attendance/transitions', body: {});
+        api.close();
+      },
+    );
+  }
+
   test(
     'network retry retains operation key and current native session',
     () async {

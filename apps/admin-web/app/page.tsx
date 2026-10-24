@@ -1,6 +1,6 @@
 "use client";
 /** Connected workspace; authorization and filtering remain server-owned. */
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 type Profile = {
@@ -55,6 +55,7 @@ function operationId() {
 }
 
 export default function Workspace() {
+  const sessionGeneration = useRef(0);
   const [ar, setAr] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [email, setEmail] = useState("");
@@ -89,6 +90,7 @@ export default function Workspace() {
     }).format(new Date(value));
 
   async function api<T>(path: string, body?: object): Promise<T> {
+    const generation = sessionGeneration.current;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
@@ -103,11 +105,15 @@ export default function Workspace() {
       body: body ? JSON.stringify(body) : undefined,
       signal: AbortSignal.timeout(15000),
     });
+    if (generation !== sessionGeneration.current)
+      throw new Error("session_changed");
     if (response.status === 401 && path !== "auth/login") {
       setProfile(null);
       setRows([]);
     }
     const data = response.status === 204 ? {} : await response.json();
+    if (generation !== sessionGeneration.current)
+      throw new Error("session_changed");
     if (!response.ok) throw new Error(data.code ?? "service_unavailable");
     return data as T;
   }
@@ -118,6 +124,7 @@ export default function Workspace() {
       await action();
     } catch (error) {
       const code = error instanceof Error ? error.message : "";
+      if (code === "session_changed") return;
       setMessage(
         code === "invalid_credentials"
           ? t("Check your email and password.", "تحقق من البريد وكلمة المرور.")
@@ -165,10 +172,12 @@ export default function Workspace() {
   }, [ar]);
   useEffect(() => {
     let active = true;
+    const generation = sessionGeneration.current;
     fetch("/api/v1/auth/me", { credentials: "same-origin" })
       .then(async (response) => {
         if (response.ok && active) {
           const data: Profile = await response.json();
+          if (!active || generation !== sessionGeneration.current) return;
           setProfile(data);
           setBranch(data.branches[0]?.id ?? "");
         }
@@ -200,6 +209,7 @@ export default function Workspace() {
   function signIn(event: FormEvent) {
     event.preventDefault();
     void run(async () => {
+      sessionGeneration.current++;
       const data = await api<Profile>("auth/login", { email, password });
       setPassword("");
       setProfile(data);
@@ -261,6 +271,7 @@ export default function Workspace() {
               disabled={busy}
               onClick={() =>
                 void run(async () => {
+                  sessionGeneration.current++;
                   await api("auth/logout", {});
                   setProfile(null);
                   setRows([]);

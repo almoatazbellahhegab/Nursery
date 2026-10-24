@@ -8,8 +8,8 @@ applies; do not stop for the same review evidence or call another domain-only
 increment the product. Work is ongoing, not complete. Original 41-feature scope
 and identifiers remain. No new push or deployment approval is implied.
 
-Foundation commit `d9bf7a5` is integrated locally. Current branch
-`feat/FEAT-012-staff-attendance` has the connected staff increment awaiting commit:
+Foundation commit `d9bf7a5` and connected staff commit `c7315f5` are integrated
+locally into S04; both retained branches remain. The connected staff increment includes:
 PostgreSQL `0002_staff_attendance` migration, atomic presence/events/corrections/
 receipt/audit API, current identity/branch/employee authorization, UTC responses,
 real Next.js and Flutter login/attendance/history/corrections/reports and Arabic.
@@ -26,7 +26,7 @@ desktop Arabic and mobile English/Arabic screenshots. Earlier failed runs retain
 All nine demo regression groups pass in `2026-10-24T12-06-08-668Z-demo-browsers.json`.
 Four source/review checks pass in `2026-10-24T12-06-07-688Z-unit.json`.
 
-Current owned connected launcher: `19342`, web localhost:3300, Flutter
+Current owned connected launcher: `55826` (TTY enabled), web localhost:3300, Flutter
 localhost:3400, API :8000. Wi-Fi 192.168.8.154 at this checkpoint; physical phone
 access is not verified. Use `stop` on launcher stdin before rebuilding/restarting.
 Project PostgreSQL 18.6 is running on loopback 55432; dev/test databases are
@@ -34,12 +34,15 @@ separate. Local credentials/DSNs remain only in ignored `.tools` files. A failed
 fixture repr exposed a generated DB credential; it was redacted, rotated and
 regression-tested. Never print these files or browser credential payloads.
 
-Next: save this tested staff increment on its retained branch and integrate
-locally; then continue real prerequisite/product features sequentially. Remaining
+Current hardening branch `chore/session-consistency`: stale session responses
+are discarded in both clients; bounded branch history retains the newest events.
+233 backend checks and ten Flutter tests pass; compiled web/mobile succeeded.
+Next: commit/integrate this hardening increment, then continue branch and staff
+onboarding prerequisites sequentially. Remaining
 work includes employee/account/child/classroom onboarding, privileged MFA,
 contract generation, pagination/large-history refinements, other S04 modules and
-deferred original product scope. Session restore races in both clients should be
-hardened before final product completion. Staff profile records currently come
+deferred original product scope. Session restore races are now covered by delayed-response regressions; retain
+that protection during account/provider integration. Staff profile records currently come
 from authoritative seeded DB rows; profile management is not yet implemented.
 Physical/native/human UAT remains pending independently. Preserve the unrelated
 untracked attendance run; do not push S04 without explicit scope confirmation.

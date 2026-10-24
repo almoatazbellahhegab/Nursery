@@ -119,6 +119,7 @@ class _StaffWorkspaceState extends State<StaffWorkspace> {
     try {
       await action();
     } on ApiException catch (error) {
+      if (error.code == 'session_changed') return;
       if (mounted) {
         setState(() {
           if (error.status == 401) _profile = null;

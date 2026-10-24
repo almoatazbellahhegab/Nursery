@@ -1,0 +1,36 @@
+{
+  "startedAt": "2026-10-24T13:31:40.480Z",
+  "completedAt": "2026-10-24T13:32:47.652Z",
+  "codeCommit": "c7315f50c8ee00152e0dbbe1135796440f3ad57d",
+  "workingTreeChanges": "M apps/admin-web/app/page.tsx\n M apps/mobile/lib/runtime/api.dart\n M apps/mobile/lib/runtime/workspace.dart\n M apps/mobile/test/runtime_test.dart\n M services/api/src/nursery_api/runtime/staff.py\n M services/api/tests/test_runtime_staff.py\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Formatted 11 files (0 changed) in 0.10 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Analyzing mobile...                                             \nNo issues found! (ran in 44.1s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart\n00:00 +0: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: late restore 200 cannot replace or clear a newer login\n00:00 +1: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: late restore 401 cannot replace or clear a newer login\n00:00 +2: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: network retry retains operation key and current native session\n00:00 +3: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: invalid login exposes a safe code, not submitted credentials\n00:00 +4: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: connected teacher signs in, checks in and sees persisted state\n00:05 +5: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: teacher link starts in teacher view and reset retains that view\n00:05 +6: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: parent has a seeded child, invoice and daily events\n00:06 +7: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: staff update reaches parent timeline and reset restores baseline\n00:08 +8: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: branch switch selects that branch family\n00:08 +9: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: Arabic demo keeps readable labels and RTL direction\n00:09 +10: All tests passed!\n"
+    }
+  ],
+  "selection": "Mobile checks only",
+  "dependencyAudit": "npm audit not rerun in this selection; dependency changes and prior evidence are documented separately",
+  "buildSelection": "Build not rerun; retain prior same-source compiled artifact evidence",
+  "result": "Pass",
+  "scope": "Actual compiled clients; connected staff journeys tested separately by check-connected-browsers.mjs; no UAT acceptance implied",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

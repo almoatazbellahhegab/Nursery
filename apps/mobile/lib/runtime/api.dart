@@ -25,6 +25,7 @@ class NurseryApi {
   final Uri base;
   String _csrf = '';
   String _bearer = '';
+  int _generation = 0;
 
   NurseryApi({http.Client? client, Uri? base})
     : _client = client ?? platform.createClient(),
@@ -48,6 +49,7 @@ class NurseryApi {
   }
 
   Future<JsonMap> request(String path, {JsonMap? body}) async {
+    final generation = _generation;
     final headers = <String, String>{'Content-Type': 'application/json'};
     if (_bearer.isNotEmpty) headers['Authorization'] = 'Bearer $_bearer';
     if (body != null) {
@@ -65,6 +67,9 @@ class NurseryApi {
         final response = await http.Response.fromStream(
           await _client.send(message),
         ).timeout(const Duration(seconds: 15));
+        if (generation != _generation) {
+          throw const ApiException('session_changed', 409);
+        }
         final data = response.statusCode == 204
             ? <String, dynamic>{}
             : jsonDecode(utf8.decode(response.bodyBytes)) as JsonMap;
@@ -91,6 +96,7 @@ class NurseryApi {
   }
 
   Future<JsonMap> login(String email, String password) async {
+    _generation++;
     final profile = await request(
       'auth/login',
       body: {'email': email, 'password': password, 'native': !kIsWeb},
@@ -107,6 +113,7 @@ class NurseryApi {
   }
 
   Future<void> logout() async {
+    _generation++;
     await request('auth/logout', body: {});
     _bearer = '';
     _csrf = '';

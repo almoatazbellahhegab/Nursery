@@ -27,6 +27,24 @@ async function signIn(page,role){
 }
 function teacherCard(){return web.locator('.workspace-roster article').filter({has:web.getByRole('heading',{name:'Teacher Demo',exact:true})});}
 try{
+  await check('CONNECTED-WEB-LATE-RESTORE',async()=>{
+    const page=await browser.newPage();
+    let release;const delayed=new Promise(resolve=>{release=resolve;});
+    let intercepted;const started=new Promise(resolve=>{intercepted=resolve;});
+    let completed;const finished=new Promise(resolve=>{completed=resolve;});
+    await page.route('**/api/v1/auth/me',async route=>{
+      intercepted();await delayed;
+      await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({role:'parent',csrf_token:'stale-fixture',organization:{name:'Stale fixture'},branches:[]})});completed();
+    });
+    try{
+      await page.goto(webBase);await started;
+      await signIn(page,'teacher');
+      release();await finished;
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      await page.getByRole('heading',{name:'Teacher Demo',exact:true}).waitFor();
+      assert.equal(await page.getByText('Stale fixture',{exact:true}).count(),0);
+    }finally{release();await page.close();}
+  });
   await check('CONNECTED-WEB-SIGNIN-AND-PERSIST',async()=>{
     await web.goto(webBase);
     await signIn(web,'teacher');

@@ -260,13 +260,16 @@ def transition(body: Transition, actor: Authenticated, operation: Operation) -> 
     )
 
 
-def effective_events(actor: Actor, employee_id: UUID) -> list[dict[str, Any]]:
+def effective_events(
+    actor: Actor, employee_id: UUID, branch_id: UUID | None = None
+) -> list[dict[str, Any]]:
     rows = actor.connection.execute(
         "SELECT e.*,coalesce(c.corrected_at,e.occurred_at) AS effective_at FROM app.staff_events e "
         "LEFT JOIN LATERAL(SELECT corrected_at FROM app.staff_corrections WHERE organization_id=e.organization_id "
         "AND event_id=e.id ORDER BY version DESC LIMIT 1)c ON true "
-        "WHERE e.organization_id=%s AND e.employee_id=%s ORDER BY e.version DESC LIMIT 1001",
-        (actor.organization_id, employee_id),
+        "WHERE e.organization_id=%s AND e.employee_id=%s "
+        "AND (%s::uuid IS NULL OR e.branch_id=%s) ORDER BY e.version DESC LIMIT 1001",
+        (actor.organization_id, employee_id, branch_id, branch_id),
     ).fetchall()
     return list(reversed(rows))
 
@@ -276,7 +279,7 @@ def effective_events(actor: Actor, employee_id: UUID) -> list[dict[str, Any]]:
 )
 def history(actor: Authenticated, employee_id: UUID, branch_id: UUID) -> dict[str, Any]:
     authorize_employee(actor, employee_id, branch_id, write=False)
-    events = [e for e in effective_events(actor, employee_id) if e["branch_id"] == branch_id]
+    events = effective_events(actor, employee_id, branch_id)
     corrections: list[dict[str, Any]] = []
     if actor.role in {"administrator", "branch_manager"}:
         corrections = actor.connection.execute(
@@ -285,7 +288,7 @@ def history(actor: Authenticated, employee_id: UUID, branch_id: UUID) -> dict[st
             "WHERE c.organization_id=%s AND c.employee_id=%s AND e.branch_id=%s ORDER BY c.version DESC LIMIT 100",
             (actor.organization_id, employee_id, branch_id),
         ).fetchall()
-    return {"events": events[:1000], "corrections": corrections, "truncated": len(events) > 1000}
+    return {"events": events[-1000:], "corrections": corrections, "truncated": len(events) > 1000}
 
 
 @router.post(
