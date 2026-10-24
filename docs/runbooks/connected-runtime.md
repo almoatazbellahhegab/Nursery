@@ -59,6 +59,28 @@ no data backfill. Test on an empty database. No automatic destructive downgrade
 is provided because it would remove access/history; use a reviewed forward fix.
 New migrations must retain the original installed revision unchanged.
 
+## Connected applications
+
+After building both clients, `Start-Connected.cmd` or `Start-Applications.cmd`
+launches API port 8000, web port 3300 and Flutter web port 3400. The launcher
+prints an eligible physical-network IPv4 address, not a virtual adapter address.
+The current owned launcher is session `19342`; verify listeners after reopening.
+It accepts `stop` on stdin and stops only its three child processes.
+
+Local URLs: `http://localhost:3300` and `http://localhost:3400`. Current Wi-Fi
+mobile URL: `http://192.168.8.154:3400`; address may change. This is not public
+hosting or proof of a physical phone connection. Credentials are generated in
+ignored `.tools/dev-accounts.json`; do not copy them into documentation or chat.
+
+The web client proxies `/api/v1` to the API. Flutter web uses the same host on
+8000 with credentialed CORS; native builds use `--dart-define=NURSERY_API_URL=`
+with an HTTPS API base ending in `/api/v1/` for deployment. Native sessions are
+in memory. HTTPS/deployment and physical/native testing remain separate work.
+
+Run `node tools/check-connected-browsers.mjs` for real compiled-client staff
+journeys. It redacts credential values from recorded diagnostics. Prior fictional
+demo checks now target web `/demo` and Flutter `?demo=true` on the new ports.
+
 ## First integration evidence
 
 [218 scenarios and all coding/dependency checks pass](../testing/runs/2026-10-24T10-43-16-887Z-runtime.json):

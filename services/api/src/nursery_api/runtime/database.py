@@ -2,7 +2,7 @@
 
 from collections.abc import Iterator
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 from uuid import UUID
 
@@ -17,11 +17,13 @@ Connection = psycopg.Connection[Row]
 class Database:
     """API DSN must use the restricted application role, never the migration owner."""
 
-    url: str
+    url: str = field(repr=False)
 
     @contextmanager
     def transaction(self) -> Iterator[Connection]:
-        with psycopg.connect(self.url, row_factory=dict_row, connect_timeout=5) as connection:
+        with psycopg.connect(
+            self.url, row_factory=dict_row, connect_timeout=5, options="-c timezone=UTC"
+        ) as connection:
             yield connection
 
 

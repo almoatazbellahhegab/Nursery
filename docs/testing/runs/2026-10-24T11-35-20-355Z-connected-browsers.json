@@ -1,0 +1,30 @@
+{
+  "startedAt": "2026-10-24T11:35:20.355Z",
+  "completedAt": "2026-10-24T11:35:58.044Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "result": "Fail",
+  "results": [
+    {
+      "id": "CONNECTED-WEB-SIGNIN-AND-PERSIST",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-FLUTTER-SHARED-STATE",
+      "result": "Fail",
+      "detail": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Check out', exact: true }) to be visible\u001b[22m\n"
+    },
+    {
+      "id": "CONNECTED-MANAGER-CORRECTION-AND-REPORT",
+      "result": "Fail",
+      "detail": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "id": "CONNECTED-ARABIC-AND-PARENT-DENIAL",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Real compiled Next.js and Flutter web against PostgreSQL-backed API; Windows Chrome plus mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

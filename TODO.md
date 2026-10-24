@@ -2,6 +2,21 @@
 
 ## Latest execution override
 
+### Connected delivery progress
+
+- [x] Real PostgreSQL 18.6 dev/test, Alembic migrations and restricted RLS role.
+- [x] Real password/session identity, current tenant/role/branch and revocation checks.
+- [x] Transactional staff attendance/corrections/receipt/audit API and daily report.
+- [x] Connected Next.js and Flutter staff journeys with shared persisted state.
+- [x] 232 backend scenarios, eight Flutter tests, build/quality checks and connected browser groups.
+- [x] Actual API integration coverage of TC-FEAT-012-01, 02 and 03 (UAT not accepted).
+- [ ] Finish profile/account/child/classroom onboarding and privileged MFA.
+- [ ] Harden session-restore races, generated contract clients and large-data pagination.
+- [ ] Implement/test the remaining original product features and all S04 modules sequentially.
+
+Earlier review-blocked and domain-only descriptions below are historical under
+the explicit override. The connected staff increment is not the final product.
+
 User explicitly waived the pending reviews for implementation/testing:
 `please skip this review and complete implementation and testing of the final product`.
 Do not re-request specialist-review evidence as a development prerequisite.

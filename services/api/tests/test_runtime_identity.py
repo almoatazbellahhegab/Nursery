@@ -1,69 +1,21 @@
-"""Real PostgreSQL identity/RLS integration; refuses to reset anything but nursery_test."""
-
-import json
-from collections.abc import Iterator
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any
+"""Real PostgreSQL identity and tenant isolation integration tests."""
 
 import psycopg
 import pytest
-from fastapi import FastAPI
-from fastapi.testclient import TestClient
-
-from nursery_api.runtime.api import configure_runtime
-from nursery_api.runtime.bootstrap import identifier, seed_workspace
-from nursery_api.runtime.database import Database, set_context
-
-ROOT = Path(__file__).resolve().parents[3]
-
-
-@dataclass
-class Workspace:
-    client: TestClient
-    database: Database
-    owner_url: str = field(repr=False)
-    accounts: dict[str, str] = field(repr=False)
-
-    def login(self, role: str = "administrator", tenant: str = "garden") -> dict[str, Any]:
-        email = f"{role}@{tenant}.example.test"
-        response = self.client.post(
-            "/api/v1/auth/login", json={"email": email, "password": self.accounts[email]}
-        )
-        assert response.status_code == 200
-        data: dict[str, Any] = response.json()
-        self.client.headers["x-csrf-token"] = data["csrf_token"]
-        return data
-
-
-@pytest.fixture
-def workspace() -> Iterator[Workspace]:
-    runtime_file = ROOT / ".tools/database-runtime.json"
-    if not runtime_file.exists():
-        pytest.skip("Owned PostgreSQL setup required: tools/setup-local-database.py")
-    runtime = json.loads(runtime_file.read_text())
-    with psycopg.connect(runtime["test_owner_url"]) as connection:
-        database = connection.execute("SELECT current_database()").fetchone()
-        if database != ("nursery_test",):
-            raise RuntimeError("Refusing to reset a database other than the owned nursery_test")
-        connection.execute("""TRUNCATE app.audit,app.sessions,app.login_limits,app.employee_assignments,
-            app.employees,app.branch_memberships,app.memberships,app.branches,app.users,
-            app.organizations CASCADE""")
-        seed_workspace(connection, ROOT / ".tools/test-accounts.json")
-    accounts = json.loads((ROOT / ".tools/test-accounts.json").read_text())
-    app = FastAPI()
-    configure_runtime(app, runtime["test_url"], ["http://localhost:3000"], False)
-    with TestClient(app) as client:
-        client.headers["origin"] = "http://localhost:3000"
-        yield Workspace(client, Database(runtime["test_url"]), runtime["test_owner_url"], accounts)
+from conftest import Workspace
+from nursery_api.runtime.bootstrap import identifier
+from nursery_api.runtime.database import set_context
 
 
 def test_identity_001_password_session_and_database_role(workspace: Workspace) -> None:
+    if "postgresql" in repr(workspace.database):
+        pytest.fail("Database representation must redact connection credentials")
     data = workspace.login()
     assert data["role"] == "administrator"
     assert len(data["branches"]) == 2
     assert workspace.client.get("/api/v1/auth/me").status_code == 200
     with workspace.database.transaction() as connection:
+        assert connection.execute("SHOW timezone").fetchone() == {"TimeZone": "UTC"}
         role = connection.execute(
             "SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname=current_user"
         ).fetchone()

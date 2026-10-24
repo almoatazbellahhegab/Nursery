@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-10-24T11:39:57.711Z",
+  "completedAt": "2026-10-24T11:40:38.059Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "result": "Fail",
+  "results": [
+    {
+      "id": "CONNECTED-WEB-SIGNIN-AND-PERSIST",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-FLUTTER-SHARED-STATE",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-MANAGER-CORRECTION-AND-REPORT",
+      "result": "Fail",
+      "detail": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Record', { exact: true })\u001b[22m\n"
+    },
+    {
+      "id": "CONNECTED-ARABIC-AND-PARENT-DENIAL",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Real compiled Next.js and Flutter web against PostgreSQL-backed API; Windows Chrome plus mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

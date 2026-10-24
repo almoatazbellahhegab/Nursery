@@ -1,0 +1,30 @@
+{
+  "startedAt": "2026-10-24T12:10:29.787Z",
+  "completedAt": "2026-10-24T12:10:41.716Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "result": "Fail",
+  "results": [
+    {
+      "id": "CONNECTED-WEB-SIGNIN-AND-PERSIST",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-FLUTTER-SHARED-STATE",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-MANAGER-CORRECTION-AND-REPORT",
+      "result": "Fail",
+      "detail": "locator.waitFor: Error: strict mode violation: getByText('Confirmed against the staff register') resolved to 2 elements:\n    1) <p>…</p> aka getByText('24 Oct 2026, 15:10 → 24 Oct')\n    2) <p>…</p> aka getByText('24 Oct 2026, 14:52 → 24 Oct')\n\nCall log:\n\u001b[2m  - waiting for getByText('Confirmed against the staff register') to be visible\u001b[22m\n"
+    },
+    {
+      "id": "CONNECTED-ARABIC-AND-PARENT-DENIAL",
+      "result": "Fail",
+      "detail": "The input did not match the regular expression /حضور الموظفين/. Input:\n\n'- heading \"الحضانة\" [level=2]\\n' +\n  '- button \"English\"\\n' +\n  '- button \"تسجيل الخروج\"\\n' +\n  '- group:\\n' +\n  '  - text: Attendance saved.\\n' +\n  '  - button \"الفرع Maadi\"\\n' +\n  '  - button \"تحديث\"\\n' +\n  '  - button \"التقرير اليومي\"\\n' +\n  '  - group \"Teacher Demo لم يسجل الحضور\":\\n' +\n  '    - button \"تسجيل الحضور\"\\n' +\n  '    - button \"السجل\"'\n"
+    }
+  ],
+  "scope": "Real compiled Next.js and Flutter web against PostgreSQL-backed API; Windows Chrome plus mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

@@ -3,7 +3,7 @@
   "activeFeature": "FEAT-012",
   "branch": "feat/FEAT-012-staff-attendance",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - staff exact-retry integrity verified; full S04 completion awaits original specialist gates, predecessors and operational integration",
+  "status": "In progress - connected PostgreSQL staff API and Next.js/Flutter journeys verified; continuing unfinished final-product scope under explicit review waiver",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "sprintThreeAcceptance": "Incomplete and unaccepted; committed scope pushed and unfinished work deferred by explicit Sprint 4 start instruction",
@@ -15,24 +15,30 @@
     "S02",
     "S03"
   ],
-  "policyDecision": "S01-S03 revision 3 product directions remain approved. Staff correction/access/report rules are not inferred from child DEC-06; original specialist gates and S04 governed-module approvals remain open",
+  "policyDecision": "User explicitly waived outstanding reviews for implementation/testing. Preserve S01-S03 revision 3 approvals and document additional implementation defaults; no specialist signoff or UAT acceptance is claimed",
   "operationalDependencies": [
     "FEAT-010 Staff Profiles and Assignments",
     "authoritative identity, employee status and branch/action permission",
     "approved staff correction, sensitive-field access and report rules",
     "PostgreSQL tenant constraints/RLS, organization-wide employee locks, atomic event/receipt/audit"
   ],
-  "sourceAcceptanceStatus": "Not run",
-  "implementedIncrement": "Opaque staff check-in/out plus exact trusted-receipt replay preserving original session/event; current activity/action/scope/expiry and receipt/current-state/UTC integrity checks. No staff policy defaults, actual authentication, database or operational API/UI",
-  "domainVerification": "204 pytest scenarios: 67 staff, 58 admissions appointment, 50 admissions stage/retry, 26 child attendance, three health/route guards; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T09-29-04-273Z-staff-attendance.json",
+  "sourceAcceptanceStatus": "API integration passed; UAT pending",
+  "sourceCaseExecution": [
+    {"caseId":"TC-FEAT-012-01","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_001_active_employee_checkin_is_persisted_and_audited","uatAccepted":false},
+    {"caseId":"TC-FEAT-012-02","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_002_duplicate_and_exact_retry_do_not_create_another_open_record","uatAccepted":false},
+    {"caseId":"TC-FEAT-012-03","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_003_manager_correction_preserves_original_new_actor_time_and_reason","uatAccepted":false}
+  ],
+  "implementedIncrement": "Real PostgreSQL identity/RLS and employee/session authorization; atomic staff presence/event/correction/receipt/audit API; connected Next.js/Flutter sign-in, branches, attendance, history, correction/report and Arabic. Seeded profiles are authoritative; onboarding/MFA and remaining original features still unfinished",
+  "domainVerification": "232 backend scenarios: 204 prior plus 14 identity/RLS and 14 staff API/PostgreSQL; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T11-27-57-018Z-runtime.json",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false,
   "pushStatus": "S03 through 1d8c766 and four new retained work branches pushed on 2026-10-24. S04 and FEAT-012 remain local; no S04 push authorized",
-  "clientVerification": "Existing demo web/mobile builds and prior emulated browser evidence unchanged; no connected staff attendance journey. Human Windows, physical Safari and native iPhone UAT pending",
+  "clientVerification": "Next.js types/lint/format/build/audit pass; Flutter format/analyzer/eight tests and web build pass. Four real connected browser groups pass: persistence, cross-client state, correction/report, Arabic/access denial. Screenshots inspected. Human/physical/native UAT pending",
   "nextSprintReadiness": "S04 started explicitly; FEAT-012 is the sole active feature. Medical, transport, KPI, community and commerce approvals/prerequisites remain unchanged",
   "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md revision 3 retained; staff-specific readiness and limits in docs/delivery/S04-FEAT-012-READINESS.md",
   "priorSprintCarryover": "docs/delivery/S03-TODO.md",
-  "scopeAuthorization": "User: complete sprint 4 development. Authorizes pursuing unchanged S04 scope; does not supply the specialist-approved policy/design evidence required by original gates or release/UAT acceptance",
+  "scopeAuthorization": "User: please skip this review and complete implementation and testing of the final product. Explicit review-gate prerequisite override is recorded in AGENTS.md; original specifications retained, no extra push/deployment/UAT acceptance",
   "completionChecklist": "docs/delivery/S04-COMPLETION.md; all six features, 29 tasks, five gates and 25 source cases retained; required owner/document evidence requested and not yet supplied",
-  "databaseTestEnvironment": "Read-only command/service checks found no PostgreSQL or Docker; no real database integration executed"
+  "databaseTestEnvironment": "Owned PostgreSQL 18.6 on loopback 55432 with separate dev/test databases, Alembic revisions 0001/0002 and a NOSUPERUSER/NOBYPASSRLS runtime role; credentials generated locally and ignored",
+  "reviewGateOverride": {"date":"2026-10-24","scope":"implementation and automated testing","specialistApproved":false,"userInstruction":"please skip this review and complete implementation and testing of the final product"}
 }

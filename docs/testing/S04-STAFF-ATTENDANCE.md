@@ -1,4 +1,54 @@
-# Sprint 4 staff attendance — initial domain evidence
+# Sprint 4 staff attendance — connected implementation and evidence
+
+## Connected implementation — review waiver applied
+
+The user's explicit instruction to skip outstanding reviews supersedes the
+historical gate-blocked descriptions below for development/testing. Staff now
+has real PostgreSQL state, immutable events/corrections, actor-scoped durable
+receipts and atomic audit. Employees and assignments are loaded from authoritative
+tables; roles, organization, session and scope are resolved per request. Parent/
+finance accounts are denied; teachers see only themselves; managers see assigned
+branches; organization administrators see their organization. No client role
+selector is a permission boundary.
+
+Implementation defaults: managers/admins can correct another employee's record
+within seven days of recording, with a mandatory reason and timeline-order checks.
+Original facts remain immutable, and reports apply the newest correction. There
+is no self-correction, payroll, overtime or leave calculation. Branch day boundaries
+use Africa/Cairo, stored/returned instants are UTC. Histories and reports are
+bounded and expose truncation flags; large-history/pagination refinement remains.
+
+The compiled Next.js root and Flutter root now sign into the same API/database.
+Both support branch selection, check-in/out, history, manager corrections, daily
+report and English/Arabic. Fictional presentation is separate at web `/demo` and
+Flutter `?demo=true`; existing `?view=parent/teacher` remain fictional demo links.
+
+| Verification | Result / evidence |
+| --- | --- |
+| 232 scenarios: 204 prior, 14 identity/RLS, 14 staff API/PostgreSQL | [Pass](runs/2026-10-24T11-27-57-018Z-runtime.json) |
+| Ruff lint/format, strict mypy, dependency consistency | Same passing runtime run |
+| Next.js types/lint/format/build and npm audit (zero reported vulnerabilities) | [Pass](runs/2026-10-24T11-43-50-863Z-clients.json) |
+| Flutter format/analyzer and eight tests | [Pass](runs/2026-10-24T11-43-21-695Z-clients.json) |
+| Flutter web build | Pass in [retained run](runs/2026-10-24T11-28-07-768Z-clients.json); that run's test-style lint findings were fixed before final passing checks |
+| Connected web reload persistence, Flutter shared state, manager correction/report, Arabic and parent denial | [Four groups pass](runs/2026-10-24T11-52-41-195Z-connected-browsers.json) |
+| Screenshot inspection | Desktop English, desktop Arabic and mobile staff screens inspected; readable/no visible clipping |
+
+TC-FEAT-012-01/02/03 now have **passing actual API integration coverage** through
+STAFF-API-001/002/003, with extra race/rollback/RLS/revocation scenarios. This does
+not accept UAT. Stable original source definitions/IDs remain unchanged; historical
+Not run labels below refer to the earlier domain-only increments.
+
+Profile/organization account onboarding, MFA, broader policy configuration,
+generated contract clients, large-history pagination and the remaining product
+features are unfinished. Existing fictional employee profiles make this connected
+journey testable, but do not complete all predecessor features. Physical iPhone
+Safari, signed native iPhone and human Windows/Arabic acceptance remain pending.
+Earlier failed client/browser runs are retained with defects described in DEFECTS.md.
+
+[All nine fictional-demo regression groups pass](runs/2026-10-24T12-06-08-668Z-demo-browsers.json),
+including the corrected new-port LAN/static checks. [Four source/review checks
+pass](runs/2026-10-24T12-06-07-688Z-unit.json); the source-case execution overlay
+now verifies actual passing artifact/test names without marking UAT accepted.
 
 ## Latest increment — trusted retry integrity
 

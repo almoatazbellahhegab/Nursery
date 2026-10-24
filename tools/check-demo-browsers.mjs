@@ -1,4 +1,4 @@
-﻿/** End-to-end sales demo scenarios; no production acceptance. */
+/** End-to-end sales demo scenarios; no production acceptance. */
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs/promises';
@@ -27,7 +27,7 @@ const waitForAria=async(page,pattern)=>{
 };
 try{
  await check('DEMO-WEB-BASELINE',async()=>{
-  assert.equal((await web.goto('http://localhost:3000')).status(),200);
+  assert.equal((await web.goto('http://localhost:3300/demo')).status(),200);
   await web.getByRole('heading',{name:'Your nursery day, all together.'}).waitFor();
   assert.equal(await web.getByTestId('present-total').innerText(),'8 / 12');
   assert.equal(await web.locator('.scenario-card').count(),4);
@@ -85,7 +85,7 @@ try{
   await web.screenshot({path:path.join(output,'demo-web-narrow-ar.png'),fullPage:true});
  });
  await check('DEMO-MOBILE-PARENT-STAFF-RESET',async()=>{
-  assert.equal((await mobile.goto('http://localhost:3200')).status(),200);
+  assert.equal((await mobile.goto('http://localhost:3400/?demo=true')).status(),200);
   await mobile.locator('flutter-view').waitFor({state:'attached',timeout:60000});
   const placeholder=mobile.locator('flt-semantics-placeholder');if(await placeholder.count())await placeholder.evaluate(e=>e.click());
   await mobile.getByRole('button',{name:'العربية',exact:true}).waitFor({timeout:30000});
@@ -110,12 +110,12 @@ try{
   assert.match(await mobile.locator('body').ariaSnapshot(),/آدم التجريبي|أقرب إلى طفلك/);
   await mobile.screenshot({path:path.join(output,'demo-mobile-parent-ar.png'),fullPage:true});
   assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-  const font=await mobile.request.get('http://localhost:3200/assets/assets/fonts/NotoNaskhArabic-Regular.ttf');assert.equal(font.status(),200);
+  const font=await mobile.request.get('http://localhost:3400/assets/assets/fonts/NotoNaskhArabic-Regular.ttf');assert.equal(font.status(),200);
   assert.deepEqual(errors,[]);
  });
  await check('DEMO-MOBILE-DIRECT-VIEWS',async()=>{
   for(const view of ['parent','teacher']){
-   await mobile.goto('http://localhost:3200/?view='+view);
+   await mobile.goto('http://localhost:3400/?view='+view);
    await mobile.locator('flutter-view').waitFor({state:'attached',timeout:60000});
    const placeholder=mobile.locator('flt-semantics-placeholder');
    if(await placeholder.count())await placeholder.evaluate(e=>e.click());
@@ -130,8 +130,8 @@ try{
  await check('DEMO-LINKS-STATIC-BOUNDARIES',async()=>{
   const address=Object.entries(os.networkInterfaces()).flatMap(([name,values])=>(values??[]).filter(a=>a.family==='IPv4'&&!a.internal&&!/virtual|vethernet/i.test(name)).map(a=>a.address))[0];
   assert.ok(address);
-  for(const port of [3000,3200])assert.equal((await fetch('http://'+address+':'+port)).status,200);
-  for(const route of ['/.git/config','/..%2F..%2Fpackage.json'])assert.equal((await mobile.request.get('http://localhost:3200'+route)).status(),404);
+  for(const port of [3300,3400])assert.equal((await fetch('http://'+address+':'+port)).status,200);
+  for(const route of ['/.git/config','/..%2F..%2Fpackage.json'])assert.equal((await mobile.request.get('http://localhost:3400'+route)).status(),404);
  });
 }finally{
  for(const [name,page]of [['web',web],['mobile',mobile]])await fs.writeFile(path.join(output,'demo-'+name+'-aria.txt'),await page.locator('body').ariaSnapshot());

@@ -1,5 +1,18 @@
 # Sprint 1 defect log
 
+## Connected runtime fixes — 2026-10-24
+
+| ID | Finding | Resolution and verification |
+| --- | --- | --- |
+| DEF-S04-001 | API correction responses inherited the database host's local timezone while first-write responses used UTC | Every app connection now sets UTC; real correction/source integration and browser round-trip pass. |
+| DEF-S04-002 | Failed-test fixture representation printed a generated local database credential | Redact Database.url from representation, rotate the local application credential, and add representation regression coverage. The old credential is invalid; no credential value was written to tracked evidence. |
+| DEF-S04-003 | Flutter browser automation filled accessibility mirror inputs without reliably updating framework controllers | Focus fields, await framework frames and type at an ordinary keyboard pace. Connected cross-client check-in/out passes; retain earlier failed runs. |
+| DEF-S04-004 | Nested select labels were not found reliably by exact accessible names | Add explicit localized ARIA labels to Branch and Record; manager correction/report browser journey passes. |
+
+These closures cover the tested environment, not human/physical Safari/native
+acceptance. Credentials/DSNs and unsanitized browser request bodies are excluded
+from tracked evidence; browser diagnostics redact generated account passwords.
+
 | ID | Finding | Resolution | Regression and status |
 | --- | --- | --- | --- |
 | DEF-S01-001 | Browser harness attempted an inline stylesheet blocked by the portal CSP | Keep CSP; use half-width responsive reflow check. Manual browser 200% zoom remains pending. | RV-005 rerun passes; initial failed run retained. Closed harness issue. |

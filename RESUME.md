@@ -1,5 +1,49 @@
 # Session checkpoint and resume instructions
 
+## Current connected-work checkpoint — continue the final product
+
+The user's active instruction remains: skip outstanding reviews and complete
+implementation/testing of the final product. The explicit AGENTS.md override
+applies; do not stop for the same review evidence or call another domain-only
+increment the product. Work is ongoing, not complete. Original 41-feature scope
+and identifiers remain. No new push or deployment approval is implied.
+
+Foundation commit `d9bf7a5` is integrated locally. Current branch
+`feat/FEAT-012-staff-attendance` has the connected staff increment awaiting commit:
+PostgreSQL `0002_staff_attendance` migration, atomic presence/events/corrections/
+receipt/audit API, current identity/branch/employee authorization, UTC responses,
+real Next.js and Flutter login/attendance/history/corrections/reports and Arabic.
+All three FEAT-012 source API cases now have actual passing integration coverage,
+not UAT acceptance. Do not overwrite installed migration 0001/0002; use new revisions.
+
+Evidence: 232 backend scenarios and coding checks in
+`2026-10-24T11-27-57-018Z-runtime.json`; Next types/lint/format/build/audit pass in
+`2026-10-24T11-43-50-863Z-clients.json`; Flutter eight tests/analyzer/format pass in
+`2026-10-24T11-43-21-695Z-clients.json`, with successful same-source web build in
+`2026-10-24T11-28-07-768Z-clients.json`. Four connected browser groups pass in
+`2026-10-24T12-14-27-060Z-connected-browsers.json`; inspected desktop English,
+desktop Arabic and mobile English/Arabic screenshots. Earlier failed runs retained.
+All nine demo regression groups pass in `2026-10-24T12-06-08-668Z-demo-browsers.json`.
+Four source/review checks pass in `2026-10-24T12-06-07-688Z-unit.json`.
+
+Current owned connected launcher: `19342`, web localhost:3300, Flutter
+localhost:3400, API :8000. Wi-Fi 192.168.8.154 at this checkpoint; physical phone
+access is not verified. Use `stop` on launcher stdin before rebuilding/restarting.
+Project PostgreSQL 18.6 is running on loopback 55432; dev/test databases are
+separate. Local credentials/DSNs remain only in ignored `.tools` files. A failed
+fixture repr exposed a generated DB credential; it was redacted, rotated and
+regression-tested. Never print these files or browser credential payloads.
+
+Next: save this tested staff increment on its retained branch and integrate
+locally; then continue real prerequisite/product features sequentially. Remaining
+work includes employee/account/child/classroom onboarding, privileged MFA,
+contract generation, pagination/large-history refinements, other S04 modules and
+deferred original product scope. Session restore races in both clients should be
+hardened before final product completion. Staff profile records currently come
+from authoritative seeded DB rows; profile management is not yet implemented.
+Physical/native/human UAT remains pending independently. Preserve the unrelated
+untracked attendance run; do not push S04 without explicit scope confirmation.
+
 ## Latest user override — implement the connected final product
 
 User: `please skip this review and complete implementation and testing of the

@@ -1,4 +1,4 @@
-"""Health-only FastAPI application; never returns tenant or child information."""
+"""Connected runtime when configured; health-only fallback without a database."""
 
 import os
 

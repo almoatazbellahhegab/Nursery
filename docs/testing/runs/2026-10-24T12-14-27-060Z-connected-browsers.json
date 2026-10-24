@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-24T12:14:27.060Z",
+  "completedAt": "2026-10-24T12:14:41.183Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "result": "Pass",
+  "results": [
+    {
+      "id": "CONNECTED-WEB-SIGNIN-AND-PERSIST",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-FLUTTER-SHARED-STATE",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-MANAGER-CORRECTION-AND-REPORT",
+      "result": "Pass"
+    },
+    {
+      "id": "CONNECTED-ARABIC-AND-PARENT-DENIAL",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Real compiled Next.js and Flutter web against PostgreSQL-backed API; Windows Chrome plus mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

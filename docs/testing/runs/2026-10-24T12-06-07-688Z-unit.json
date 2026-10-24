@@ -1,0 +1,46 @@
+{
+  "startedAt": "2026-10-24T12:06:07.688Z",
+  "completedAt": "2026-10-24T12:06:08.077Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "workingTreeChanges": "M README.md\n M RESUME.md\n M Start-Applications.cmd\n M TODO.md\n M apps/admin-web/README.md\n M apps/admin-web/app/demo-data.json\n M apps/admin-web/app/layout.tsx\n M apps/admin-web/app/messages.ts\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/admin-web/eslint.config.mjs\n M apps/admin-web/package-lock.json\n M apps/admin-web/package.json\n M apps/admin-web/tsconfig.json\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.lock\n M apps/mobile/pubspec.yaml\n M docs/delivery/S04-COMPLETION.md\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M docs/runbooks/connected-runtime.md\n M docs/testing/DEFECTS.md\n M docs/testing/S04-STAFF-ATTENDANCE.md\n M services/api/README.md\n M services/api/src/nursery_api/main.py\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/database.py\n M services/api/tests/test_runtime_identity.py\n M tests/system/review.test.mjs\n M tools/check-clients.mjs\n M tools/check-demo-browsers.mjs\n M tools/run-staff-attendance-checks.mjs\n M tools/serve-mobile.mjs\n?? Start-Connected.cmd\n?? apps/admin-web/.prettierrc.json\n?? apps/admin-web/app/demo-page.tsx\n?? apps/admin-web/app/demo/\n?? apps/admin-web/app/workspace.css\n?? apps/admin-web/next.config.ts\n?? apps/mobile/lib/runtime/\n?? apps/mobile/test/runtime_test.dart\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T11-19-21-486Z-clients.json\n?? docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json\n?? docs/testing/runs/2026-10-24T11-28-07-183Z-clients.json\n?? docs/testing/runs/2026-10-24T11-28-07-768Z-clients.json\n?? docs/testing/runs/2026-10-24T11-35-20-355Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-39-57-711Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-43-21-695Z-clients.json\n?? docs/testing/runs/2026-10-24T11-43-50-863Z-clients.json\n?? docs/testing/runs/2026-10-24T11-48-00-127Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-52-41-195Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-59-06-926Z-demo-browsers.json\n?? services/api/migrations/versions/0002_staff_attendance.py\n?? services/api/src/nursery_api/runtime/staff.py\n?? services/api/tests/conftest.py\n?? services/api/tests/test_runtime_staff.py\n?? tools/check-connected-browsers.mjs\n?? tools/rotate-local-db-credential.py\n?? tools/start-connected.mjs",
+  "environment": {
+    "node": "v20.11.1",
+    "platform": "win32"
+  },
+  "command": "node --test tests/system/review.test.mjs",
+  "result": "Pass",
+  "cases": [
+    {
+      "id": "RV-001",
+      "uat": [
+        "UAT-S01-04"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-002",
+      "uat": [
+        "UAT-S01-03"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-003",
+      "uat": [
+        "UAT-S01-05",
+        "UAT-S01-06"
+      ],
+      "result": "Pass"
+    },
+    {
+      "id": "RV-004",
+      "uat": [
+        "UAT-S01-05"
+      ],
+      "result": "Pass"
+    }
+  ],
+  "output": "TAP version 13\n# Subtest: RV-001 preserves every source feature, checklist item and acceptance case exactly once\nok 1 - RV-001 preserves every source feature, checklist item and acceptance case exactly once\n  ---\n  duration_ms: 24.3921\n  ...\n# Subtest: RV-002 requires matching bilingual keys and rejects blank translation entries\nok 2 - RV-002 requires matching bilingual keys and rejects blank translation entries\n  ---\n  duration_ms: 3.5652\n  ...\n# Subtest: RV-003 rejects unknown cases, oversized notes and misleading native passes\nok 3 - RV-003 rejects unknown cases, oversized notes and misleading native passes\n  ---\n  duration_ms: 0.2305\n  ...\n# Subtest: RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\nok 4 - RV-004 serves only explicit public routes and prevents cross-origin or invalid evidence writes\n  ---\n  duration_ms: 126.0387\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 258.4626\n",
+  "sourceProductTests": "Not run",
+  "userAcceptance": "Pending"
+}

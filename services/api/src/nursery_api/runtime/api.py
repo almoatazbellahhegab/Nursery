@@ -273,6 +273,9 @@ def configure_runtime(
         return result
 
     app.include_router(auth_router)
+    from .staff import router as staff_router
+
+    app.include_router(staff_router)
 
     @app.exception_handler(RequestValidationError)
     def safe_validation(request: Request, error: RequestValidationError) -> JSONResponse:

@@ -15,7 +15,20 @@ test('RV-001 preserves every source feature, checklist item and acceptance case 
   if (plan.execution) {
     assert.equal(plan.execution.featureConcurrencyLimit, 1);
     assert.ok(plan.features.some(f => f.id === plan.execution.activeFeature && f.sprint === plan.execution.activeSprint));
-    assert.equal(plan.execution.sourceAcceptanceStatus, 'Not run');
+    assert.ok(['Not run', 'API integration passed; UAT pending'].includes(plan.execution.sourceAcceptanceStatus));
+    if (plan.execution.sourceAcceptanceStatus === 'API integration passed; UAT pending') {
+      assert.ok(plan.execution.sourceCaseExecution.length > 0);
+      for (const run of plan.execution.sourceCaseExecution) {
+        assert.ok(plan.cases.some(item => item.id === run.caseId));
+        assert.equal(run.result, 'Pass');
+        assert.equal(run.level, 'API/PostgreSQL integration');
+        assert.equal(run.uatAccepted, false);
+        assert.match(run.evidence, /^docs\/testing\/runs\/[\w.-]+\.json$/);
+        const evidence = JSON.parse(await fs.readFile(path.join(root, run.evidence), 'utf8'));
+        assert.equal(evidence.result, 'Pass');
+        assert.ok(evidence.executedCases.includes(run.executedTest));
+      }
+    }
     assert.equal(typeof plan.execution.pushAuthorized, 'boolean');
     if (plan.execution.pushAuthorized) {
       const approvals = JSON.parse(await fs.readFile(path.join(root, 'docs/delivery/approvals.json'), 'utf8'));

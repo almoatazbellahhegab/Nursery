@@ -38,5 +38,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   await fs.access(path.join(root, 'index.html'));
   const server = createMobileServer();
   server.on('error', error => { console.error(error.message); process.exitCode = 1; });
-  server.listen(3200, '0.0.0.0', () => console.log('Flutter web application: http://localhost:3200'));
+  const port = Number(process.env.NURSERY_MOBILE_PORT ?? 3200);
+  server.listen(port, '0.0.0.0', () => console.log(`Flutter web application: http://localhost:${port}`));
 }

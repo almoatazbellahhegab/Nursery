@@ -1,0 +1,41 @@
+{
+  "startedAt": "2026-10-24T11:19:21.486Z",
+  "completedAt": "2026-10-24T11:22:01.098Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "workingTreeChanges": "M apps/admin-web/app/layout.tsx\n M apps/admin-web/app/page.tsx\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.lock\n M apps/mobile/pubspec.yaml\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/database.py\n M services/api/tests/test_runtime_identity.py\n M tools/serve-mobile.mjs\n?? Start-Connected.cmd\n?? apps/admin-web/app/demo-page.tsx\n?? apps/admin-web/app/demo/\n?? apps/admin-web/app/workspace.css\n?? apps/admin-web/next.config.ts\n?? apps/mobile/lib/runtime/\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? services/api/migrations/versions/0002_staff_attendance.py\n?? services/api/src/nursery_api/runtime/staff.py\n?? services/api/tests/conftest.py\n?? services/api/tests/test_runtime_staff.py\n?? tools/rotate-local-db-credential.py\n?? tools/start-connected.mjs",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-WEB-TYPES",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-LINT",
+      "result": "Fail",
+      "exitCode": 1,
+      "output": "\nC:\\Users\\localadmin\\Documents\\Nursery\\apps\\admin-web\\app\\page.tsx\n  239:9  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages\n\n✖ 1 problem (1 error, 0 warnings)\n\n"
+    },
+    {
+      "id": "APP-WEB-FORMAT",
+      "result": "Fail",
+      "exitCode": 1,
+      "output": "Checking formatting...\n[warn] app/demo-data.json\n[warn] app/messages.ts\n[warn] app/style.css\n[warn] eslint.config.mjs\n[warn] package-lock.json\n[warn] package.json\n[warn] README.md\n[warn] tsconfig.json\n[warn] Code style issues found in 8 files. Run Prettier with --write to fix.\n"
+    },
+    {
+      "id": "APP-WEB-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "▲ Next.js 16.4.2 (webpack)\n✓ Running next.config.ts took 997ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 23.5s\n  Running TypeScript ...\n  Finished TypeScript in 2.2s ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 1849ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n└ ○ /demo\n\n\n○  (Static)  prerendered as static content\n\n"
+    }
+  ],
+  "selection": "Web checks only",
+  "dependencyAudit": "Not rerun: dependency manifests unchanged; prior audit evidence retained",
+  "result": "Fail",
+  "scope": "Actual compiled public foundation shells only; operational workflows remain incomplete",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

@@ -1,5 +1,16 @@
 # API foundation
 
+## Latest connected runtime
+
+The configured API now provides PostgreSQL-backed identity/session/tenant access
+and transactional staff attendance, immutable corrections, receipts, audit and
+daily reports. Set NURSERY_DATABASE_URL to the restricted app role and explicit
+origins; without a configured database the app retains its health-only fallback.
+Use the root connected-runtime runbook and run-runtime-checks.mjs for real DB tests.
+The user's explicit review waiver permits continued implementation/testing;
+historical policy-blocked/unavailable descriptions below are superseded. MFA,
+onboarding and remaining product modules are still being developed.
+
 Health-only FastAPI scaffold. No production data model, authentication, database, authorization or audit implementation is present. Domain work is gated by the source decisions.
 
 Use Python 3.12 in a project virtual environment. Install the resolved development lock and local package as described below, then run Ruff, mypy and pytest; start the health-only API with `uvicorn nursery_api.main:app --app-dir src`.

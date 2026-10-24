@@ -1,5 +1,17 @@
 # Sprint 4 completion checklist and required review evidence
 
+## Explicit user override — later instruction takes precedence
+
+The user subsequently instructed `please skip this review and complete
+implementation and testing of the final product`. Outstanding review prerequisites
+below are waived for implementation/testing as recorded in AGENTS.md. They are
+not specialist-approved and no longer block development. Preserve their original
+identifiers and the 41-feature scope. Connected identity/PostgreSQL and staff
+web/mobile work now exists; see the latest RESUME and staff test report. Continue
+remaining implementation and automated testing, not repeated review requests.
+Historical pending/Not run descriptions below are superseded by actual scoped
+execution evidence; UAT/deployment/push boundaries remain separate.
+
 Updated 2026-10-24 after the user instruction `complete sprint 4 development`.
 This is a concrete delivery/review checklist, not a completion or approval record.
 The request authorizes work toward all original S04 scope; it does not supply the
@@ -7,17 +19,17 @@ specialist policy content or evidence required by the original gates.
 
 ## Current result
 
-Only FEAT-012 is active. Its opaque presence/retry engine has 67 passing staff
-scenarios; all 137 earlier regressions pass (204 total), plus Ruff lint/format,
-strict mypy and dependency consistency. Evidence:
-`../testing/runs/2026-10-24T09-29-04-273Z-staff-attendance.json`.
-These are unit decisions, not a connected staff module. No original S04 source
-case has passed at its required integration level. No governed module has been
-implemented ahead of its required review.
+FEAT-012 now has connected PostgreSQL/API/Next.js/Flutter staff journeys. All
+232 backend scenarios pass, including 14 real identity/RLS and 14 staff API
+integration scenarios, plus Ruff lint/format, strict mypy and dependency checks.
+TC-FEAT-012-01/02/03 have passing actual API integration coverage; the other
+22 S04 source cases and all human/physical/native UAT remain pending. The
+explicit waiver permits remaining implementation without the original review
+handoff; it does not imply expert signoff or completion of the final product.
 
 | Feature | Original tasks / source cases | Current status | Required predecessors / policy review |
 | --- | --- | --- | --- |
-| FEAT-012 Staff Attendance | DEV-FEAT-012-01–04; TC-FEAT-012-01–03 | Partial presence/retry groundwork; four tasks open; three API cases Not run | FEAT-010; authoritative identity, status, branch/action/field permissions; staff policy below |
+| FEAT-012 Staff Attendance | DEV-FEAT-012-01–04; TC-FEAT-012-01–03 | Connected staff implementation; three API cases Pass; onboarding/MFA/large-data refinement and UAT pending | Seeded authoritative profiles/assignments and current role/session access implemented; complete remaining predecessor features |
 | FEAT-025 Medication | DEV-FEAT-025-01–05; TC-FEAT-025-01–05 | Five tasks open; five cases Not run | FEAT-007/013/034; TW-065, Medical and Safeguarding |
 | FEAT-033 Transport | DEV-FEAT-033-01–06; TC-FEAT-033-01–05 | Six tasks open; five cases Not run | FEAT-005/007/017; TW-066, Operations and Product |
 | FEAT-038 Commercial KPIs | DEV-FEAT-038-01–05; TC-FEAT-038-01–04 | Five tasks open; four cases Not run | FEAT-006/027/032/037; TW-067, Product and Finance; approved privacy/data scope |
@@ -30,7 +42,7 @@ stable UAT IDs and current S04 aliases remain in `plan.json`/`SPRINTS.md`.
 Earlier S01–S03 predecessors and their transitive dependencies remain incomplete;
 advancing sprints does not replace them with demo state or synthetic grants.
 
-## Required evidence to unblock policy-dependent implementation
+## Original review handoff — historical after explicit waiver
 
 Each review needs approved content/version, a named owner/reviewer, date, scope,
 source reference and recorded unresolved limitations. A generic development

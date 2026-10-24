@@ -1,5 +1,15 @@
 # Sprint 4 preparation — FEAT-012 Staff Attendance
 
+## Connected implementation supersedes earlier preparation
+
+Following the explicit user review waiver, staff has real PostgreSQL transactions,
+current identity/assignment checks, immutable correction/receipt/audit and
+connected Next.js/Flutter workflows. Three source API cases pass at actual
+integration level; physical/native/human UAT is not accepted. See the current
+staff test report and RESUME. Earlier entry/gate-blocked checkboxes are history,
+not a reason to stop implementing the remaining product. Profile management,
+MFA and remaining module/prerequisite work still need completion.
+
 ## Latest state — Sprint 4 started 2026-10-24
 
 User instruction: `push and start development of sprint 4`. S03 through

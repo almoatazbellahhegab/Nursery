@@ -1,5 +1,18 @@
 # Nursery
 
+## Connected workspace
+
+`Start-Applications.cmd` now opens the connected runtime: Next.js on port 3300,
+Flutter web on 3400 and FastAPI on 8000, backed by project-owned PostgreSQL.
+Staff attendance, history, manager corrections and daily reports share real
+persistent state across the clients. Accounts and credentials are generated in
+ignored local files; see [setup and verification](docs/runbooks/connected-runtime.md).
+
+The original fictional presentation remains available at web `/demo` and mobile
+`?demo=true` (including existing parent/teacher demo links). The final product is
+still being implemented; this connected increment does not complete all 41
+features or constitute deployment, specialist signoff or physical/native UAT.
+
 ## Client demonstration
 
 The actual web and mobile apps now include a fictional Little Garden nursery

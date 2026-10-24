@@ -5,9 +5,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'demo_data.dart';
 import 'l10n/app_localizations.dart';
+import 'runtime/workspace.dart';
 
 void main() => runApp(
-  NurseryApp(initialTeacher: Uri.base.queryParameters['view'] == 'teacher'),
+  Uri.base.queryParameters.containsKey('view') ||
+          Uri.base.queryParameters['demo'] == 'true'
+      ? NurseryApp(
+          initialTeacher: Uri.base.queryParameters['view'] == 'teacher',
+        )
+      : const ConnectedApp(),
 );
 
 class NurseryApp extends StatefulWidget {

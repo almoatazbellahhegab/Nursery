@@ -1,837 +1,593 @@
-﻿"use client";
-/** FEAT-041 fictional presentation demo. Mutations stay in this page. */
-import { useEffect, useState } from "react";
-import seed from "./demo-data.json";
-type Tab =
-  | "overview"
-  | "classrooms"
-  | "attendance"
-  | "timeline"
-  | "billing"
-  | "admissions";
-type Label = { en: string; ar: string };
-const tabs: { id: Tab; en: string; ar: string }[] = [
-  { id: "overview", en: "Overview", ar: "نظرة عامة" },
-  { id: "classrooms", en: "Classrooms", ar: "الفصول" },
-  { id: "attendance", en: "Attendance", ar: "الحضور" },
-  { id: "timeline", en: "Daily care", ar: "الرعاية اليومية" },
-  { id: "billing", en: "Fees & follow-up", ar: "الرسوم والمتابعة" },
-  { id: "admissions", en: "Admissions", ar: "القبول" },
-];
-export default function Page() {
-  const [locale, setLocale] = useState<"en" | "ar">("en");
-  const [data, setData] = useState(() => structuredClone(seed));
-  const [branchId, setBranch] = useState("B001");
-  const [tab, setTab] = useState<Tab>("overview");
-  const [selectedChild, setChild] = useState("C001");
-  const [search, setSearch] = useState("");
-  const [unpaidOnly, setUnpaid] = useState(true);
-  const [reminders, setReminders] = useState<string[]>([]);
-  const [previewInvoice, setPreview] = useState<string | null>(null);
-  const [guide, setGuide] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState("");
-  const t = (en: string, ar: string) => (locale === "ar" ? ar : en);
-  const label = (v: Label) => v[locale];
-  const money = (minor: number) =>
-    new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
-      style: "currency",
-      currency: "EGP",
-      maximumFractionDigits: 0,
-    }).format(minor / 100);
-  const children = data.children.filter((c) => c.branchId === branchId);
-  const rooms = data.classrooms.filter((c) => c.branchId === branchId);
-  const invoices = data.invoices.filter((c) => c.branchId === branchId);
-  const leads = data.leads.filter((c) => c.branchId === branchId);
-  const present = children.filter((c) => c.status === "present").length;
-  const outstanding = invoices.reduce(
-    (s, i) => s + i.amountMinor - i.paidMinor,
-    0,
+"use client";
+/** Connected workspace; authorization and filtering remain server-owned. */
+import { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
+
+type Profile = {
+  role: string;
+  csrf_token: string;
+  organization: { name: string };
+  branches: { id: string; name: string }[];
+};
+type Employee = {
+  id: string;
+  display_name: string;
+  active: boolean;
+  version: number;
+  open_branch_id: string | null;
+  open_session_id: string | null;
+};
+type Event = {
+  id: string;
+  action: string;
+  occurred_at: string;
+  effective_at: string;
+};
+type History = {
+  events: Event[];
+  corrections: {
+    id: string;
+    original_at: string;
+    corrected_at: string;
+    reason: string;
+  }[];
+  truncated: boolean;
+};
+type Report = {
+  timezone: string;
+  items: {
+    employee_id: string;
+    display_name: string;
+    seconds_present: number;
+    data_truncated: boolean;
+  }[];
+};
+
+function operationId() {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  bytes[6] = (bytes[6] & 15) | 64;
+  bytes[8] = (bytes[8] & 63) | 128;
+  const text = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join(
+    "",
   );
-  const child = children.find((c) => c.id === selectedChild) ?? children[0];
-  const branch = data.branches.find((b) => b.id === branchId)!;
-  const scenario = data.scenarios.find((s) => s.id === guide);
-  const invoice = invoices.find((i) => i.id === previewInvoice);
-  const status = (v: string) =>
-    ({
-      present: t("Here now", "حاضر الآن"),
-      expected: t("Expected", "متوقع وصوله"),
-      home: t("Went home", "غادر"),
-      absent: t("Absent", "غائب"),
-    })[v];
+  return `${text.slice(0, 8)}-${text.slice(8, 12)}-${text.slice(12, 16)}-${text.slice(16, 20)}-${text.slice(20)}`;
+}
+
+export default function Workspace() {
+  const [ar, setAr] = useState(false);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [branch, setBranch] = useState("");
+  const [rows, setRows] = useState<Employee[]>([]);
+  const [selected, setSelected] = useState<Employee | null>(null);
+  const [history, setHistory] = useState<History | null>(null);
+  const [report, setReport] = useState<Report | null>(null);
+  const [day, setDay] = useState(() =>
+    new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Cairo" }).format(
+      new Date(),
+    ),
+  );
+  const [search, setSearch] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [eventId, setEventId] = useState("");
+  const [corrected, setCorrected] = useState("");
+  const [reason, setReason] = useState("");
+  const t = (en: string, arabic: string) => (ar ? arabic : en);
+  const canUseStaff =
+    !!profile &&
+    ["administrator", "branch_manager", "teacher"].includes(profile.role);
+  const canCorrect =
+    !!profile && ["administrator", "branch_manager"].includes(profile.role);
+  const readable = (value: string) =>
+    new Intl.DateTimeFormat(ar ? "ar-EG" : "en-GB", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "Africa/Cairo",
+    }).format(new Date(value));
+
+  async function api<T>(path: string, body?: object): Promise<T> {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (body) {
+      headers["X-CSRF-Token"] = profile?.csrf_token ?? "";
+      headers["Idempotency-Key"] = operationId();
+    }
+    const response = await fetch(`/api/v1/${path}`, {
+      method: body ? "POST" : "GET",
+      headers,
+      credentials: "same-origin",
+      body: body ? JSON.stringify(body) : undefined,
+      signal: AbortSignal.timeout(15000),
+    });
+    if (response.status === 401 && path !== "auth/login") {
+      setProfile(null);
+      setRows([]);
+    }
+    const data = response.status === 204 ? {} : await response.json();
+    if (!response.ok) throw new Error(data.code ?? "service_unavailable");
+    return data as T;
+  }
+  async function run(action: () => Promise<void>) {
+    setBusy(true);
+    setMessage("");
+    try {
+      await action();
+    } catch (error) {
+      const code = error instanceof Error ? error.message : "";
+      setMessage(
+        code === "invalid_credentials"
+          ? t("Check your email and password.", "تحقق من البريد وكلمة المرور.")
+          : code === "staff_attendance_version_conflict"
+            ? t(
+                "The record changed. Refresh and try again.",
+                "تغير السجل. حدّث البيانات وحاول مجدداً.",
+              )
+            : code === "staff_correction_denied"
+              ? t(
+                  "You cannot correct your own record or this employee.",
+                  "لا يمكنك تصحيح سجلك أو سجل هذا الموظف.",
+                )
+              : t(
+                  "The action could not be completed. Refresh and try again.",
+                  "تعذر إتمام الإجراء. حدّث البيانات وحاول مجدداً.",
+                ),
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function load(): Promise<Employee[]> {
+    const data = await api<{ items: Employee[] }>(
+      `staff-attendance/employees?branch_id=${branch}`,
+    );
+    setRows(data.items);
+    return data.items;
+  }
+  async function showHistory(employee: Employee) {
+    setHistory(null);
+    setSelected(employee);
+    setEventId("");
+    setCorrected("");
+    setReason("");
+    setHistory(
+      await api<History>(
+        `staff-attendance/history?branch_id=${branch}&employee_id=${employee.id}`,
+      ),
+    );
+  }
   useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-    document.title =
-      locale === "ar"
-        ? "الحديقة الصغيرة | عرض تجريبي"
-        : "Little Garden | Client demo";
-  }, [locale]);
-  function reset() {
-    setData(structuredClone(seed));
-    setReminders([]);
-    setPreview(null);
-    setGuide(null);
-    setBranch("B001");
-    setChild("C001");
-    setSearch("");
-    setTab("overview");
-    setUnpaid(true);
-    setFeedback(
-      t(
-        "Demo restored. You can repeat every story.",
-        "أعيد ضبط العرض. يمكنك تكرار كل قصة.",
-      ),
-    );
+    document.documentElement.lang = ar ? "ar" : "en";
+    document.documentElement.dir = ar ? "rtl" : "ltr";
+  }, [ar]);
+  useEffect(() => {
+    let active = true;
+    fetch("/api/v1/auth/me", { credentials: "same-origin" })
+      .then(async (response) => {
+        if (response.ok && active) {
+          const data: Profile = await response.json();
+          setProfile(data);
+          setBranch(data.branches[0]?.id ?? "");
+        }
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+  useEffect(() => {
+    let active = true;
+    if (canUseStaff && branch)
+      fetch(`/api/v1/staff-attendance/employees?branch_id=${branch}`, {
+        credentials: "same-origin",
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error("load_failed");
+          const data: { items: Employee[] } = await response.json();
+          if (active) setRows(data.items);
+        })
+        .catch(() => {
+          if (active)
+            setMessage("Unable to load attendance / تعذر تحميل الحضور");
+        });
+    return () => {
+      active = false;
+    };
+  }, [canUseStaff, branch]);
+  function signIn(event: FormEvent) {
+    event.preventDefault();
+    void run(async () => {
+      const data = await api<Profile>("auth/login", { email, password });
+      setPassword("");
+      setProfile(data);
+      setBranch(data.branches[0]?.id ?? "");
+    });
   }
-  function startStory(id: string, nextTab: Tab) {
-    setBranch("B001");
-    setChild("C001");
-    setSearch("");
-    setPreview(null);
-    setFeedback("");
-    setGuide(id);
-    setTab(nextTab);
+  function change(employee: Employee) {
+    void run(async () => {
+      await api("staff-attendance/transitions", {
+        employee_id: employee.id,
+        branch_id: branch,
+        action: employee.open_session_id ? "check_out" : "check_in",
+        expected_version: employee.version,
+      });
+      const updated = await load();
+      if (selected?.id === employee.id)
+        await showHistory(
+          updated.find((item) => item.id === employee.id) ?? employee,
+        );
+      setMessage(t("Attendance saved.", "تم حفظ الحضور."));
+    });
   }
-  function attendance(id: string) {
-    const target = data.children.find((c) => c.id === id)!;
-    const arriving = target.status === "expected";
-    setData((current) => ({
-      ...current,
-      children: current.children.map((c) =>
-        c.id === id ? { ...c, status: arriving ? "present" : "home" } : c,
-      ),
-      events: [
-        ...current.events,
-        {
-          id: "demo-" + current.events.length,
-          childId: id,
-          branchId,
-          time: "11:35",
-          kind: arriving ? "arrival" : "departure",
-          detail: arriving
-            ? {
-                en: "Arrival recorded in the demo.",
-                ar: "سُجل الوصول في العرض التجريبي.",
-              }
-            : {
-                en: "Departure recorded in the demo.",
-                ar: "سُجلت المغادرة في العرض التجريبي.",
-              },
-          staffId: data.staff.find((s) => s.classroomId === target.classroomId)!
-            .id,
-        },
-      ],
-    }));
-    setFeedback(
-      t(
-        "Attendance and this child’s timeline updated in this demo.",
-        "حُدّث الحضور والسجل اليومي للطفل في هذا العرض.",
-      ),
-    );
-  }
-  function careUpdate() {
-    setData((current) => ({
-      ...current,
-      events: [
-        ...current.events,
-        {
-          id: "demo-" + current.events.length,
-          childId: child.id,
-          branchId,
-          time: "11:35",
-          kind: "care",
-          detail: {
-            en: "Garden play · explored leaves and colours with friends.",
-            ar: "اللعب في الحديقة · استكشف الأوراق والألوان مع الأصدقاء.",
-          },
-          staffId: data.staff.find((s) => s.classroomId === child.classroomId)!
-            .id,
-        },
-      ],
-    }));
-    setFeedback(
-      t(
-        "Sample update added. See the latest entry below.",
-        "أُضيف تحديث تجريبي. راجع آخر إدخال أدناه.",
-      ),
-    );
+  function saveCorrection(event: FormEvent) {
+    event.preventDefault();
+    if (!selected) return;
+    void run(async () => {
+      await api("staff-attendance/corrections", {
+        employee_id: selected.id,
+        branch_id: branch,
+        event_id: eventId,
+        expected_version: selected.version,
+        corrected_at: new Date(corrected).toISOString(),
+        reason,
+      });
+      const updated = await load();
+      await showHistory(
+        updated.find((item) => item.id === selected.id) ?? selected,
+      );
+      setMessage(
+        t(
+          "Correction saved; the original is retained.",
+          "حُفظ التصحيح مع الاحتفاظ بالأصل.",
+        ),
+      );
+    });
   }
   return (
-    <main>
-      <div className="demo-banner">
-        <span>
-          {t("CLIENT DEMO · FICTIONAL DATA", "عرض للعملاء · بيانات خيالية")}
-        </span>
-        <span>{t("24 October 2026 · Cairo", "٢٤ أكتوبر ٢٠٢٦ · القاهرة")}</span>
-      </div>
-      <header>
-        <a
-          className="brand"
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setTab("overview");
-          }}
-        >
-          <span className="brand-mark" aria-hidden="true">
-            ✿
-          </span>
-          <span>
-            {label(data.organization.name)}
-            <small>
-              {t("A little care. A big difference.", "رعاية صغيرة. أثر كبير.")}
-            </small>
-          </span>
-        </a>
-        <div className="header-actions">
-          <button onClick={reset}>{t("Reset demo", "إعادة ضبط العرض")}</button>
-          <button
-            onClick={() => {
-              setFeedback("");
-              setLocale(locale === "en" ? "ar" : "en");
-            }}
-          >
-            {t("العربية", "English")}
+    <main className="workspace">
+      <header className="workspace-header">
+        <Link className="workspace-brand" href="/">
+          🌿 {t("Nursery", "الحضانة")}
+        </Link>
+        <div>
+          <button onClick={() => setAr(!ar)}>
+            {ar ? "English" : "العربية"}
           </button>
+          {profile && (
+            <button
+              disabled={busy}
+              onClick={() =>
+                void run(async () => {
+                  await api("auth/logout", {});
+                  setProfile(null);
+                  setRows([]);
+                  setHistory(null);
+                  setSelected(null);
+                  setReport(null);
+                })
+              }
+            >
+              {t("Sign out", "تسجيل الخروج")}
+            </button>
+          )}
         </div>
       </header>
-      <div className="context-bar">
-        <label>
-          {t("Explore a branch", "استكشف فرعاً")}
-          <select
-            aria-label={t("Branch", "الفرع")}
-            value={branchId}
-            onChange={(e) => {
-              const id = e.target.value;
-              setBranch(id);
-              setGuide(null);
-              setChild(data.children.find((c) => c.branchId === id)!.id);
-              setSearch("");
-              setPreview(null);
-              setFeedback("");
-            }}
-          >
-            {data.branches.map((b) => (
-              <option key={b.id} value={b.id}>
-                {label(b.name)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <p>
-          {t(
-            "A ready-to-present nursery day. Try the stories, explore the records, then reset.",
-            "يوم حضانة جاهز للعرض. جرّب القصص واستكشف السجلات ثم أعد الضبط.",
-          )}
-        </p>
-      </div>
-      <nav aria-label={t("Main navigation", "التنقل الرئيسي")}>
-        {tabs.map((item) => (
-          <button
-            key={item.id}
-            aria-current={tab === item.id ? "page" : undefined}
-            onClick={() => {
-              setTab(item.id);
-              setSearch("");
-              setFeedback("");
-            }}
-          >
-            {label(item)}
-          </button>
-        ))}
-      </nav>
-      <div role="status" className={feedback ? "feedback" : "status-empty"}>
-        {feedback}
-      </div>
-      {scenario && (
-        <aside className="guide">
-          <div>
-            <span className="eyebrow">{t("YOUR DEMO STORY", "قصة العرض")}</span>
-            <h2>{label(scenario.title)}</h2>
-            <p>{label(scenario.steps)}</p>
-          </div>
-          <button onClick={() => setGuide(null)}>
-            {t("Close guide", "إغلاق الدليل")}
-          </button>
-        </aside>
-      )}
-      <section className="page-content">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">
-              {label(branch.name)} · {t("DEMO SNAPSHOT", "لقطة تجريبية")}
-            </p>
-            <h1>{label(tabs.find((x) => x.id === tab)!)}</h1>
-          </div>
-          <span className="date-chip">
-            {t("Saturday, 24 October", "السبت، ٢٤ أكتوبر")}
-          </span>
+      {message && (
+        <div className="workspace-message" role="status">
+          {message}
         </div>
-        {tab === "overview" && (
-          <>
-            <div className="hero">
-              <div>
-                <p className="eyebrow">
-                  {t("MORE TIME FOR LITTLE MOMENTS", "وقت أطول للحظات الصغيرة")}
-                </p>
-                <h2>
-                  {t(
-                    "Your nursery day, all together.",
-                    "يوم حضانتك، في مكان واحد.",
-                  )}
-                </h2>
-                <p>
-                  {t(
-                    "See the classroom picture, keep families informed and give your team a clear next step.",
-                    "تابع الفصول واطمئن الأسر وحدد الخطوة التالية لفريقك.",
-                  )}
-                </p>
-                <button
-                  className="primary"
-                  onClick={() => {
-                    startStory("morning", "attendance");
-                  }}
-                >
-                  {t("Start the morning story", "ابدأ قصة الصباح")} →
-                </button>
-              </div>
-              <div className="hero-note">
-                <span className="large-number" dir="ltr">
-                  {present}
-                  <small> / {children.length}</small>
-                </span>
-                <p>{t("children here now", "طفلاً حاضراً الآن")}</p>
-                <span>
-                  {children.filter((c) => c.status === "expected").length}{" "}
-                  {t("still expected", "متوقع وصولهم")}
-                </span>
-              </div>
-            </div>
-            <div className="metrics">
-              <article>
-                <span>{t("Here now", "حاضرون الآن")}</span>
-                <strong data-testid="present-total" dir="ltr">
-                  {present} / {children.length}
-                </strong>
-                <small>
-                  {t(
-                    "Attendance from this demo branch",
-                    "من حضور الفرع التجريبي",
-                  )}
-                </small>
-              </article>
-              <article>
-                <span>{t("Enrolled / capacity", "المسجلون / السعة")}</span>
-                <strong dir="ltr">
-                  {children.length} /{" "}
-                  {rooms.reduce((s, r) => s + r.capacity, 0)}
-                </strong>
-                <small>
-                  {rooms.length} {t("classrooms to explore", "فصول للاستكشاف")}
-                </small>
-              </article>
-              <article>
-                <span>{t("Outstanding tuition", "الرسوم المستحقة")}</span>
-                <strong>{money(outstanding)}</strong>
-                <small>
-                  {invoices.filter((i) => i.paidMinor < i.amountMinor).length}{" "}
-                  {t("invoices need follow-up", "فواتير تحتاج متابعة")}
-                </small>
-              </article>
-              <article>
-                <span>{t("Admissions inquiries", "استفسارات القبول")}</span>
-                <strong>{leads.length}</strong>
-                <small>
-                  {t(
-                    "Every family has an owner and next step",
-                    "مسؤول وخطوة تالية لكل أسرة",
-                  )}
-                </small>
-              </article>
-            </div>
-            <h2>
-              {t("Four stories to show the value", "أربع قصص توضح القيمة")}
-            </h2>
-            <div className="scenario-grid">
-              {data.scenarios.map((s, i) => (
-                <article className="scenario-card" key={s.id}>
-                  <span className="story-number">0{i + 1}</span>
-                  <h3>{label(s.title)}</h3>
-                  <p>{label(s.value)}</p>
-                  <button
-                    onClick={() => {
-                      startStory(s.id, s.tab as Tab);
-                    }}
-                  >
-                    {t("Try this story", "جرّب هذه القصة")} →
-                  </button>
-                </article>
-              ))}
-            </div>
-            <div className="split">
-              <article className="panel">
-                <h2>{t("A team ready for the day", "فريق مستعد لليوم")}</h2>
-                {rooms.map((r) => (
-                  <div className="list-row" key={r.id}>
-                    <div>
-                      <strong>{label(r.name)}</strong>
-                      <small>
-                        {data.staff
-                          .filter((s) => s.classroomId === r.id)
-                          .map((s) => label(s.name))
-                          .join(" · ")}
-                      </small>
-                    </div>
-                    <span className="badge">
-                      {
-                        children.filter(
-                          (c) =>
-                            c.classroomId === r.id && c.status === "present",
-                        ).length
-                      }{" "}
-                      {t("here", "حاضر")}
-                    </span>
-                  </div>
-                ))}
-              </article>
-              <article className="panel">
-                <h2>
-                  {t("Keep families in the loop", "أبقِ الأسرة على اطلاع")}
-                </h2>
-                {data.notices
-                  .filter((n) => n.branchId === branchId)
-                  .map((n) => (
-                    <div className="notice" key={n.id}>
-                      <h3>{label(n.title)}</h3>
-                      <p>{label(n.body)}</p>
-                    </div>
-                  ))}
-              </article>
-            </div>
-          </>
-        )}
-        {tab === "classrooms" && (
-          <div className="split">
-            {rooms.map((r) => (
-              <article className="panel" key={r.id}>
-                <span className="eyebrow">
-                  {t("AGES", "الأعمار")} <bdi dir="ltr">{r.ages}</bdi>
-                </span>
-                <h2>{label(r.name)}</h2>
-                <p>
-                  {t("Educators", "المعلمات")}:{" "}
-                  {data.staff
-                    .filter((s) => s.classroomId === r.id)
-                    .map((s) => label(s.name))
-                    .join(" · ")}
-                </p>
-                <p>
-                  {children.filter((c) => c.classroomId === r.id).length} /{" "}
-                  {r.capacity} {t("places occupied", "أماكن مشغولة")}
-                </p>
-                {children
-                  .filter((c) => c.classroomId === r.id)
-                  .map((c) => (
-                    <div className="list-row" key={c.id}>
-                      <button
-                        className="text-button"
-                        onClick={() => {
-                          setChild(c.id);
-                          setTab("timeline");
-                        }}
-                      >
-                        {label(c.name)}
-                      </button>
-                      <span className={"badge " + c.status}>
-                        {status(c.status)}
-                      </span>
-                    </div>
-                  ))}
-              </article>
-            ))}
-          </div>
-        )}
-        {tab === "attendance" && (
-          <>
-            <p>
-              {t(
-                "Keep arrival, departure and the child’s daily story together. These actions only change this demo session.",
-                "اجمع الوصول والمغادرة وقصة الطفل اليومية. تغيّر الإجراءات هذه الجلسة التجريبية فقط.",
-              )}
-            </p>
-            <label className="search-label">
-              {t("Find a child", "ابحث عن طفل")}
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={t("Search by name…", "ابحث بالاسم…")}
-              />
-            </label>
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>{t("Child", "الطفل")}</th>
-                    <th>{t("Classroom", "الفصل")}</th>
-                    <th>{t("Status", "الحالة")}</th>
-                    <th>{t("Demo action", "إجراء تجريبي")}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {children
-                    .filter((c) =>
-                      label(c.name)
-                        .toLowerCase()
-                        .includes(search.toLowerCase()),
-                    )
-                    .map((c) => (
-                      <tr key={c.id}>
-                        <td>
-                          <strong>{label(c.name)}</strong>
-                          <small>
-                            {label(
-                              data.guardians.find((g) => g.id === c.guardianId)!
-                                .name,
-                            )}
-                          </small>
-                        </td>
-                        <td>
-                          {label(
-                            rooms.find((r) => r.id === c.classroomId)!.name,
-                          )}
-                        </td>
-                        <td>
-                          <span className={"badge " + c.status}>
-                            {status(c.status)}
-                          </span>
-                        </td>
-                        <td>
-                          {["expected", "present"].includes(c.status) ? (
-                            <button
-                              onClick={() => attendance(c.id)}
-                              aria-label={
-                                (c.status === "expected"
-                                  ? t("Check in", "تسجيل وصول")
-                                  : t("Check out", "تسجيل مغادرة")) +
-                                " " +
-                                label(c.name)
-                              }
-                            >
-                              {c.status === "expected"
-                                ? t("Check in", "تسجيل وصول")
-                                : t("Check out", "تسجيل مغادرة")}
-                            </button>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-            {!children.some((c) =>
-              label(c.name).toLowerCase().includes(search.toLowerCase()),
-            ) && (
-              <p>
-                {t(
-                  "No matching children in this branch.",
-                  "لا يوجد طفل مطابق في هذا الفرع.",
-                )}
-              </p>
+      )}
+      {!profile ? (
+        <section className="workspace-login">
+          <span className="eyebrow">
+            {t("YOUR NURSERY WORKSPACE", "مساحة عمل الحضانة")}
+          </span>
+          <h1>{t("Welcome back.", "مرحباً بعودتك.")}</h1>
+          <p>
+            {t(
+              "Sign in to your organization's workspace.",
+              "سجّل الدخول إلى مساحة عمل مؤسستك.",
             )}
-          </>
-        )}
-        {tab === "timeline" && (
-          <>
-            <div className="toolbar">
-              <label>
-                {t("Child", "الطفل")}
-                <select
-                  value={child.id}
-                  onChange={(e) => setChild(e.target.value)}
-                >
-                  {children.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {label(c.name)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button className="primary" onClick={careUpdate}>
-                {t("Add sample care update", "إضافة تحديث رعاية تجريبي")}
-              </button>
-            </div>
-            <div className="split">
-              <article className="panel">
-                <h2>{label(child.name)}</h2>
-                <p>
-                  {label(rooms.find((r) => r.id === child.classroomId)!.name)} ·{" "}
-                  {status(child.status)}
-                </p>
-                <h3>{t("Family preview", "معاينة الأسرة")}</h3>
-                <p>
-                  {t(
-                    "A reassuring daily picture: arrival, meals, play and a personal update from the classroom team.",
-                    "صورة مطمئنة لليوم: الوصول والوجبات واللعب وتحديث من فريق الفصل.",
-                  )}
-                </p>
-                <p className="muted">
-                  {t(
-                    "Mobile opens the same starting dataset. Changes in this browser are local and do not sync to the phone.",
-                    "يفتح الهاتف نفس البيانات الأولية. التغييرات في هذا المتصفح محلية ولا تتزامن مع الهاتف.",
-                  )}
-                </p>
-              </article>
-              <article className="panel">
-                <h2>{t("Today’s story", "قصة اليوم")}</h2>
-                {data.events
-                  .filter((e) => e.childId === child.id)
-                  .map((e) => (
-                    <div className="timeline-item" key={e.id}>
-                      <time>{e.time}</time>
-                      <div>
-                        <p>{label(e.detail)}</p>
-                        <small>
-                          {label(
-                            data.staff.find((s) => s.id === e.staffId)!.name,
-                          )}
-                        </small>
-                      </div>
-                    </div>
-                  ))}
-                {!data.events.some((e) => e.childId === child.id) && (
-                  <p>
-                    {t(
-                      "No updates yet. Add a sample to tell this child’s story.",
-                      "لا توجد تحديثات بعد. أضف تحديثاً تجريبياً لبدء قصة الطفل.",
-                    )}
-                  </p>
-                )}
-              </article>
-            </div>
-          </>
-        )}
-        {tab === "billing" && (
-          <>
-            <div className="section-intro">
+          </p>
+          <form onSubmit={signIn}>
+            <label>
+              {t("Email", "البريد الإلكتروني")}
+              <input
+                type="email"
+                autoComplete="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                dir="ltr"
+              />
+            </label>
+            <label>
+              {t("Password", "كلمة المرور")}
+              <input
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+            <button className="primary" disabled={busy}>
+              {busy ? t("Signing in…", "جارٍ الدخول…") : t("Sign in", "دخول")}
+            </button>
+          </form>
+          <Link href="/demo">
+            {t(
+              "Explore the fictional presentation demo",
+              "استكشف العرض التجريبي الخيالي",
+            )}
+          </Link>
+        </section>
+      ) : (
+        <>
+          <section className="workspace-heading">
+            <div>
+              <span className="eyebrow">{profile.organization.name}</span>
+              <h1>{t("Staff attendance", "حضور الموظفين")}</h1>
               <p>
                 {t(
-                  "A clear follow-up list for the office. All figures are fictional EGP amounts and excluded from real business reporting.",
-                  "قائمة متابعة واضحة للإدارة. كل المبالغ خيالية بالجنيه المصري ولا تدخل في التقارير الحقيقية.",
+                  "A clear record of who's here, with every change accounted for.",
+                  "سجل واضح للحضور مع توثيق كل تغيير.",
                 )}
               </p>
-              <strong>
-                {money(outstanding)} {t("outstanding", "مستحقة")}
-              </strong>
             </div>
-            <label className="check-label">
-              <input
-                type="checkbox"
-                checked={unpaidOnly}
-                onChange={(e) => setUnpaid(e.target.checked)}
-              />
-              {t("Outstanding invoices only", "الفواتير المستحقة فقط")}
-            </label>
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>{t("Family / invoice", "الأسرة / الفاتورة")}</th>
-                    <th>{t("Tuition", "الرسوم")}</th>
-                    <th>{t("Paid", "المدفوع")}</th>
-                    <th>{t("Balance", "المتبقي")}</th>
-                    <th>{t("Follow-up", "المتابعة")}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {invoices
-                    .filter((i) => !unpaidOnly || i.paidMinor < i.amountMinor)
-                    .map((i) => (
-                      <tr key={i.id}>
-                        <td>
-                          <strong>
-                            {label(
-                              children.find((c) => c.id === i.childId)!.name,
-                            )}
-                          </strong>
-                          <small>
-                            {i.id} · {label(i.period)}
-                          </small>
-                        </td>
-                        <td>{money(i.amountMinor)}</td>
-                        <td>{money(i.paidMinor)}</td>
-                        <td>{money(i.amountMinor - i.paidMinor)}</td>
-                        <td>
-                          {i.paidMinor === i.amountMinor ? (
-                            <span className="badge present">
-                              {t("Paid", "مدفوع")}
-                            </span>
-                          ) : reminders.includes(i.id) ? (
-                            <span className="badge">
-                              {t("Previewed locally", "تمت المعاينة محلياً")}
-                            </span>
-                          ) : (
-                            <button
-                              onClick={() => setPreview(i.id)}
-                              aria-label={
-                                t("Preview reminder", "معاينة تذكير") +
-                                " " +
-                                i.id
-                              }
-                            >
-                              {t("Preview reminder", "معاينة تذكير")}
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-            {invoice && (
-              <aside
-                className="guide"
-                aria-label={t("Reminder preview", "معاينة التذكير")}
+            <label>
+              {t("Branch", "الفرع")}
+              <select
+                aria-label={t("Branch", "الفرع")}
+                value={branch}
+                disabled={busy}
+                onChange={(e) => {
+                  setBranch(e.target.value);
+                  setSelected(null);
+                  setHistory(null);
+                  setReport(null);
+                }}
               >
-                <div>
-                  <h2>{t("Reminder preview", "معاينة التذكير")}</h2>
-                  <p>
-                    {t(
-                      "Dear family, your October tuition balance is",
-                      "عزيزي ولي الأمر، المبلغ المتبقي من رسوم أكتوبر هو",
-                    )}{" "}
-                    {money(invoice.amountMinor - invoice.paidMinor)}.{" "}
-                    {t(
-                      "Please contact the nursery office if you need help.",
-                      "يرجى التواصل مع إدارة الحضانة إذا احتجت مساعدة.",
-                    )}
-                  </p>
-                  <p className="muted">
-                    {t(
-                      "Demo preview only. No email, SMS or payment request will be sent.",
-                      "معاينة تجريبية فقط. لن تُرسل رسائل أو طلبات دفع.",
-                    )}
-                  </p>
-                  <button
-                    className="primary"
-                    onClick={() => {
-                      setReminders((current) => [...current, invoice.id]);
-                      setPreview(null);
-                      setFeedback(
-                        t(
-                          "Follow-up preview recorded locally. Nothing was sent.",
-                          "سُجلت المعاينة محلياً. لم يُرسل شيء.",
+                {profile.branches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </section>
+          {!canUseStaff ? (
+            <section className="panel">
+              <h2>
+                {t(
+                  "This account does not have staff workspace access.",
+                  "لا يملك هذا الحساب صلاحية مساحة الموظفين.",
+                )}
+              </h2>
+            </section>
+          ) : (
+            <>
+              <section className="workspace-toolbar">
+                <label>
+                  {t("Find an employee", "ابحث عن موظف")}
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </label>
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    void run(async () => {
+                      const updated = await load();
+                      if (selected)
+                        await showHistory(
+                          updated.find((item) => item.id === selected.id) ??
+                            selected,
+                        );
+                    })
+                  }
+                >
+                  {t("Refresh", "تحديث")}
+                </button>
+                <label>
+                  {t("Report date", "تاريخ التقرير")}
+                  <input
+                    type="date"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                  />
+                </label>
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    void run(async () => {
+                      setReport(
+                        await api<Report>(
+                          `staff-attendance/daily?branch_id=${branch}&day=${day}`,
                         ),
                       );
-                    }}
-                  >
-                    {t("Record demo follow-up", "تسجيل متابعة تجريبية")}
-                  </button>{" "}
-                  <button onClick={() => setPreview(null)}>
-                    {t("Close", "إغلاق")}
-                  </button>
-                </div>
-              </aside>
-            )}
-          </>
-        )}
-        {tab === "admissions" && (
-          <>
-            <p>
-              {t(
-                "Every interested family has a next step. Sample visits are presentation scenarios; they do not enroll children or send invitations.",
-                "لكل أسرة مهتمة خطوة تالية. الزيارات سيناريوهات عرض ولا تسجّل أطفالاً ولا ترسل دعوات.",
+                    })
+                  }
+                >
+                  {t("Daily report", "التقرير اليومي")}
+                </button>
+              </section>
+              <section
+                className="workspace-roster"
+                aria-label={t("Employee roster", "قائمة الموظفين")}
+              >
+                {rows
+                  .filter((e) =>
+                    e.display_name.toLowerCase().includes(search.toLowerCase()),
+                  )
+                  .map((employee) => (
+                    <article className="panel" key={employee.id}>
+                      <div className="workspace-person">
+                        <span
+                          className={`workspace-dot ${employee.open_session_id ? "present" : ""}`}
+                        />
+                        <h2>{employee.display_name}</h2>
+                      </div>
+                      <p>
+                        {employee.open_session_id
+                          ? employee.open_branch_id === branch
+                            ? t("Present", "حاضر")
+                            : t("Present at another branch", "حاضر بفرع آخر")
+                          : t("Not checked in", "لم يسجل الحضور")}
+                      </p>
+                      <div className="workspace-actions">
+                        <button
+                          className="primary"
+                          disabled={
+                            busy ||
+                            !employee.active ||
+                            (!!employee.open_session_id &&
+                              employee.open_branch_id !== branch)
+                          }
+                          onClick={() => change(employee)}
+                        >
+                          {employee.open_session_id
+                            ? t("Check out", "تسجيل الانصراف")
+                            : t("Check in", "تسجيل الحضور")}
+                        </button>
+                        <button
+                          disabled={busy}
+                          onClick={() => void run(() => showHistory(employee))}
+                        >
+                          {t("History", "السجل")}
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+              </section>
+              {rows.length === 0 && (
+                <p>
+                  {t(
+                    "No assigned employees in this branch.",
+                    "لا يوجد موظفون مسندون لهذا الفرع.",
+                  )}
+                </p>
               )}
-            </p>
-            <div className="scenario-grid">
-              {leads.map((lead) => (
-                <article className="panel" key={lead.id}>
-                  <span className="badge">
-                    {
-                      {
-                        inquiry: t("New inquiry", "استفسار جديد"),
-                        visit: t("Visit arranged", "زيارة محددة"),
-                        application: t("Application", "طلب التحاق"),
-                        waitlist: t("Waiting list", "قائمة الانتظار"),
-                      }[lead.stage]
-                    }
-                  </span>
-                  <h2>{label(lead.name)}</h2>
-                  <p>
-                    {label(lead.source)} · {t("Age group", "الفئة العمرية")}{" "}
-                    <bdi dir="ltr">{lead.ageGroup}</bdi>
-                  </p>
-                  <small>
-                    {t("Owner", "المسؤول")}:{" "}
-                    {label(data.staff.find((s) => s.id === lead.ownerId)!.name)}
-                  </small>
-                  <p>
-                    <strong>{t("Next step", "الخطوة التالية")}</strong>
-                    <br />
-                    {label(lead.nextStep)}
-                  </p>
-                  {lead.visitScheduled ? (
-                    <p className="badge present">
+              {selected && history && (
+                <section className="panel workspace-history">
+                  <h2>
+                    {selected.display_name} · {t("History", "السجل")}
+                  </h2>
+                  {history.events.length === 0 && (
+                    <p>
+                      {t("No attendance recorded yet.", "لم يُسجل حضور بعد.")}
+                    </p>
+                  )}
+                  <ol>
+                    {history.events.map((event) => (
+                      <li key={event.id}>
+                        <strong>
+                          {event.action === "check_in"
+                            ? t("Check in", "حضور")
+                            : t("Check out", "انصراف")}
+                        </strong>{" "}
+                        · {readable(event.effective_at)}
+                        {event.effective_at !== event.occurred_at && (
+                          <span> · {t("Corrected", "مصحح")}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                  {history.truncated && (
+                    <p>
                       {t(
-                        "Demo visit · 27 Oct, 10:00",
-                        "زيارة تجريبية · ٢٧ أكتوبر، ١٠ صباحاً",
+                        "Showing a partial history window.",
+                        "يُعرض نطاق جزئي للسجل.",
                       )}
                     </p>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        setData((current) => ({
-                          ...current,
-                          leads: current.leads.map((l) =>
-                            l.id === lead.id
-                              ? {
-                                  ...l,
-                                  visitScheduled: true,
-                                  nextStep: {
-                                    en: "Welcome the family · 27 October at 10:00",
-                                    ar: "استقبال الأسرة · ٢٧ أكتوبر الساعة ١٠ صباحاً",
-                                  },
-                                }
-                              : l,
-                          ),
-                        }));
-                        setFeedback(
-                          t(
-                            "Sample visit scheduled locally. No invitation was sent.",
-                            "حُددت زيارة تجريبية محلياً. لم تُرسل دعوة.",
-                          ),
-                        );
-                      }}
-                      aria-label={
-                        t("Schedule sample visit", "تحديد زيارة تجريبية") +
-                        " " +
-                        label(lead.name)
-                      }
-                    >
-                      {t("Schedule sample visit", "تحديد زيارة تجريبية")}
-                    </button>
                   )}
-                </article>
-              ))}
-            </div>
-          </>
-        )}
-      </section>
-      <footer>
-        <strong>
-          {t(
-            "Fictional nursery. Real conversations about value.",
-            "حضانة خيالية. حوار واقعي عن القيمة.",
+                  {canCorrect && history.events.length > 0 && (
+                    <form
+                      className="workspace-correction"
+                      onSubmit={saveCorrection}
+                    >
+                      <h3>{t("Correct a time", "تصحيح وقت")}</h3>
+                      <label>
+                        {t("Record", "السجل")}
+                        <select
+                          aria-label={t("Record", "السجل")}
+                          required
+                          value={eventId}
+                          onChange={(e) => setEventId(e.target.value)}
+                        >
+                          <option value="">
+                            {t("Select a record", "اختر سجلاً")}
+                          </option>
+                          {history.events.map((event) => (
+                            <option key={event.id} value={event.id}>
+                              {event.action} · {readable(event.effective_at)}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label>
+                        {t(
+                          "Correct time (your device timezone)",
+                          "الوقت الصحيح (بتوقيت جهازك)",
+                        )}
+                        <input
+                          type="datetime-local"
+                          step="1"
+                          required
+                          value={corrected}
+                          onChange={(e) => setCorrected(e.target.value)}
+                        />
+                      </label>
+                      <label>
+                        {t("Reason", "السبب")}
+                        <input
+                          required
+                          minLength={3}
+                          maxLength={500}
+                          value={reason}
+                          onChange={(e) => setReason(e.target.value)}
+                        />
+                      </label>
+                      <button disabled={busy} className="primary">
+                        {t("Save correction", "حفظ التصحيح")}
+                      </button>
+                    </form>
+                  )}
+                  <h3>{t("Correction history", "سجل التصحيحات")}</h3>
+                  {history.corrections.map((c) => (
+                    <p key={c.id}>
+                      {readable(c.original_at)} → {readable(c.corrected_at)} ·{" "}
+                      {c.reason}
+                    </p>
+                  ))}
+                </section>
+              )}
+              {report && (
+                <section className="panel">
+                  <h2>
+                    {t("Daily presence", "الحضور اليومي")} · {day}
+                  </h2>
+                  <p>{report.timezone}</p>
+                  {report.items.map((item) => (
+                    <p key={item.employee_id}>
+                      <strong>{item.display_name}</strong> ·{" "}
+                      {Math.floor(item.seconds_present / 60)}{" "}
+                      {t("minutes", "دقيقة")}
+                      {item.data_truncated &&
+                        ` · ${t("Partial data", "بيانات جزئية")}`}
+                    </p>
+                  ))}
+                </section>
+              )}
+            </>
           )}
-        </strong>
-        <p>
-          {t(
-            "Demo actions stay in this page and reset on reload. No live messages, payments, child records or access controls are connected. Branch selection is a presentation filter.",
-            "تبقى الإجراءات في هذه الصفحة وتُعاد عند تحميلها. لا توجد رسائل أو مدفوعات أو سجلات حقيقية متصلة. اختيار الفرع مرشح للعرض.",
-          )}
-        </p>
-      </footer>
+        </>
+      )}
     </main>
   );
 }

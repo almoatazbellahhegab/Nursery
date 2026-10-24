@@ -1,4 +1,5 @@
 @echo off
 cd /d "%~dp0"
-node tools/start-applications.mjs --open
+set "NODE_OPTIONS=--preserve-symlinks --preserve-symlinks-main"
+node tools/start-connected.mjs
 pause

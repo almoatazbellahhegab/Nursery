@@ -1,0 +1,48 @@
+{
+  "startedAt": "2026-10-24T11:43:50.863Z",
+  "completedAt": "2026-10-24T11:45:34.367Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "workingTreeChanges": "M Start-Applications.cmd\n M apps/admin-web/README.md\n M apps/admin-web/app/demo-data.json\n M apps/admin-web/app/layout.tsx\n M apps/admin-web/app/messages.ts\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/admin-web/eslint.config.mjs\n M apps/admin-web/package-lock.json\n M apps/admin-web/package.json\n M apps/admin-web/tsconfig.json\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.lock\n M apps/mobile/pubspec.yaml\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/database.py\n M services/api/tests/test_runtime_identity.py\n M tools/check-clients.mjs\n M tools/serve-mobile.mjs\n?? Start-Connected.cmd\n?? apps/admin-web/.prettierrc.json\n?? apps/admin-web/app/demo-page.tsx\n?? apps/admin-web/app/demo/\n?? apps/admin-web/app/workspace.css\n?? apps/admin-web/next.config.ts\n?? apps/mobile/lib/runtime/\n?? apps/mobile/test/runtime_test.dart\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T11-19-21-486Z-clients.json\n?? docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json\n?? docs/testing/runs/2026-10-24T11-28-07-183Z-clients.json\n?? docs/testing/runs/2026-10-24T11-28-07-768Z-clients.json\n?? docs/testing/runs/2026-10-24T11-35-20-355Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-39-57-711Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-43-21-695Z-clients.json\n?? services/api/migrations/versions/0002_staff_attendance.py\n?? services/api/src/nursery_api/runtime/staff.py\n?? services/api/tests/conftest.py\n?? services/api/tests/test_runtime_staff.py\n?? tools/check-connected-browsers.mjs\n?? tools/rotate-local-db-credential.py\n?? tools/start-connected.mjs",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-WEB-TYPES",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-LINT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "id": "APP-WEB-AUDIT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "{\n  \"auditReportVersion\": 2,\n  \"vulnerabilities\": {},\n  \"metadata\": {\n    \"vulnerabilities\": {\n      \"info\": 0,\n      \"low\": 0,\n      \"moderate\": 0,\n      \"high\": 0,\n      \"critical\": 0,\n      \"total\": 0\n    },\n    \"dependencies\": {\n      \"prod\": 17,\n      \"dev\": 350,\n      \"optional\": 66,\n      \"peer\": 0,\n      \"peerOptional\": 0,\n      \"total\": 405\n    }\n  }\n}\n"
+    },
+    {
+      "id": "APP-WEB-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "▲ Next.js 16.4.2 (webpack)\n✓ Running next.config.ts took 175ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 3.6s\n  Running TypeScript ...\n  Finished TypeScript in 2.4s ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 2.0s\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n└ ○ /demo\n\n\n○  (Static)  prerendered as static content\n\n"
+    }
+  ],
+  "selection": "Web checks only",
+  "dependencyAudit": "See selected results",
+  "buildSelection": "See selected results",
+  "result": "Pass",
+  "scope": "Actual compiled public foundation shells only; operational workflows remain incomplete",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

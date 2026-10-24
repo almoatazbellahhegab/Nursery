@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-24T11:59:06.926Z",
+  "completedAt": "2026-10-24T11:59:19.571Z",
+  "codeCommit": "d9bf7a52b9e84a56423a5f0d28992d1ee21d1851",
+  "workingTreeChanges": "M Start-Applications.cmd\n M apps/admin-web/README.md\n M apps/admin-web/app/demo-data.json\n M apps/admin-web/app/layout.tsx\n M apps/admin-web/app/messages.ts\n M apps/admin-web/app/page.tsx\n M apps/admin-web/app/style.css\n M apps/admin-web/eslint.config.mjs\n M apps/admin-web/package-lock.json\n M apps/admin-web/package.json\n M apps/admin-web/tsconfig.json\n M apps/mobile/lib/main.dart\n M apps/mobile/pubspec.lock\n M apps/mobile/pubspec.yaml\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/database.py\n M services/api/tests/test_runtime_identity.py\n M tools/check-clients.mjs\n M tools/check-demo-browsers.mjs\n M tools/serve-mobile.mjs\n?? Start-Connected.cmd\n?? apps/admin-web/.prettierrc.json\n?? apps/admin-web/app/demo-page.tsx\n?? apps/admin-web/app/demo/\n?? apps/admin-web/app/workspace.css\n?? apps/admin-web/next.config.ts\n?? apps/mobile/lib/runtime/\n?? apps/mobile/test/runtime_test.dart\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T11-19-21-486Z-clients.json\n?? docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json\n?? docs/testing/runs/2026-10-24T11-28-07-183Z-clients.json\n?? docs/testing/runs/2026-10-24T11-28-07-768Z-clients.json\n?? docs/testing/runs/2026-10-24T11-35-20-355Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-39-57-711Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-43-21-695Z-clients.json\n?? docs/testing/runs/2026-10-24T11-43-50-863Z-clients.json\n?? docs/testing/runs/2026-10-24T11-48-00-127Z-connected-browsers.json\n?? docs/testing/runs/2026-10-24T11-52-41-195Z-connected-browsers.json\n?? services/api/migrations/versions/0002_staff_attendance.py\n?? services/api/src/nursery_api/runtime/staff.py\n?? services/api/tests/conftest.py\n?? services/api/tests/test_runtime_staff.py\n?? tools/check-connected-browsers.mjs\n?? tools/rotate-local-db-credential.py\n?? tools/start-connected.mjs",
+  "scope": "Fictional client demo; local UI simulations only. No operational API/RLS acceptance.",
+  "environment": "Windows Chrome headless, desktop 1440px, responsive 390/320px and Flutter 390px mobile emulation",
+  "results": [
+    {
+      "id": "DEMO-WEB-BASELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ATTENDANCE-TIMELINE",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-FEES",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ADMISSIONS-BRANCHES-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-WEB-ARABIC-REFLOW",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-PARENT-STAFF-RESET",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-ARABIC",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-MOBILE-DIRECT-VIEWS",
+      "result": "Pass"
+    },
+    {
+      "id": "DEMO-LINKS-STATIC-BOUNDARIES",
+      "result": "Fail",
+      "detail": "fetch failed"
+    }
+  ],
+  "pageErrors": [],
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}
