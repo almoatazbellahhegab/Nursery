@@ -1,5 +1,47 @@
 # Session checkpoint and resume instructions
 
+## Latest instruction: apply all recommended S01–S03 decisions
+
+User: `apply all your recommended decisions`. The full preceding package is
+recorded as **Product-approved revision 3** at the top of
+`docs/delivery/S03-DECISION-PACK.md`, with exact targets, metric formulas,
+DEC-01–14 resolution overlay and explicit remaining specialist/configuration
+inputs. Preserve earlier user approvals. Do not ask the user to approve these
+same product choices again. The latest instruction supersedes the earlier
+one-question-at-a-time collection for choices contained in the package.
+
+No runtime policy/configuration changed and no original spec/identifier or
+baseline DEC/GATE record changed. All original GATE-01–07 reviews remain open;
+actual specialist names/signoffs, production provider/region/gateway, detailed
+field/matching/permission rules and other noted inputs remain pending.
+Engineering targets are approved targets, not measured results or an SLA.
+DEC-13 optional community remains outside S01–S03 and unapproved.
+
+Save/integrate this documentation increment locally on a retained chore branch.
+No new push/deployment/UAT acceptance is authorized. Remote S03 is `a9868ba`;
+prior local increments include `76f7c39` and `5679288`. Keep the unrelated
+untracked attendance evidence excluded. S03/FEAT-030 stays active; next work is
+closing the recorded specialist/prerequisite inputs before affected operational
+implementation. Existing 79 backend cases and client builds remain prior
+evidence; documentation review checks are recorded separately for this update.
+
+## Latest cross-sprint decision collection
+
+The user requested pending S01–S03 decisions one at a time. They approved
+Egypt only for the first production release, with European markets deferred
+(`yes` to the initial-market question). Recorded in the decision pack's
+cross-sprint section. Privacy, hosting, payment and specialist approvals remain
+open. The user also approved nursery control over the purposes of child/family
+data use, with provider handling only on nursery instructions. This product
+direction does not close legal/privacy review or establish contractual terms.
+The user also approved prohibiting provider use of identifiable child/family
+data for advertising, resale or AI-model training. No aggregate/anonymized
+secondary use is implicitly authorized. The user approved separate guardian
+opt-in for public/promotional child photos/videos; refusal must not affect
+ordinary nursery services. Continue with one question about withdrawal at any
+time and immediate blocking of new public/promotional publication. Treatment
+of existing publications and specialist consent review remain unresolved.
+
 ## Latest decisions: admissions questions 1–8 (2026-10-24)
 
 The user answered `1- yes`, `2- yes`, `3- yes` and then `both` for reopening

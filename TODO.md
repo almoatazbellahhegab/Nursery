@@ -1,5 +1,26 @@
 # Development TODO
 
+## Approved S01–S03 recommendation package — revision 3
+
+- [x] Record user's `apply all your recommended decisions` as Product approval.
+- [x] Preserve all earlier approvals and record every recommended rule/target/formula.
+- [x] Map DEC-01–14 to current resolutions without modifying original baseline records.
+- [x] Add Arabic reviewer and Engineering release owner roles, names pending.
+- [ ] Obtain remaining specialist names/evidence and close original GATE-01–07.
+- [ ] Specify actual hosting/gateway, tier limits/prices, exact field/permission/matching rules and other recorded inputs.
+- [ ] Complete prerequisite features, affected implementation and original source acceptance/UAT.
+
+The revision 3 section of the decision pack supersedes older pending product
+questions below. Product approval does not establish specialist or UAT acceptance.
+
+## Cross-sprint decision collection
+
+- [x] Confirm Egypt-only initial production market; defer Europe.
+- [x] Record nursery control of data-use purposes and provider handling on nursery instructions, pending legal/privacy review.
+- [x] Record prohibition on provider advertising, resale and AI-training use of identifiable child/family data.
+- [x] Record separate guardian opt-in for public/promotional child media, without affecting ordinary services on refusal.
+- [ ] Resolve privacy/data-handling model and the remaining S01–S03 decisions one at a time.
+
 ## Admissions decision collection (2026-10-24)
 
 - [x] Record user directions for required inquiry fields, workflow and loss reasons.
