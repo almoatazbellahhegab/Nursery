@@ -4,6 +4,7 @@ library;
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'api.dart';
+import 'branches.dart';
 
 class ConnectedApp extends StatefulWidget {
   final NurseryApi? api;
@@ -434,6 +435,28 @@ class _StaffWorkspaceState extends State<StaffWorkspace> {
                 ),
               ] else ...[
                 Text((_profile!['organization'] as JsonMap)['name'] as String),
+                if (_profile!['role'] == 'administrator')
+                  OutlinedButton(
+                    onPressed: _busy
+                        ? null
+                        : () async {
+                            await Navigator.push<void>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BranchManagement(
+                                  api: widget.api,
+                                  ar: widget.ar,
+                                ),
+                              ),
+                            );
+                            if (mounted) {
+                              await _run(
+                                () async => _accept(await widget.api.restore()),
+                              );
+                            }
+                          },
+                    child: Text(t('Manage branches', 'إدارة الفروع')),
+                  ),
                 Text(
                   t('Staff attendance', 'حضور الموظفين'),
                   style: Theme.of(context).textTheme.headlineMedium,
@@ -520,7 +543,15 @@ class _StaffWorkspaceState extends State<StaffWorkspace> {
                                   onPressed:
                                       _busy ||
                                           elsewhere ||
-                                          employee['active'] != true
+                                          employee['active'] != true ||
+                                          (_profile!['branches'] as List)
+                                                  .cast<JsonMap>()
+                                                  .where(
+                                                    (item) =>
+                                                        item['id'] == _branch,
+                                                  )
+                                                  .firstOrNull?['active'] ==
+                                              false
                                       ? null
                                       : () => _change(employee),
                                   child: Text(

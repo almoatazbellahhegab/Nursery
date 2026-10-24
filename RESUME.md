@@ -1,5 +1,44 @@
 # Session checkpoint and resume instructions
 
+## Latest prerequisite checkpoint ? keep completing the final product
+
+Local S04 includes `c7315f5` connected staff and `45bf3b6` session/history fixes.
+Current branch `feat/FEAT-002-branch-management` resumes original S01 prerequisites
+under the user's final-product instruction. Original feature/sprint IDs remain.
+FEAT-002 connected branch API and Next.js/Flutter admin screens are implemented:
+metadata/status, active/inactive history, IANA timezone, current member scope,
+version/receipt/audit, and paginated branch/member/assignment lists. New immutable
+migration `0003_branch_management` is installed in owned dev/test DBs; never edit
+installed revisions. Common command receipts are separate from staff tables.
+
+248 backend scenarios and all coding checks pass (`14-49-27-829Z-runtime.json`).
+Both clients build (`14-49-38-820Z-clients.json`, overall failed on test-only lint,
+subsequently corrected). Flutter format/analyzer/11 tests pass (`14-53-28-922Z`).
+Latest Next quality/build pass (`14-58-29-877Z-clients.json`). Four branch browser
+groups pass (`15-00-32-351Z-branch-browsers.json`), and all five staff regression
+groups pass (`15-00-54-786Z-connected-browsers.json`). English/Arabic desktop and
+English mobile screenshots were inspected. All five final branch browser groups, including Flutter Arabic, pass in
+`15-09-58-298Z-branch-browsers.json`; final complete client checks/builds and
+12 Flutter tests pass in `15-04-29-041Z-clients.json`. The UTF-8 shell-pipe defect
+is fixed and regression-covered (DEF-S01-007). Earlier failed runs preserved as defects/harness evidence.
+Four source/review checks pass (`14-54-32-964Z-unit.json`), with actual source API
+passes for TC-FEAT-002-01/02/03 and prior FEAT-012 cases in execution overlay.
+
+Owned launcher is now TTY session `32113` (ports3300/3400/8000), DB loopback55432.
+Use `stop` on stdin before rebuilding. Account/DB secrets remain ignored; generated
+credential scan passed. No pushes, production deployments, real messaging or UAT
+acceptances. Preserve unrelated `2026-10-23T20-50-36-104Z-attendance.json`.
+
+Next: commit FEAT-002 and integrate locally
+into source S01 review and cumulative S04 assembly, retaining all feature branches.
+Then continue account/provider security, invitations, staff/child/classroom onboarding
+and remaining original product workflows. Do not stop at this increment or ask again
+for waived specialist reviews. Final product remains unfinished; account/MFA/provider,
+other original modules, generated contracts and operations are pending. Profile branch
+picker is bounded100; administration itself paginates. Deactivating a branch with an
+open staff session blocks further transitions until reactivation; see known limits.
+
+
 ## Current connected-work checkpoint — continue the final product
 
 The user's active instruction remains: skip outstanding reviews and complete

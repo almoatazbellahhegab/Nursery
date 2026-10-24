@@ -2,12 +2,13 @@
 /** Connected workspace; authorization and filtering remain server-owned. */
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import BranchManager from "./branch-manager";
 
 type Profile = {
   role: string;
   csrf_token: string;
   organization: { name: string };
-  branches: { id: string; name: string }[];
+  branches: { id: string; name: string; active: boolean; timezone: string }[];
 };
 type Employee = {
   id: string;
@@ -86,7 +87,9 @@ export default function Workspace() {
     new Intl.DateTimeFormat(ar ? "ar-EG" : "en-GB", {
       dateStyle: "medium",
       timeStyle: "short",
-      timeZone: "Africa/Cairo",
+      timeZone:
+        profile?.branches.find((item) => item.id === branch)?.timezone ??
+        "Africa/Cairo",
     }).format(new Date(value));
 
   async function api<T>(path: string, body?: object): Promise<T> {
@@ -365,11 +368,24 @@ export default function Workspace() {
                 {profile.branches.map((b) => (
                   <option key={b.id} value={b.id}>
                     {b.name}
+                    {!b.active ? t(" · inactive", " · غير نشط") : ""}
                   </option>
                 ))}
               </select>
             </label>
           </section>
+          {profile.role === "administrator" && (
+            <BranchManager
+              api={api}
+              ar={ar}
+              onChanged={async () => {
+                const current = await api<Profile>("auth/me");
+                setProfile(current);
+                if (!current.branches.some((item) => item.id === branch))
+                  setBranch(current.branches[0]?.id ?? "");
+              }}
+            />
+          )}
           {!canUseStaff ? (
             <section className="panel">
               <h2>
@@ -456,6 +472,8 @@ export default function Workspace() {
                           className="primary"
                           disabled={
                             busy ||
+                            !profile.branches.find((item) => item.id === branch)
+                              ?.active ||
                             !employee.active ||
                             (!!employee.open_session_id &&
                               employee.open_branch_id !== branch)

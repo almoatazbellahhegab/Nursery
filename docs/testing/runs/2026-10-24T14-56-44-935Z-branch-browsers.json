@@ -1,0 +1,31 @@
+{
+  "startedAt": "2026-10-24T14:56:44.935Z",
+  "completedAt": "2026-10-24T14:58:00.975Z",
+  "codeCommit": "45bf3b677d0de03b1214fcd0e92542b9a8e39a94",
+  "result": "Fail",
+  "results": [
+    {
+      "id": "BRANCH-WEB-CREATE-ASSIGN-DEACTIVATE",
+      "result": "Fail",
+      "detail": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Organization member', { exact: true })\u001b[22m\n"
+    },
+    {
+      "id": "BRANCH-MANAGER-CURRENT-SCOPE",
+      "result": "Fail",
+      "detail": "Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- 'Fictional Riverside 1792853805857'"
+    },
+    {
+      "id": "BRANCH-FLUTTER-CREATE-WEB-PERSISTENCE",
+      "result": "Fail",
+      "detail": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Fictional Orchard 1792853805857', { exact: true }) to be visible\u001b[22m\n"
+    },
+    {
+      "id": "BRANCH-WEB-ARABIC",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Compiled Next.js and Flutter web branch management against real PostgreSQL; Windows Chrome and mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

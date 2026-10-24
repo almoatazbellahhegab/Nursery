@@ -58,7 +58,7 @@ def authorize_employee(
     if actor.role not in {"administrator", "branch_manager", "teacher"}:
         raise ApiError(403, "staff_access_denied")
     branch = actor.connection.execute(
-        "SELECT id FROM app.branches WHERE id=%s AND active", (branch_id,)
+        "SELECT id FROM app.branches WHERE id=%s AND (active OR NOT %s)", (branch_id, write)
     ).fetchone()
     if branch is None:
         raise ApiError(404, "staff_not_found")
@@ -158,9 +158,7 @@ def employees(actor: Authenticated, branch_id: UUID, cursor: UUID | None = None)
     if actor.role not in {"administrator", "branch_manager", "teacher"}:
         raise ApiError(403, "staff_access_denied")
     if (
-        actor.connection.execute(
-            "SELECT id FROM app.branches WHERE id=%s AND active", (branch_id,)
-        ).fetchone()
+        actor.connection.execute("SELECT id FROM app.branches WHERE id=%s", (branch_id,)).fetchone()
         is None
     ):
         raise ApiError(404, "staff_not_found")
@@ -378,7 +376,12 @@ def daily(
     employees(
         actor, branch_id
     )  # Establish current role and branch access before historical details.
-    zone = ZoneInfo("Africa/Cairo")
+    branch = actor.connection.execute(
+        "SELECT timezone FROM app.branches WHERE organization_id=%s AND id=%s",
+        (actor.organization_id, branch_id),
+    ).fetchone()
+    assert branch is not None
+    zone = ZoneInfo(branch["timezone"])
     day = day or now_utc().astimezone(zone).date()
     start = datetime.combine(day, time(), zone).astimezone(UTC)
     end = datetime.combine(day + timedelta(days=1), time(), zone).astimezone(UTC)
@@ -419,7 +422,7 @@ def daily(
         )
     return {
         "day": day,
-        "timezone": "Africa/Cairo",
+        "timezone": branch["timezone"],
         "start": start,
         "end": end,
         "cutoff": cutoff,

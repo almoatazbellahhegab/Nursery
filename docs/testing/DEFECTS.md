@@ -36,3 +36,29 @@ Closed for emulated Chrome: mobile quality/build run
 `2026-10-24T06-36-58-935Z-clients.json` and browser run
 `2026-10-24T06-38-54-697Z-compiled-browsers.json` pass; Arabic/English screenshots
 were inspected with readable glyphs. Physical iPhone Arabic UAT remains pending.
+
+
+## DEF-S01-005 ? Branch settings select accessible names
+
+Connected Chrome checks found the nested member selector's computed name included
+option text. Added explicit localized ARIA names for member and operating-status
+selectors. Backend creation was correct; assignment UI automation exposed the
+label defect. Rebuild/connected verification is pending the current run.
+
+## DEF-S01-006 ? Flutter branch-card browser assertion
+
+The branch create API returned 200 and persisted the exact fictional name.
+Flutter exposes the card name/status through an accessibility group, rather than
+a text node. The test now selects the named group and scrolls it into view.
+This is a harness correction, not a failed database create. Failed run evidence
+is retained; no product pass inferred before the corrected browser run.
+
+## DEF-S01-007 - UTF-8 labels changed by a shell pipe
+
+An additional Flutter Arabic branch check exposed question marks in newly inserted
+Arabic strings. A PowerShell text pipe used a legacy encoding. Restored the labels
+through the Unicode-safe patch tool, added the administrator Arabic entry widget
+regression and explicit Arabic select-name browser assertions. The complete client
+checks and both builds pass in `2026-10-24T15-04-29-041Z-clients.json` (12 Flutter
+tests). Use Unicode-safe patches for localized source; do not rely on Python's
+UTF-8 mode to change PowerShell's outgoing pipe encoding.

@@ -1,0 +1,66 @@
+{
+  "startedAt": "2026-10-24T14:49:38.820Z",
+  "completedAt": "2026-10-24T14:54:12.606Z",
+  "codeCommit": "45bf3b677d0de03b1214fcd0e92542b9a8e39a94",
+  "workingTreeChanges": "M apps/admin-web/app/page.tsx\n M apps/mobile/lib/runtime/workspace.dart\n M docs/delivery/execution.json\n M docs/delivery/plan.json\n M services/api/src/nursery_api/runtime/api.py\n M services/api/src/nursery_api/runtime/staff.py\n?? apps/admin-web/app/branch-manager.tsx\n?? apps/mobile/lib/runtime/branches.dart\n?? apps/mobile/test/branches_test.dart\n?? docs/testing/S01-BRANCH-MANAGEMENT.md\n?? docs/testing/runs/2026-10-23T20-50-36-104Z-attendance.json\n?? docs/testing/runs/2026-10-24T14-49-27-829Z-runtime.json\n?? docs/testing/runs/2026-10-24T14-53-28-922Z-clients.json\n?? services/api/migrations/versions/0003_branch_management.py\n?? services/api/src/nursery_api/runtime/branches.py\n?? services/api/src/nursery_api/runtime/commands.py\n?? services/api/tests/test_runtime_branches.py\n?? tools/check-branch-browsers.mjs",
+  "node": "v24.19.0",
+  "flutterSdk": "3.47.8 / Dart 3.13.7",
+  "results": [
+    {
+      "id": "APP-WEB-TYPES",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-LINT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "id": "APP-WEB-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "id": "APP-WEB-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "▲ Next.js 16.4.2 (webpack)\n✓ Running next.config.ts took 271ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 5.6s\n  Running TypeScript ...\n  Finished TypeScript in 2.1s ...\n  Collecting page data using 5 workers ...\n  Generating static pages using 5 workers (0/4) ...\n  Generating static pages using 5 workers (1/4) \r\n  Generating static pages using 5 workers (2/4) \r\n  Generating static pages using 5 workers (3/4) \r\n✓ Generating static pages using 5 workers (4/4) in 1868ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n└ ○ /demo\n\n\n○  (Static)  prerendered as static content\n\n"
+    },
+    {
+      "id": "APP-MOBILE-FORMAT",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Formatted 13 files (0 changed) in 0.11 seconds.\n"
+    },
+    {
+      "id": "APP-MOBILE-ANALYZE",
+      "result": "Fail",
+      "exitCode": 1,
+      "output": "Analyzing mobile...                                             \n\n   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\\branches_test.dart:18:11 - curly_braces_in_flow_control_structures\n\n1 issue found. (ran in 18.1s)\n"
+    },
+    {
+      "id": "APP-MOBILE-WIDGET",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "00:00 +0: loading C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart\n00:00 +0: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:02 +1: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:02 +2: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:02 +3: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:02 +4: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/branches_test.dart: administrator creates a branch and edits its current version\n00:03 +5: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: connected teacher signs in, checks in and sees persisted state\n00:05 +6: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/runtime_test.dart: connected teacher signs in, checks in and sees persisted state\n00:05 +7: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: parent has a seeded child, invoice and daily events\n00:05 +8: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: staff update reaches parent timeline and reset restores baseline\n00:06 +9: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: branch switch selects that branch family\n00:07 +10: C:/Users/localadmin/Documents/Nursery/apps/mobile/test/shell_test.dart: Arabic demo keeps readable labels and RTL direction\n00:07 +11: All tests passed!\n"
+    },
+    {
+      "id": "APP-MOBILE-BUILD",
+      "result": "Pass",
+      "exitCode": 0,
+      "output": "Compiling lib\\main.dart for the Web...                          \nFont asset \"CupertinoIcons.ttf\" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nFont asset \"MaterialIcons-Regular.otf\" was tree-shaken, reducing it from 1645184 to 8624 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.\nCompiling lib\\main.dart for the Web...                            111.4s\n✓ Built build\\web\nWasm dry run succeeded. Consider building and testing your application with the `--wasm` flag. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm\nUse --no-wasm-dry-run to disable these warnings.\n"
+    }
+  ],
+  "selection": "All client checks",
+  "dependencyAudit": "npm audit not rerun in this selection; dependency changes and prior evidence are documented separately",
+  "buildSelection": "See selected results",
+  "result": "Fail",
+  "scope": "Actual compiled clients; connected staff journeys tested separately by check-connected-browsers.mjs; no UAT acceptance implied",
+  "physicalIPhone": "Not run",
+  "nativeIOSBuild": "Blocked on macOS/Xcode/signing",
+  "userAcceptance": "Pending"
+}

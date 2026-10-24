@@ -1,9 +1,9 @@
 {
-  "activeSprint": "S04",
-  "activeFeature": "FEAT-012",
-  "branch": "feat/FEAT-012-staff-attendance",
+  "activeSprint": "S01",
+  "activeFeature": "FEAT-002",
+  "branch": "feat/FEAT-002-branch-management",
   "featureConcurrencyLimit": 1,
-  "status": "In progress - connected PostgreSQL staff API and Next.js/Flutter journeys verified; continuing unfinished final-product scope under explicit review waiver",
+  "status": "In progress - returning to original branch-management prerequisite under final-product completion instruction; S04 connected staff and session fixes retained locally",
   "sprintOneAcceptance": "Incomplete and unaccepted",
   "sprintTwoAcceptance": "Incomplete and unaccepted; deferred by next-sprint instruction",
   "sprintThreeAcceptance": "Incomplete and unaccepted; committed scope pushed and unfinished work deferred by explicit Sprint 4 start instruction",
@@ -24,21 +24,71 @@
   ],
   "sourceAcceptanceStatus": "API integration passed; UAT pending",
   "sourceCaseExecution": [
-    {"caseId":"TC-FEAT-012-01","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_001_active_employee_checkin_is_persisted_and_audited","uatAccepted":false},
-    {"caseId":"TC-FEAT-012-02","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_002_duplicate_and_exact_retry_do_not_create_another_open_record","uatAccepted":false},
-    {"caseId":"TC-FEAT-012-03","result":"Pass","level":"API/PostgreSQL integration","evidence":"docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json","executedTest":"test_staff_api_003_manager_correction_preserves_original_new_actor_time_and_reason","uatAccepted":false}
+    {
+      "caseId": "TC-FEAT-012-01",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json",
+      "executedTest": "test_staff_api_001_active_employee_checkin_is_persisted_and_audited",
+      "uatAccepted": false
+    },
+    {
+      "caseId": "TC-FEAT-012-02",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json",
+      "executedTest": "test_staff_api_002_duplicate_and_exact_retry_do_not_create_another_open_record",
+      "uatAccepted": false
+    },
+    {
+      "caseId": "TC-FEAT-012-03",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T11-27-57-018Z-runtime.json",
+      "executedTest": "test_staff_api_003_manager_correction_preserves_original_new_actor_time_and_reason",
+      "uatAccepted": false
+    },
+    {
+      "caseId": "TC-FEAT-002-01",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T14-49-27-829Z-runtime.json",
+      "executedTest": "test_branch_api_001_create_metadata_assignment_and_audit",
+      "uatAccepted": false
+    },
+    {
+      "caseId": "TC-FEAT-002-02",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T14-49-27-829Z-runtime.json",
+      "executedTest": "test_branch_api_002_manager_scope_and_combined_results",
+      "uatAccepted": false
+    },
+    {
+      "caseId": "TC-FEAT-002-03",
+      "result": "Pass",
+      "level": "API/PostgreSQL integration",
+      "evidence": "docs/testing/runs/2026-10-24T14-49-27-829Z-runtime.json",
+      "executedTest": "test_branch_api_003_inactive_blocks_writes_but_retains_authorized_history",
+      "uatAccepted": false
+    }
   ],
-  "implementedIncrement": "Real PostgreSQL identity/RLS and employee/session authorization; atomic staff presence/event/correction/receipt/audit API; connected Next.js/Flutter sign-in, branches, attendance, history, correction/report and Arabic. Seeded profiles are authoritative; onboarding/MFA and remaining original features still unfinished",
-  "domainVerification": "232 backend scenarios: 204 prior plus 14 identity/RLS and 14 staff API/PostgreSQL; Ruff lint/format, strict mypy and dependency consistency pass. Evidence: 2026-10-24T11-27-57-018Z-runtime.json",
+  "implementedIncrement": "Connected FEAT-002 branch metadata/status and member assignments, immediate scope removal, version/receipt/audit and pagination in API/Next.js/Flutter. Prior connected staff, identity/RLS and session fixes retained; remaining original product work unfinished.",
+  "domainVerification": "248 backend scenarios and Ruff lint/format, strict typing and dependency checks pass; evidence 2026-10-24T14-49-27-829Z-runtime.json. Includes 15 branch API/RLS scenarios and original TC-FEAT-002-01/02/03.",
   "networkStatus": "Registry access restored; API/test dependencies resolved in project-local virtual environment",
   "pushAuthorized": false,
   "pushStatus": "S03 through 1d8c766 and four new retained work branches pushed on 2026-10-24. S04 and FEAT-012 remain local; no S04 push authorized",
-  "clientVerification": "Next.js types/lint/format/build/audit pass; Flutter format/analyzer/eight tests and web build pass. Four real connected browser groups pass: persistence, cross-client state, correction/report, Arabic/access denial. Screenshots inspected. Human/physical/native UAT pending",
-  "nextSprintReadiness": "S04 started explicitly; FEAT-012 is the sole active feature. Medical, transport, KPI, community and commerce approvals/prerequisites remain unchanged",
+  "clientVerification": "Final selected Next.js and Flutter quality checks and both builds pass; 12 Flutter tests. Five branch browser groups pass including Arabic in both clients; five staff browser groups pass. Evidence 2026-10-24T15-04-29-041Z-clients.json, 2026-10-24T15-09-58-298Z-branch-browsers.json and 2026-10-24T15-00-54-786Z-connected-browsers.json. Physical/native/human UAT pending",
+  "nextSprintReadiness": "Completing original S01 prerequisites sequentially before remaining product workflows; source sprint assignments unchanged",
   "completionDecisionPack": "docs/delivery/S03-DECISION-PACK.md revision 3 retained; staff-specific readiness and limits in docs/delivery/S04-FEAT-012-READINESS.md",
   "priorSprintCarryover": "docs/delivery/S03-TODO.md",
   "scopeAuthorization": "User: please skip this review and complete implementation and testing of the final product. Explicit review-gate prerequisite override is recorded in AGENTS.md; original specifications retained, no extra push/deployment/UAT acceptance",
   "completionChecklist": "docs/delivery/S04-COMPLETION.md; all six features, 29 tasks, five gates and 25 source cases retained; required owner/document evidence requested and not yet supplied",
-  "databaseTestEnvironment": "Owned PostgreSQL 18.6 on loopback 55432 with separate dev/test databases, Alembic revisions 0001/0002 and a NOSUPERUSER/NOBYPASSRLS runtime role; credentials generated locally and ignored",
-  "reviewGateOverride": {"date":"2026-10-24","scope":"implementation and automated testing","specialistApproved":false,"userInstruction":"please skip this review and complete implementation and testing of the final product"}
+  "databaseTestEnvironment": "Owned PostgreSQL 18.6 on loopback 55432, separate dev/test, immutable Alembic revisions 0001/0002/0003 and restricted NOSUPERUSER/NOBYPASSRLS role; ignored generated credentials",
+  "reviewGateOverride": {
+    "date": "2026-10-24",
+    "scope": "implementation and automated testing",
+    "specialistApproved": false,
+    "userInstruction": "please skip this review and complete implementation and testing of the final product"
+  }
 }

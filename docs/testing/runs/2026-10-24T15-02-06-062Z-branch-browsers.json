@@ -1,0 +1,33 @@
+{
+  "startedAt": "2026-10-24T15:02:06.062Z",
+  "completedAt": "2026-10-24T15:02:57.916Z",
+  "codeCommit": "45bf3b677d0de03b1214fcd0e92542b9a8e39a94",
+  "result": "Fail",
+  "results": [
+    {
+      "id": "BRANCH-WEB-CREATE-ASSIGN-DEACTIVATE",
+      "result": "Pass"
+    },
+    {
+      "id": "BRANCH-MANAGER-CURRENT-SCOPE",
+      "result": "Pass"
+    },
+    {
+      "id": "BRANCH-FLUTTER-CREATE-WEB-PERSISTENCE",
+      "result": "Pass"
+    },
+    {
+      "id": "BRANCH-FLUTTER-ARABIC",
+      "result": "Fail",
+      "detail": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '???????', exact: true })\u001b[22m\n"
+    },
+    {
+      "id": "BRANCH-WEB-ARABIC",
+      "result": "Pass"
+    }
+  ],
+  "scope": "Compiled Next.js and Flutter web branch management against real PostgreSQL; Windows Chrome and mobile emulation",
+  "physicalIPhone": "Not run",
+  "nativeIPhone": "Not run",
+  "userAcceptance": "Pending"
+}

@@ -4,6 +4,10 @@
 
 ### Connected delivery progress
 
+- [x] Connected FEAT-002 branch API/RLS and paginated Next.js/Flutter administration.
+- [x] 248 backend scenarios; 11 Flutter tests; web/mobile builds; connected branch and staff browser checks.
+- [ ] Commit/integrate the tested branch prerequisite, then continue account security and onboarding.
+
 - [x] Real PostgreSQL 18.6 dev/test, Alembic migrations and restricted RLS role.
 - [x] Real password/session identity, current tenant/role/branch and revocation checks.
 - [x] Transactional staff attendance/corrections/receipt/audit API and daily report.

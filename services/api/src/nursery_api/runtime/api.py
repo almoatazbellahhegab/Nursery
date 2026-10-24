@@ -120,7 +120,7 @@ auth_router = APIRouter(prefix="/api/v1/auth", tags=["Identity"])
 
 def profile(actor: Actor) -> dict[str, Any]:
     branches = actor.connection.execute(
-        "SELECT id,name FROM app.branches WHERE organization_id=%s AND active ORDER BY name,id LIMIT 100",
+        "SELECT id,name,active,timezone,operating_status FROM app.branches WHERE organization_id=%s ORDER BY active DESC,name,id LIMIT 100",
         (actor.organization_id,),
     ).fetchall()
     organization = actor.connection.execute(
@@ -276,6 +276,9 @@ def configure_runtime(
     from .staff import router as staff_router
 
     app.include_router(staff_router)
+    from .branches import router as branch_router
+
+    app.include_router(branch_router)
 
     @app.exception_handler(RequestValidationError)
     def safe_validation(request: Request, error: RequestValidationError) -> JSONResponse:

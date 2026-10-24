@@ -18,6 +18,43 @@ Map<String, dynamic> profile() => {
 };
 
 void main() {
+  testWidgets('administrator branch entry keeps its Arabic accessible label', (
+    tester,
+  ) async {
+    final api = NurseryApi(
+      base: Uri.parse('https://fixture.invalid/api/v1/'),
+      client: MockClient((request) async {
+        if (request.url.path.endsWith('/auth/me')) {
+          return http.Response('{"code":"authentication_required"}', 401);
+        }
+        if (request.url.path.endsWith('/auth/login')) {
+          return http.Response(
+            jsonEncode({...profile(), 'role': 'administrator'}),
+            200,
+          );
+        }
+        return http.Response('{"items":[],"next_cursor":null}', 200);
+      }),
+    );
+    await tester.pumpWidget(ConnectedApp(api: api));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Email'),
+      'fictional@example.test',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Password'),
+      'noncredential fixture',
+    );
+    await tester.tap(find.text('Sign in'));
+    await tester.pumpAndSettle();
+    expect(find.text('Manage branches'), findsOneWidget);
+    await tester.tap(find.text('العربية'));
+    await tester.pumpAndSettle();
+    expect(find.text('إدارة الفروع'), findsOneWidget);
+    expect(find.textContaining('???'), findsNothing);
+  });
+
   for (final status in [200, 401]) {
     test(
       'late restore $status cannot replace or clear a newer login',
