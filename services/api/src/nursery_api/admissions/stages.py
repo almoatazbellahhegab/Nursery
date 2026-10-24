@@ -239,7 +239,7 @@ def decide_stage_change(
     ):
         raise AdmissionsError(AdmissionsErrorCode.ACCESS_DENIED)
     if receipt is not None:
-        return _replay_stage_change(command, current, grant, receipt)
+        return _replay_stage_change(command, current, grant, receipt, now=now)
     if command.expected_version != current.version:
         raise AdmissionsError(AdmissionsErrorCode.VERSION_CONFLICT)
     if command.new_stage == current.stage:
@@ -278,6 +278,8 @@ def _replay_stage_change(
     current: LeadSnapshot,
     grant: VerifiedAdmissionsGrant,
     receipt: StageReceipt,
+    *,
+    now: datetime,
 ) -> StageDecision:
     """Return one original fact only after checking receipt identity and integrity."""
     if receipt.actor_id != grant.actor_id or receipt.command.scope != command.scope:
@@ -302,6 +304,7 @@ def _replay_stage_change(
         or snapshot.version != history.version
         or snapshot.stage != history.new_stage
         or snapshot.last_changed_at != history.changed_at
+        or history.changed_at > now
         or current.version < snapshot.version
         or (current.version == snapshot.version and current != snapshot)
         or current.last_changed_at is None

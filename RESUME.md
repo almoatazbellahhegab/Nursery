@@ -1,5 +1,29 @@
 # Session checkpoint and resume instructions
 
+## Latest continuation: S03 pushed, retry chronology fixed (2026-10-24)
+
+User instruction: `push sprint 3 changes and continue development`.
+Approval was recorded before push in `docs/delivery/approvals.json`, covering
+work through `5134ba2` plus the approval record. Git push succeeded atomically:
+`sprint/03-review` at `a9868ba`, admissions pipeline/retry, demo scenarios,
+application verification and commit-checkpoint branches. No deployment or UAT
+acceptance was granted. Earlier no-push/read-only/uncommitted descriptions below
+are historical. Preserve the unrelated untracked attendance evidence.
+
+Continued on `feat/FEAT-030-retry-chronology`: historical receipts must not claim
+an event later than the server instant. Six new timezone/boundary scenarios
+pass with all 79 backend scenarios, Ruff lint/format, strict mypy and dependency
+consistency. Evidence: `2026-10-24T08-08-47-850Z-admissions.json`. Commit this
+increment and integrate locally into `sprint/03-review`, retaining its feature
+branch; it is outside the earlier recorded push scope and must remain local.
+No client code or build changed; retain earlier demo verification/UAT scope.
+
+S03/FEAT-030 stays active and incomplete. An asynchronous question requested
+the approved admissions decisions and named owners; no approval has arrived.
+Do not implement the candidate decisions or operational routes before applicable
+gates and identity/branch/permission/storage prerequisites close. Next work is
+resolving that policy source and explicitly planning prerequisites; no S04 start.
+
 ## Latest request: commit pending changes (2026-10-24)
 
 The user explicitly requested local Git commits. Git index writes were approved

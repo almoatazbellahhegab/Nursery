@@ -13,10 +13,10 @@ is the sole active product feature. Its tested stage/history/retry engine is a
 domain increment, not an operational admissions journey. The client demo is a
 local simulation. No complete S03 feature or sprint acceptance is recorded.
 
-The active workspace cannot write `.git`; it cannot create a feature branch,
-commit or integrate a coherent increment. Preserve the existing work and branches
-until an authorized session provides Git write access. This is independent of
-product/specialist decisions and must not be bypassed.
+Git metadata writes were authorized through host escalation. The user explicitly
+approved pushing the committed S03 scope on 2026-10-24; `sprint/03-review` through
+`a9868ba` and the five retained work branches were pushed. This resolves the
+earlier Git handoff blocker; product/specialist decisions remain open.
 
 ## Admissions decisions that Product must resolve
 
@@ -86,7 +86,7 @@ Gates. This packet provides no legal, medical, safeguarding or finance approval.
 - [ ] Named specialist and user acceptance; coherent commits and local review
   integration on retained branches. Confirm exact expanded scope before push.
 
-The existing S03 push approval covers only its recorded earlier increment. It
-does not authorize pushing later client-demo or retry work, accept UAT, waive
-open gates or authorize a production deployment. S04 is not being started under
-the current instruction to continue and finish S03.
+The latest S03 push approval covers work through `5134ba2` plus its approval
+record, including the client demo and initial retry implementation. Subsequent
+development remains outside that recorded scope. The push does not accept UAT,
+waive open gates or authorize production deployment. S04 is not being started.

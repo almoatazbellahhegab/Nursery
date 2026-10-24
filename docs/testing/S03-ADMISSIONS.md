@@ -1,5 +1,20 @@
 # Admissions domain tests and UAT links
 
+## Latest verification: retry chronology (2026-10-24)
+
+Retry receipts now reject a saved event later than the supplied server instant
+with `admissions_operation_conflict`. A retry at the exact event instant remains
+valid. ADM-UNIT-029 and ADM-UNIT-030 each cover UTC, UTC+3 and UTC-5, checking
+instant comparison and preservation of the original snapshot/history objects.
+These are partial TC-FEAT-030-02 / UAT-S03-TC-FEAT-030-02 domain checks.
+
+[All 79 backend scenarios, lint, format, strict types and dependency checks pass](runs/2026-10-24T08-08-47-850Z-admissions.json).
+The suite contains 50 admissions, 26 attendance and three route/health scenarios.
+The upstream Starlette/AnyIO deprecation warning remains. Existing compiled web
+and mobile demos are unchanged; their prior evidence and separate Windows human,
+physical iPhone Safari and native iPhone UAT checklist remain applicable. No
+operational source acceptance case or policy gate is completed by this change.
+
 | Cases | Behavior | Source / current UAT | Coverage limit |
 | --- | --- | --- | --- |
 | ADM-UNIT-001 | Prior/new stage, actor, UTC time, version and policy recorded | TC-FEAT-030-02 / UAT-S03-TC-FEAT-030-02 | Domain only; no database/history API integration |

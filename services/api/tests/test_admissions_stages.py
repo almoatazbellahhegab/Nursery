@@ -407,3 +407,41 @@ def test_adm_unit_028_contradictory_current_state_cannot_be_hidden_by_a_receipt(
             receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
         )
     assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)
+
+
+@pytest.mark.parametrize("offset_hours", [0, 3, -5])
+def test_adm_unit_029_future_receipt_is_rejected_at_equivalent_timezone_offsets(
+    offset_hours: int,
+) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    retry_time = (NOW - timedelta(microseconds=1)).astimezone(
+        timezone(timedelta(hours=offset_hours))
+    )
+    with pytest.raises(AdmissionsError) as error:
+        decide_stage_change(
+            COMMAND,
+            saved.snapshot,
+            GRANT,
+            POLICY,
+            changed_at=retry_time,
+            receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+        )
+    assert_code(error, AdmissionsErrorCode.OPERATION_CONFLICT)
+
+
+@pytest.mark.parametrize("offset_hours", [0, 3, -5])
+def test_adm_unit_030_receipt_at_current_instant_is_replayable_across_offsets(
+    offset_hours: int,
+) -> None:
+    saved = decide_stage_change(COMMAND, STATE, GRANT, POLICY, changed_at=NOW)
+    replay = decide_stage_change(
+        COMMAND,
+        saved.snapshot,
+        GRANT,
+        POLICY,
+        changed_at=NOW.astimezone(timezone(timedelta(hours=offset_hours))),
+        receipt=StageReceipt(COMMAND, GRANT.actor_id, saved),
+    )
+    assert replay.replayed
+    assert replay.history is saved.history
+    assert replay.snapshot is saved.snapshot

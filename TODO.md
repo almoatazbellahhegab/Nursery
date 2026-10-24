@@ -1,5 +1,18 @@
 # Development TODO
 
+## Latest continuation (2026-10-24)
+
+- [x] Record the user's expanded S03 push approval before pushing.
+- [x] Push sprint `a9868ba` and all five retained work branches atomically.
+- [x] Continue FEAT-030 with rejection of future-dated retry receipts.
+- [x] Pass 79 backend scenarios, lint, format, strict types and dependency checks.
+- [x] Save the chronology increment for local sprint integration on its retained branch.
+- [ ] Obtain approved admissions decisions and prerequisite owner evidence.
+- [ ] Run remaining original source cases and separate human/physical/native UAT.
+
+Older uncommitted/Git-blocked/no-push statements below are historical; the new
+chronology increment remains outside the recorded push scope. S03 stays active.
+
 ## Local commit handoff (2026-10-24)
 
 - [x] Read the saved checkpoint and inspect pending changes and test evidence.
